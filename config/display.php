@@ -25,7 +25,7 @@ $query ="select nostamp, usrcode ,
         where nostamp='".$noti."'";
 $dest = $conn->query($query)->fetchAll();
 
-$query ="select a.notino,a.data,a.hora,e.usrcode,a.head ,a.body,
+$query ="select a.notino,a.data,e.usrcode,a.head ,a.body,
         a.tpcode,TXTOK,TXTYES,TXTNO
         From notificacoes (nolock) a join destinatarios (nolock) b  on a.NOTINO=b.nostamp
         join utilizadores (nolock) c on c.USRNO=b.usrstamp -- receiver
@@ -55,7 +55,7 @@ foreach ($Nsino as $n) {
     $ns = $n[0];
 }
 
-$query ="select USRCODE
+$query ="select USRCODE,NOSTAMP
 from destinatarios (nolock) a join utilizadores (nolock) c on c.USRNO=a.usrstamp 
 where  USRCODE='".$login."' and data='19000101' and ldata='19000101'";
 $nosino = $conn->query($query)->fetchAll();

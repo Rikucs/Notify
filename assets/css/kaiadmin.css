@@ -2692,7 +2692,7 @@ label {
 .form-group label,
 .form-check label {
   margin-bottom: 0.5rem;
-  color: #495057;
+  color: rgb(106, 120, 135);
   font-size: 1rem;
   white-space: nowrap; }
 

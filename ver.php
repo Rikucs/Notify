@@ -1,6 +1,31 @@
 <?php
 include 'config/display.php';
+if (!isset ($_SESSION['login'])) {
+    header('Location: login/index.php');
+}
 $auz = 0;
+//s/n/ok
+if (isset($_POST["submits"])) {
+
+    $query = "update destinatarios set DATA='".$datav."',RESP = 'S' where NOSTAMP='" . $noti . "' and  USRSTAMP='" . $uc . "'";
+    $conn->query($query);
+    header('Location: notify.php');
+
+}
+if (isset($_POST["submitn"])) {
+
+    $query = "update destinatarios set DATA='".$datav."',RESP = 'N' where NOSTAMP='" . $noti . "' and  USRSTAMP='" . $uc . "'";
+    $conn->query($query);
+    header('Location: notify.php');
+
+}
+if (isset($_POST["submitok"])) {
+
+    $query = "update destinatarios set DATA='".$datav."',RESP = 'OK' where NOSTAMP='" . $noti . "' and  USRSTAMP='" . $uc . "'";
+    $conn->query($query);
+    header('Location: notify.php');
+
+}
 
 ?>
 
@@ -43,7 +68,13 @@ $auz = 0;
     <!-- #8898aa 
             rgb(106, 120, 135) 
         -->
-
+    <style>
+        hr.rounded {
+            border-top: 8px solid;
+            border-radius: 5px;
+            background-color: #D3e7fb;
+        }
+    </style>
 
 
     <!-- CSS Files -->
@@ -65,7 +96,7 @@ $auz = 0;
                 <div class="logo-header" data-background-color="dark">
                     <a href="notify.php" class="logo">
                         <img
-                            src="assets/img/kaiadmin/logo.png"
+                            src="assets/img/kaiadmin/NC.png"
                             alt="navbar brand"
                             class="navbar-brand"
                             height="40" />
@@ -137,25 +168,23 @@ $auz = 0;
                               height="20"
                           />-->
                         </a>
-                        <div class="nav-toggle">
-                            <button class="btn btn-toggle toggle-sidebar">
-                                <i class="gg-menu-right"></i>
-                            </button>
-                            <button class="btn btn-toggle sidenav-toggler">
-                                <i class="gg-menu-left"></i>
-                            </button>
-                        </div>
-                        <button class="topbar-toggler more">
-                            <i class="gg-more-vertical-alt"></i>
-                        </button>
                     </div>
                     <!-- End Logo Header -->
                 </div>
                 <!-- Navbar Header -->
-                <nav
-                    class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+                <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                     <div class="container-fluid">
-
+                        <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+                            <div>
+                                <a href="notify.php" class="logo">
+                                <img
+                                    src="assets/img/kaiadmin/notify.jpg"
+                                    alt="navbar brand"
+                                    class="navbar-brand"
+                                    height="40" />
+                                </a>
+                            </div>
+                        </nav>
 
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
 
@@ -169,14 +198,14 @@ $auz = 0;
                                     aria-haspopup="true"
                                     aria-expanded="false">
                                     <i class="fa fa-bell"></i>
-                                    <span class="notification" id="notification-count-text"> </span>
+                                    <span class="notification"> <?= $ns ?></span>
                                 </a>
                                 <ul
                                     class="dropdown-menu notif-box animated fadeIn"
                                     aria-labelledby="notifDropdown">
                                     <li>
                                         <div class="dropdown-title">
-                                            Tem <span id="notification-count-text"></span> notificações novas
+                                            Tem <span><?= $ns ?></span> notificações novas
                                         </div>
                                     </li>
                                     <li>
@@ -184,14 +213,16 @@ $auz = 0;
                                             <div class="notif-center">
                                                 <?php foreach ($nosino as $sino) { ?>
                                                     <a href="ver.php?noti=<?= $sino['NOSTAMP'] ?>">
-                                                        <div class="notif-img">
+                                                        <div  width="170" height="40">
                                                             <img
                                                                 src="assets/img/kaiadmin/favicon.png"
+                                                                width="170"
+                                                                height="40"
                                                                 alt="Img Profile" />
                                                         </div>
                                                         <div class="notif-content">
-                                                            <span class="block"> New Coffee - Notify </span>
-                                                            <span class="time">Nova Notificação de <?= $sino["usercode"] ?></span>
+                                                            <span class="block"> NewCoffee - Notify </span>
+                                                            <span class="time">Nova Notificação de <?= $sino["USRCODE"] ?></span>
                                                         </div>
                                                     </a>
                                                 <?php } ?>
@@ -233,12 +264,7 @@ $auz = 0;
                                                 </div>
                                                 <div class="u-text">
                                                     <h4><?php echo $login ?></h4>
-                                                    <p class="text-muted">hello@example.com</p>
-                                                    <a
-                                                        href="profile.html"
-                                                        class="btn btn-xs btn-secondary btn-sm">Ver Perfil</a>
                                                 </div>
-                                            </div>
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
@@ -336,16 +362,20 @@ $auz = 0;
                                 <div class="col-3 col-sm-2 col-lg-3"></div>
                                 <div class="col-3 col-sm-2 col-lg-3">
                                     <div class="card">
-                                        <div class="card-header" style="background-color: #b4e8a0; text-align: center">
-                                            <div class="headcs"><?= $sim ?></div>
-                                        </div>
+                                        <button style="padding: 0;border: none;background: none;">
+                                            <div class="card-header" style="background-color: #b4e8a0; text-align: center">
+                                                <div class="headcs"><?= $sim ?></div>
+                                            </div>
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="col-3 col-sm-2 col-lg-3">
                                     <div class="card">
-                                        <div class="card-header" style="background-color: #f59b99; text-align: center">
-                                            <div class="headcs"><?= $nao ?></div>
-                                        </div>
+                                        <button style="padding: 0;border: none;background: none;">
+                                            <div class="card-header" style="background-color: #f59b99; text-align: center">
+                                                <div class="headcs"><?= $nao ?></div>
+                                            </div>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -355,9 +385,11 @@ $auz = 0;
                                 <div class="col-4 col-sm-2 col-lg-4"></div>
                                 <div class="col-4 col-sm-2 col-lg-4">
                                     <div class="card">
-                                        <div class="card-header" style="background-color: #b4e8a0; text-align: center">
-                                            <div class="headcs"><?= $ok ?></div>
-                                        </div>
+                                        <button style="padding: 0;border: none;background: none;">
+                                            <div class="card-header" style="background-color: #b4e8a0; text-align: center">
+                                                <div class="headcs"><?= $ok ?></div>
+                                            </div>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -429,9 +461,13 @@ $auz = 0;
                                                     ></iframe>';
                                                 //echo '<div><a href="pdf.php?noti='.$file['DOCNO'].'" target="_blank">Abrir ' . $file["DOCCODE"] . '</a></div><br>';
                                             } elseif (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif'])) {
+                                                echo '<hr class="rounded">';
                                                 echo '<div style="text-align: center"><img src="data:image/' . $fileExtension . ';base64,' . base64_encode(hex2bin($file['DOC64'])) . '" alt="" ></div><br>';
+                                                echo '<hr class="rounded">';
                                             } else {
+                                                echo '<hr class="rounded">';
                                                 echo "<div>Ficheiro Desconhecido: " . $file['DOCCODE'] . " <br> Por favor falar com o remetente</div><br>";
+                                                echo '<hr class="rounded">';
                                             }
                                         }
                                     } else {

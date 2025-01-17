@@ -1,5 +1,8 @@
 <?php
 include 'config/tables.php';
+if (!isset ($_SESSION['login'])) {
+    header('Location: login/index.php');
+}
 
 $ijs = 0;
 
@@ -71,7 +74,7 @@ $ijs = 0;
                 <div class="logo-header" data-background-color="dark">
                     <a href="notify.php" class="logo">
                         <img
-                            src="assets/img/kaiadmin/logo.png"
+                            src="assets/img/kaiadmin/NC.png"
                             alt="navbar brand"
                             class="navbar-brand"
                             height="40" />
@@ -175,33 +178,32 @@ $ijs = 0;
                                     aria-haspopup="true"
                                     aria-expanded="false">
                                     <i class="fa fa-bell"></i>
-                                    <span class="notification" id="notification-count"></span>
+                                    <span class="notification"><?= $ns ?></span>
                                 </a>
                                 <ul
                                     class="dropdown-menu notif-box animated fadeIn"
                                     aria-labelledby="notifDropdown">
                                     <li>
                                         <div class="dropdown-title">
-                                           Tem <span id="notification-count-text"> </span> notificações novas
+                                            Tem <span><?= $ns ?></span> notificações novas
                                         </div>
                                     </li>
                                     <li>
                                         <div class="notif-scroll scrollbar-outer">
                                             <div class="notif-center">
-                                            <?php foreach ($nosino as $sino ){ ?>
-                                                <a href="ver.php?noti=<?= $sino['NOSTAMP'] ?>">
-                                                    <div class="notif-img">
-                                                        <img
+                                                <?php foreach ($nosino as $sino) { ?>
+                                                    <a href="ver.php?noti=<?= $sino['NOSTAMP'] ?>">
+                                                        <div class="notif-img">
+                                                            <img
                                                                 src="assets/img/kaiadmin/favicon.png"
-                                                                alt="Img Profile"
-                                                        />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="block"> New Coffee - Notify </span>
-                                                        <span class="time">Nova Notificação de <?= $sino["usercode"] ?></span>
-                                                    </div>
-                                                </a>
-                                            <?php } ?> 
+                                                                alt="Img Profile" />
+                                                        </div>
+                                                        <div class="notif-content">
+                                                            <span class="block"> NewCoffee - Notify </span>
+                                                            <span class="time">Nova Notificação de <?= $sino["usercode"] ?></span>
+                                                        </div>
+                                                    </a>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </li>
@@ -240,10 +242,6 @@ $ijs = 0;
                                                 </div>
                                                 <div class="u-text">
                                                     <h4><?php echo $login ?></h4>
-                                                    <p class="text-muted">hello@example.com</p>
-                                                    <a
-                                                        href="profile.html"
-                                                        class="btn btn-xs btn-secondary btn-sm">Ver Perfil</a>
                                                 </div>
                                             </div>
                                         </li>
@@ -268,6 +266,25 @@ $ijs = 0;
 
             <div class="container">
                 <div class="page-inner">
+                    <ul class="breadcrumbs mb-3">
+                        <li class="nav-home">
+                            <a href="notify.php">
+                                <i class="icon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="icon-arrow-right"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="form.php">Notify</a>
+                        </li>
+                        <li class="separator">
+                            <i class="icon-arrow-right"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="form.php">Enviadas</a>
+                        </li>
+                    </ul>
                     <div
                         class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                         <div>
@@ -301,37 +318,37 @@ $ijs = 0;
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($enviadas as $row) { 
-                                                        $ijs +=1;    
+                                                <?php foreach ($enviadas as $row) {
+                                                    $ijs += 1;
                                                 ?>
                                                     <tr>
                                                         <?php
-                                                        $query ="select nostamp, usrcode ,
-                                                                iif(data<>'19000101',convert(varchar,data,104),iif(ldata <> '19000101',convert(varchar,ldata,104),'')) data ,
+                                                        $query = "select nostamp, usrcode ,
+                                                                iif(data<>'19000101',convert(varchar,data,104),iif(ldata <> '19000101',convert(varchar,ldata,104),'')) Data ,
                                                                 iif(data<>'19000101',resp,iif(ldata <> '19000101','Lida','Não lida')) resposta  
                                                                 from destinatarios (nolock) a join utilizadores (nolock) c on c.USRNO=a.usrstamp -- receiver
                                                                 where nostamp='" . $row['notino'] . "'";
 
                                                         $dest = $conn->query($query)->fetchAll();
                                                         ?>
-                                                        <th scope="row" style="text-align: center;"><?php echo $row['notino'] ?></th>
-                                                        <td style="text-align: center; vertical-align:top;"><?php $dn = new datetime($row['data']);
+                                                        <th scope="row" style="text-align: center;color: rgb(106, 120, 135);"><?php echo $row['notino'] ?></th>
+                                                        <td style="text-align: center; vertical-align:top;color: rgb(106, 120, 135);"><?php $dn = new datetime($row['data']);
                                                                                                             echo $dn->format('d-m-Y H:i'); ?></td>
-                                                        <td style="text-align: center; vertical-align:top;"><?php echo $row['head'] ?></th>
+                                                        <td style="text-align: center; vertical-align:top;color: rgb(106, 120, 135);"><?php echo $row['head'] ?></th>
                                                             <form method="post">
                                                                 <?php if (isset($dest) && count($dest) > 1) { ?>
                                                                     <?php if ($row['status'] == 0) { ?>
                                                         <td class="show-more-button" data-img-id="img<?= $ijs ?>" style="text-align: center;"><img id="img<?= $ijs ?>" src="assets/img/mnr.jpg" width="40" height="40"></td>
-                                                    <?php } elseif ($row['status'] == 1) { ?>
+                                                    <?php } elseif ($row['status'] ==1) { ?>
                                                         <td class="show-more-button" data-img-id="img<?= $ijs ?>" style="text-align: center;"><img id="img<?= $ijs ?>" src="assets/img/mr.jpg" width="40" height="40"></td>
                                                     <?php } elseif ($row['status'] > 1) { ?>
                                                         <td class="show-more-button" data-img-id="img<?= $ijs ?>" style="text-align: center;"><img id="img<?= $ijs ?>" src="assets/img/ml.jpg" width="40" height="40"></td>
                                                     <?php } ?>
                                                 <?php } else { ?>
                                                     <?php if ($row['status'] == 0) { ?>
-                                                        <td style="text-align: center;"><img src="assets/img/respondido.jpg" width="40" height="40"></td>
-                                                    <?php } elseif ($row['status'] == 1) { ?>
                                                         <td style="text-align: center;"><img src="assets/img/naorespondido.jpg" width="40" height="40"></td>
+                                                    <?php } elseif ($row['status'] == 1) { ?>
+                                                        <td style="text-align: center;"><img src="assets/img/respondido.jpg" width="40" height="40"></td>
                                                     <?php } elseif ($row['status'] > 1) { ?>
                                                         <td style="text-align: center;"><img src="assets/img/lido.jpg" width="40" height="40"></td>
                                                     <?php } ?>
@@ -339,8 +356,8 @@ $ijs = 0;
                                                 </form>
                                                 <?php if ($row['clip'] > 0) { ?>
                                                     <td style="text-align: center;"><img
-                                                        src="assets/img/clip2.png"
-                                                        width="40" height="40">
+                                                            src="assets/img/clip2.png"
+                                                            width="35" height="35">
                                                     </td>
                                                 <?php } else { ?>
                                                     <td style="text-align: center;"></td>
@@ -349,36 +366,32 @@ $ijs = 0;
                                                     if (count($dest) > 1) {
                                                 ?>
 
-                                                    <td class="show-less" style="text-align: center;">--------------------------------------------------</td>
-                                                    <td class="show-less" style="text-align: center;">---------------</td>
-                                                    <td class="show-less" style="text-align: center;">----</td>
-                                                    <td class="show-more" style="text-align: center;"><?php foreach ($dest as $e) {
+                                                    <td class="show-less" style="text-align: center;color: rgb(106, 120, 135);">--------------------------------------------------</td>
+                                                    <td class="show-less" style="text-align: center;color: rgb(106, 120, 135);">---------------</td>
+                                                    <td class="show-less" style="text-align: center;color: rgb(106, 120, 135);">----</td>
+                                                    <td class="show-more" style="text-align: center;color: rgb(106, 120, 135);"><?php foreach ($dest as $e) {
                                                                                                             echo $e['usrcode'];
                                                                                                             echo '<br>';
                                                                                                         } ?> </td>
-                                                    <td class="show-more" style="text-align: center;"><?php foreach ($dest as $e) {
-                                                                                                            $f = new datetime($e['data']);
-                                                                                                            if ($f->format('d-m-Y H:i') == '01-01-1900 00:00') echo ' ';
-                                                                                                            else echo $f->format('d-m-Y H:i');
-                                                                                                            echo "<br>";
+                                                    <td class="show-more" style="text-align: center;color: rgb(106, 120, 135);"><?php foreach ($dest as $e) {
+                                                                                                            echo $e['Data'];
+                                                                                                            echo '<br>';
                                                                                                         } ?> </td>
-                                                    <td class="show-more" style="text-align: center;"><?php foreach ($dest as $e) {
+                                                    <td class="show-more" style="text-align: center;color: rgb(106, 120, 135);"><?php foreach ($dest as $e) {
                                                                                                             echo $e['resposta'];
                                                                                                             echo "<br>";
                                                                                                         } ?></td>
 
                                                 <?php } else { ?>
                                                     <?php foreach ($dest as $g) { ?>
-                                                        <td style="text-align: center;"><?php echo $g['usrcode']; ?>
+                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $g['usrcode']; ?>
 
 
-                                                        <td style="text-align: center;"><?php $f = new datetime($g['data']);
-                                                                                        if ($f->format('d-m-Y H:i') == '01-01-1900 00:00') echo ' ';
-                                                                                        else echo $f->format('d-m-Y H:i'); ?> </td>
-                                                        <td style="text-align: center;"><?php echo $g['resposta']; ?> </td>
+                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $g['Data'] ?></td>
+                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $g['resposta']; ?> </td>
                                                     <?php } ?>
                                                 <?php } ?>
-                                                    <td><a href="ver.php?noti=<?= $row['notino'] ?>"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
+                                                <td><a href="ver.php?noti=<?= $row['notino'] ?>"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
                                                     </tr>
                                                 <?php  } ?>
                                             </tbody>
@@ -473,48 +486,30 @@ $ijs = 0;
                 img.setAttribute('src', 'assets/img/ll.jpg');
                 $(this).closest('tr').children(".show-more").css('display', 'table-cell');
                 $(this).closest('tr').children(".show-less").css('display', 'none');
-            } 
+            }
             if (imgsrc == 'assets/img/mr.jpg') {
                 img.setAttribute('src', 'assets/img/lr.jpg');
                 $(this).closest('tr').children(".show-more").css('display', 'table-cell');
                 $(this).closest('tr').children(".show-less").css('display', 'none');
-            } 
+            }
             if (imgsrc == 'assets/img/lnr.jpg') {
-                iimg.setAttribute('src', 'assets/img/mnr.jpg');
+                img.setAttribute('src', 'assets/img/mnr.jpg');
                 $(this).closest('tr').children(".show-more").css('display', 'none');
                 $(this).closest('tr').children(".show-less").css('display', 'table-cell');
-            } 
+            }
             if (imgsrc == 'assets/img/ll.jpg') {
                 img.setAttribute('src', 'assets/img/ml.jpg');
                 $(this).closest('tr').children(".show-more").css('display', 'none');
                 $(this).closest('tr').children(".show-less").css('display', 'table-cell');
-            } 
+            }
             if (imgsrc == 'assets/img/lr.jpg') {
                 img.setAttribute('src', 'assets/img/mr.jpg');
                 $(this).closest('tr').children(".show-more").css('display', 'none');
                 $(this).closest('tr').children(".show-less").css('display', 'table-cell');
-            }  
+            }
         });
     </script>
 
-<script>
-    $(document).ready(function() {
-        function fetchNotifications() {
-            $.ajax({
-                url: 'config/sino.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    $('#notification-count').text(data.count);
-                    $('#notification-count-text').text(data.count);
-                }
-            });
-        }
-
-        // Fetch notifications every 10 seconds
-        setInterval(fetchNotifications, 10000);
-    });
-</script>
 
 </body>
 

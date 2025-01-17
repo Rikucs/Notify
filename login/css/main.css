@@ -183,7 +183,7 @@ iframe {
 
 
 .wrap-login100 {
-  width: 670px;
+  width: 675px;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
@@ -213,10 +213,9 @@ iframe {
 }
 
 .login100-form-title-1 {
-  font-family: Poppins-Bold;
+  font-family: segoe ui;
   font-size: 30px;
   color: #fff;
-  text-transform: uppercase;
   line-height: 1.2;
   text-align: center;
 }

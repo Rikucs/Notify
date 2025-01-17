@@ -1,4 +1,10 @@
+<?php 
+session_start();
+if (!isset ($_SESSION['login'])) {
+    header('Location: login/index.php');
+}
 
+?>
 
 <html lang="en">
 <head>
@@ -43,12 +49,14 @@
             <textarea name="nao" id="nao"> </textarea>
         </p>
         <p>
-            <label for="txtnao">NAO:</label>
+            <label for="txtnao">texto para o NAO:</label>
             <textarea name="txtnao" id="txtnao"> </textarea>
         </p>
         <p>
-            <label for="cancelar">CANCELAR:</label>
-            <textarea name="cancelar" id="cancelar"> </textarea>
+            <input type="radio" id="AC" name="DSP" value="0">
+            <label for="AC">User com Acesso</label><br>
+            <input type="radio" id="SC" name="DSP" value="1">
+            <label for="SC">User sem Acesso</label><br>
         </p>
         <input type="submit" value="Submit">
     </form>

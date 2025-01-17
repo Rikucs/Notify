@@ -13,7 +13,7 @@ foreach ($useres as $u) {
 
 // Query para obter os dados para a tabela de notificaçoes recebidas
 
-$query = "select a.notino,a.data,a.hora,e.usrcode,a.head ,iif(b.resp='',iif(LDATA<>'19000101','2','0'),'1') status,
+$query = "select a.notino,a.data,e.usrcode,a.head ,iif(b.resp='',iif(LDATA<>'19000101','2','0'),'1') status,
 iif(b.data='19000101',iif(LDATA<>'19000101',ldata,''),b.data) Data, b.RESP, 
 (select count(*) from documentos (nolock) where nostamp=a.notino) clip
 from notificacoes (nolock) a join destinatarios (nolock) b  on a.NOTINO=b.nostamp
@@ -25,8 +25,8 @@ $n_count = count($notify);
 
 // Query para obter os dados para a tabela de notificaçoes enviadas
 
-$query = "select a.notino,a.data,a.hora,e.usrcode,a.head ,
-(select isnull(convert(numeric(10,2),count(*)) /nullif(sum(iif(resp='',1,0)),0),0) 
+$query = "select a.notino,a.data,e.usrcode,a.head ,
+(select isnull(convert(numeric(10,2),count(*)) /nullif(sum(iif(resp > '',1,0)),0),0) 
 from destinatarios (nolock) where nostamp=a.notino) status,
 -- status = 1 todos respondidos, 0 = nenhum respondido, > 1 alguns respondidos
 (select count(*) from documentos (nolock) where nostamp=a.notino) clip
@@ -42,11 +42,15 @@ where  USRCODE='".$login."' and data='19000101' and ldata='19000101' ");
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 foreach ($result as $r) {
-    $ns += $r;
+    $ns = $r;
 }
 
-$query ="select USRCODE
+$query ="select USRCODE,NOSTAMP
 from destinatarios (nolock) a join utilizadores (nolock) c on c.USRNO=a.usrstamp 
 where  USRCODE='".$login."' and data='19000101' and ldata='19000101'";
 $nosino = $conn->query($query)->fetchAll();
+
+$query = "select * from Tipos where DSPUSR = 1";
+$dda = $conn->query($query)->fetchAll();
+
 ?>
