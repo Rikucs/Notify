@@ -273,9 +273,9 @@ $click = false;
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
-
+<!-- btncs -->
               <div class="ms-md-auto py-2 py-md-0">
-                <a href="enviadas.php" class="btn btn-round me-2 btncs"  >Ver mensagens enviadas</a>
+                <a href="enviadas.php" class="btn btn-round me-2 btncs">Ver mensagens enviadas</a>
                 <a href="form.php" class="btn  btn-round btncs">Enviar uma mensagem</a>
               </div>
             </div>

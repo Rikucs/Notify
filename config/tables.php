@@ -36,7 +36,14 @@ where  e.usrcode='" . $login . "'";
 
 $enviadas = $conn->query($query)->fetchAll();
 
-
+$stmt = $conn->prepare("select count(*)
+from destinatarios (nolock) a join utilizadores (nolock) c on c.USRNO=a.usrstamp 
+where  USRCODE='".$login."' and data='19000101' and ldata='19000101' ");
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+foreach ($result as $r) {
+    $ns += $r;
+}
 
 $query ="select USRCODE
 from destinatarios (nolock) a join utilizadores (nolock) c on c.USRNO=a.usrstamp 

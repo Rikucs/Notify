@@ -3008,7 +3008,8 @@ label.error {
 .table .thead-light th {
   /*background-color: #f6f9fc;
   color: #8898aa;*/
-  background-color:rgb(236, 227, 220);
+  /*background-color:rgb(236, 227, 220);*/
+  background-color: #e8f0fe;
   color:rgb(106, 120, 135);
   border-color: #ebecec !important; }
 .table .thead-dark th {

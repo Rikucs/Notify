@@ -277,7 +277,7 @@ $auz = 0;
                     <div class="row">
                         <div class="col-4 col-sm-2 col-lg-4">
                             <div class="card">
-                                <div class="card-header" style="background-color: rgb(236, 227, 220); text-align: center">
+                                <div class="card-header" style="background-color: #D3e7fb; text-align: center">
                                     <div class="headcs">Data/Hora</div>
                                 </div>
                                 <div class="card-body">
@@ -287,7 +287,7 @@ $auz = 0;
                         </div>
                         <div class="col-4 col-sm-2 col-lg-4">
                             <div class="card">
-                                <div class="card-header" style="background-color: rgb(236, 227, 220); text-align: center">
+                                <div class="card-header" style="background-color: #D3e7fb; text-align: center">
                                     <div class="headcs">Remetente</div>
                                 </div>
                                 <div class="card-body">
@@ -297,7 +297,7 @@ $auz = 0;
                         </div>
                         <div class="col-4 col-sm-2 col-lg-4">
                             <div class="card">
-                                <div class="card-header" style="background-color: rgb(236, 227, 220); text-align: center">
+                                <div class="card-header" style="background-color: #D3e7fb; text-align: center">
                                     <div class="headcs">Assunto</div>
                                 </div>
                                 <div class="card-body">
@@ -309,7 +309,7 @@ $auz = 0;
                     <div class="row">
                         <div class="col-12 col-sm-12 col-lg-12">
                             <div class="card">
-                                <div class="card-header" style="background-color: rgb(236, 227, 220); text-align: center">
+                                <div class="card-header" style="background-color: #D3e7fb; text-align: center">
                                     <div class="headcs">Notificação</div>
                                 </div>
                                 <div class="card-body">
@@ -320,49 +320,53 @@ $auz = 0;
                             </div>
                         </div>
                     </div>
-                    <?php 
+                    <?php
 
-                        $query= "select * from destinatarios where NOSTAMP='".$noti."' and USRSTAMP='".$uc."' ";
-                        $e = $conn->query($query)->fetchAll();
-                        foreach ($e as $z) {
-                            $auz +=1;
-                        }        
-                        if ($auz != 0){                    
+                    $query = "select * from destinatarios where NOSTAMP='" . $noti . "' and USRSTAMP='" . $uc . "' ";
+                    $e = $conn->query($query)->fetchAll();
+                    foreach ($e as $z) {
+                        $auz += 1;
+                    }
+                    if ($auz != 0) {
                     ?>
-                
-                    <?php if ($tpa == 2) { ?>
-                        <div class="row">
-                            <div class="col-6 col-sm-2 col-lg-6">
-                                <div class="card">
-                                    <div class="card-header" style="background-color: #b4e8a0; text-align: center">
-                                        <div class="headcs"><?= $sim ?></div>
+
+                        <?php if ($tpa == 2) { ?>
+                            <div class="row">
+                                <div class="col-3 col-sm-2 col-lg-3"></div>
+                                <div class="col-3 col-sm-2 col-lg-3"></div>
+                                <div class="col-3 col-sm-2 col-lg-3">
+                                    <div class="card">
+                                        <div class="card-header" style="background-color: #b4e8a0; text-align: center">
+                                            <div class="headcs"><?= $sim ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 col-sm-2 col-lg-3">
+                                    <div class="card">
+                                        <div class="card-header" style="background-color: #f59b99; text-align: center">
+                                            <div class="headcs"><?= $nao ?></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6 col-sm-2 col-lg-6">
-                                <div class="card">
-                                    <div class="card-header" style="background-color: #f59b99; text-align: center">
-                                        <div class="headcs"><?= $nao ?></div>
+                        <?php } else { ?>
+                            <div class="row">
+                                <div class="col-4 col-sm-2 col-lg-4"></div>
+                                <div class="col-4 col-sm-2 col-lg-4"></div>
+                                <div class="col-4 col-sm-2 col-lg-4">
+                                    <div class="card">
+                                        <div class="card-header" style="background-color: #b4e8a0; text-align: center">
+                                            <div class="headcs"><?= $ok ?></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php } else { ?>
-                        <div class="row">
-                            <div class="col-12 col-sm-2 col-lg-12">
-                                <div class="card">
-                                    <div class="card-header" style="background-color: #b4e8a0; text-align: center">
-                                        <div class="headcs"><?= $ok ?></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
+                        <?php } ?>
                     <?php } ?>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header" style="background-color: rgb(236, 227, 220); text-align: center">
+                                <div class="card-header" style="background-color: #D3e7fb; text-align: center">
 
                                     <h4 class="headcs">Destinatarios</h4>
 
@@ -400,8 +404,8 @@ $auz = 0;
                         <div class="col-12 col-sm-12 col-lg-12">
                             <div class="card">
                                 <!-- rgba(227, 232, 236, 0.95) 
-                                     rgb(236, 227, 220) -->
-                                <div class="card-header" style="background-color:rgb(236, 227, 220); text-align: center">
+                                     #D3e7fb -->
+                                <div class="card-header" style="background-color:#D3e7fb; text-align: center">
                                     <div class="headcs">Documentos</div>
                                 </div>
                                 <div class="card-body">
