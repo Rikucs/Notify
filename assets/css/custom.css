@@ -1,0 +1,26 @@
+.headcs {
+    color:rgb(106, 120, 135);
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.btncs{
+    background-color:rgb(236, 227, 220);
+    color:rgb(106, 120, 135);
+    font-size: 15px;
+    font-weight: bold
+}
+
+.bodycs {
+    color: rgb(106, 120, 135);
+    font-size: 15px;
+    text-align: center;
+}
+
+.textoc {
+    color: rgb(106, 120, 135);
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75em
+}
