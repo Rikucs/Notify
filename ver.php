@@ -1,31 +1,11 @@
 <?php
 include 'config/display.php';
-if (!isset ($_SESSION['login'])) {
+if (!isset($_SESSION['login'])) {
     header('Location: login/index.php');
 }
+
 $auz = 0;
-//s/n/ok
-if (isset($_POST["submits"])) {
 
-    $query = "update destinatarios set DATA='".$datav."',RESP = 'S' where NOSTAMP='" . $noti . "' and  USRSTAMP='" . $uc . "'";
-    $conn->query($query);
-    header('Location: notify.php');
-
-}
-if (isset($_POST["submitn"])) {
-
-    $query = "update destinatarios set DATA='".$datav."',RESP = 'N' where NOSTAMP='" . $noti . "' and  USRSTAMP='" . $uc . "'";
-    $conn->query($query);
-    header('Location: notify.php');
-
-}
-if (isset($_POST["submitok"])) {
-
-    $query = "update destinatarios set DATA='".$datav."',RESP = 'OK' where NOSTAMP='" . $noti . "' and  USRSTAMP='" . $uc . "'";
-    $conn->query($query);
-    header('Location: notify.php');
-
-}
 
 ?>
 
@@ -177,11 +157,11 @@ if (isset($_POST["submitok"])) {
                         <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                             <div>
                                 <a href="notify.php" class="logo">
-                                <img
-                                    src="assets/img/kaiadmin/notify.jpg"
-                                    alt="navbar brand"
-                                    class="navbar-brand"
-                                    height="40" />
+                                    <img
+                                        src="assets/img/kaiadmin/notify.jpg"
+                                        alt="navbar brand"
+                                        class="navbar-brand"
+                                        height="40" />
                                 </a>
                             </div>
                         </nav>
@@ -213,7 +193,7 @@ if (isset($_POST["submitok"])) {
                                             <div class="notif-center">
                                                 <?php foreach ($nosino as $sino) { ?>
                                                     <a href="ver.php?noti=<?= $sino['NOSTAMP'] ?>">
-                                                        <div  width="170" height="40">
+                                                        <div width="170" height="40">
                                                             <img
                                                                 src="assets/img/kaiadmin/favicon.png"
                                                                 width="170"
@@ -355,45 +335,48 @@ if (isset($_POST["submitok"])) {
                     }
                     if ($auz != 0) {
                     ?>
-
-                        <?php if ($tpa == 2) { ?>
-                            <div class="row">
-                                <div class="col-3 col-sm-2 col-lg-3"></div>
-                                <div class="col-3 col-sm-2 col-lg-3"></div>
-                                <div class="col-3 col-sm-2 col-lg-3">
-                                    <div class="card">
-                                        <button style="padding: 0;border: none;background: none;">
-                                            <div class="card-header" style="background-color: #b4e8a0; text-align: center">
-                                                <div class="headcs"><?= $sim ?></div>
+                        <form action="config/verbtn.php?noti=<?= $noti ?>" method="post">
+                            <?php if ($resbtn == 1) { ?>
+                                <?php if ($tpa == 2) { ?>
+                                    <div class="row">
+                                        <div class="col-3 col-sm-2 col-lg-3"></div>
+                                        <div class="col-3 col-sm-2 col-lg-3"></div>
+                                        <div class="col-3 col-sm-2 col-lg-3">
+                                            <div class="card">
+                                                <button style="padding: 0;border: none;background: none;" name="submits">
+                                                    <div class="card-header" style="background-color: #b4e8a0; text-align: center">
+                                                        <div class="headcs"><?= $sim ?></div>
+                                                    </div>
+                                                </button>
                                             </div>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-3 col-sm-2 col-lg-3">
-                                    <div class="card">
-                                        <button style="padding: 0;border: none;background: none;">
-                                            <div class="card-header" style="background-color: #f59b99; text-align: center">
-                                                <div class="headcs"><?= $nao ?></div>
+                                        </div>
+                                        <div class="col-3 col-sm-2 col-lg-3">
+                                            <div class="card">
+                                                <button style="padding: 0;border: none;background: none;" name="submitn">
+                                                    <div class="card-header" style="background-color: #f59b99; text-align: center">
+                                                        <div class="headcs"><?= $nao ?></div>
+                                                    </div>
+                                                </button>
                                             </div>
-                                        </button>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        <?php } else { ?>
-                            <div class="row">
-                                <div class="col-4 col-sm-2 col-lg-4"></div>
-                                <div class="col-4 col-sm-2 col-lg-4"></div>
-                                <div class="col-4 col-sm-2 col-lg-4">
-                                    <div class="card">
-                                        <button style="padding: 0;border: none;background: none;">
-                                            <div class="card-header" style="background-color: #b4e8a0; text-align: center">
-                                                <div class="headcs"><?= $ok ?></div>
+                                <?php } else { ?>
+                                    <div class="row">
+                                        <div class="col-4 col-sm-2 col-lg-4"></div>
+                                        <div class="col-4 col-sm-2 col-lg-4"></div>
+                                        <div class="col-4 col-sm-2 col-lg-4">
+                                            <div class="card">
+                                                <button style="padding: 0;border: none;background: none;" name="submitok">
+                                                    <div class="card-header" style="background-color: #b4e8a0; text-align: center">
+                                                        <div class="headcs"><?= $ok ?></div>
+                                                    </div>
+                                                </button>
                                             </div>
-                                        </button>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        <?php } ?>
+                                <?php } ?>
+                            <?php } ?>
+                        </form>
                     <?php } ?>
                     <div class="row">
                         <div class="col-md-12">

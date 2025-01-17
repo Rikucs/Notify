@@ -382,11 +382,11 @@ if (isset($_POST["submit"])) {
                                             <div class="col-md-6 col-lg-6">
                                                 <div class="form-group">
 
-                                                    <label for="tpn" Style="color: rgb(106, 120, 135);">Tipo de Notificação</label>
+                                                    <label for="tpno" Style="color: rgb(106, 120, 135);">Tipo de Notificação</label>
                                                     <select
                                                         Style="color: rgb(106, 120, 135);"
                                                         name="tpno"
-                                                        id="tpn"
+                                                        id="tpno"
                                                         class="form-select">
                                                         <?php foreach ($dda as $dd) { ?>
                                                             <option value='<?= $dd['TPNO'] ?>' Style="color: rgb(106, 120, 135);"><?= $dd['HEAD'] ?></option>

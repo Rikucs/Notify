@@ -26,7 +26,7 @@ $query ="select nostamp, usrcode ,
 $dest = $conn->query($query)->fetchAll();
 
 $query ="select a.notino,a.data,e.usrcode,a.head ,a.body,
-        a.tpcode,TXTOK,TXTYES,TXTNO
+        Tipos.tpcode,TXTOK,TXTYES,TXTNO
         From notificacoes (nolock) a join destinatarios (nolock) b  on a.NOTINO=b.nostamp
         join utilizadores (nolock) c on c.USRNO=b.usrstamp -- receiver
         join utilizadores (nolock) e on a.usrstamp=e.USRNO -- sender
@@ -42,6 +42,11 @@ foreach ($display as $row){
     $nao = $row['TXTNO'];
     $ok = $row['TXTOK'];
     $tpa = $row['tpcode'];
+}
+$query ="select iif(RESP='','1','2') as RESP from Destinatarios where  NOSTAMP    ='".$noti."' and USRSTAMP='".$uc."'";
+$respbtn= $conn->query($query)->fetchAll();
+foreach ($respbtn as $r) {
+    $resbtn = $r['RESP'];
 }
 
 $query ="select * from documentos where  NOSTAMP    ='".$noti."'";
