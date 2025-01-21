@@ -1,22 +1,19 @@
 <?php
-include 'config/tables.php';
-if (!isset($_SESSION['login'])) {
-    header('Location: login/index.php');
-}
 
-$ijs = 0;
+include_once("config/config.php");
+include_once("config/vendor.php");
 
-
+$date = date('d/m/Y');
+date_default_timezone_set("Europe/London");
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title> Notify </title>
+    <title>Notify</title>
     <meta
         content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
         name="viewport" />
@@ -46,23 +43,47 @@ $ijs = 0;
             },
         });
     </script>
-    <style>
-        .show-more {
-            display: none;
-        }
 
-        .aling {
-            text-align: center;
-        }
-    </style>
     <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/plugins.min.css" />
     <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <link rel="stylesheet" href="assets/css/custom.css" />
+
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="assets/css/demo.css" />
+    <script src="assets/js/multiselect-dropdown.js"></script>
+    <style>
+        .box {
+            background-color: white;
+            outline: 2px dashed black;
+            height: 200px;
+        }
+
+        .box.is-dragover {
+            background-color: grey;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box label strong {
+            text-decoration: underline;
+            color: blue;
+            cursor: pointer;
+        }
+
+        .box label strong:hover {
+            color: blueviolet
+        }
+
+        .box input {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -135,13 +156,14 @@ $ijs = 0;
                                 href="#dashboard"
                                 class="collapsed"
                                 aria-expanded="false">
-                                <i class="fas fa-chart-area" aria-hidden="true"></i>
+                                <i class="fas fa-chart-area"></i>
                                 <p>Dashboard</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse" id="dashboard">
                                 <ul class="nav nav-collapse">
                                     <li>
+                                        <!-- TO Change Link -->
                                         <a href="snapshot.php">
                                             <span class="sub-item">Snapshot</span>
                                         </a>
@@ -203,12 +225,11 @@ $ijs = 0;
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
                         <a href="notify.php" class="logo">
-                            <!--<img
-                              src="assets/img/kaiadmin/logo_light.svg"
-                              alt="navbar brand"
-                              class="navbar-brand"
-                              height="20"
-                          />-->
+                            <img
+                                src="assets/img/kaiadmin/logo.png"
+                                alt="navbar brand"
+                                class="navbar-brand"
+                                height="40" />
                         </a>
                         <div class="nav-toggle">
                             <button class="btn btn-toggle toggle-sidebar">
@@ -249,7 +270,7 @@ $ijs = 0;
                                     aria-labelledby="notifDropdown">
                                     <li>
                                         <div class="dropdown-title">
-                                            Tem <span><?= $ns ?></span> notificações novas
+                                            Tem <span><?= $ns ?></span> Notificaçoes Novas
                                         </div>
                                     </li>
                                     <li>
@@ -272,7 +293,7 @@ $ijs = 0;
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="see-all" href="notify.php">Ver todas as notificações<i class="fa fa-angle-right"></i>
+                                        <a class="see-all" href="javascript:void(0);">Ver todas as notificações <i class="fa fa-angle-right"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -311,8 +332,8 @@ $ijs = 0;
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="enviadas.php">Enviadas</a>
-                                            <a class="dropdown-item" href="notify.php">Recebidas</a>
+                                            <a class="dropdown-item" href="notify.php">Enviadas</a>
+                                            <a class="dropdown-item" href="recebidas.php">Recebidas</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="form.php">Enviar mensagem</a>
                                             <div class="dropdown-divider"></div>
@@ -327,139 +348,98 @@ $ijs = 0;
                 <!-- End Navbar -->
             </div>
 
-
             <div class="container">
                 <div class="page-inner">
-                    <ul class="breadcrumbs mb-3">
-                        <li class="nav-home">
-                            <a href="notify.php">
-                                <i class="icon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="icon-arrow-right"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="notify.php">Notify</a>
-                        </li>
-                        <li class="separator">
-                            <i class="icon-arrow-right"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Enviadas</a>
-                        </li>
-                    </ul>
-                    <div
-                        class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                        <div>
-                        </div>
-                        <div class="ms-md-auto py-2 py-md-0">
-                            <a href="notify.php" class="btn btn-round me-2 btncs">Ver mensagens recebidas</a>
-                            <a href="form.php" class="btn  btn-round btncs">Enviar uma mensagem</a>
-                        </div>
+                    <div class="page-header">
+                        <ul class="breadcrumbs mb-3">
+                            <li class="nav-home">
+                                <a href="notify.php">
+                                    <i class="icon-home"></i>
+                                </a>
+                            </li>
+                            <li class="separator">
+                                <i class="icon-arrow-right"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li class="separator">
+                                <i class="icon-arrow-right"></i>
+                            </li>
+                            <li class="nav-item">
+                                <a href="snapshot.php">Snapshot</a>
+                            </li>
+                        </ul>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title"> Notificações enviadas</div>
-                                    <div style="text-align: right;"><input type="text" id="search" placeholder="Pesquisar"></div>
-                                    
+                                    <div class="card-title">Snapshot - <?= $login ?> - <?= $date;?></div>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
                                         <!-- Projects table -->
-                                        <table class="table align-items-center mb-0" id="table">
+                                        <table class="table align-items-center mb-0">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th style="text-align: center;">ID</th>
-                                                    <th style="text-align: center;">Data/Hora</th>
-                                                    <th style="text-align: center;">Assunto</th>
-                                                    <th style="text-align: center;">Status</th>
-                                                    <th style="text-align: center;"></th>
-                                                    <th style="text-align: center;">Destinatario</th>
-                                                    <th style="text-align: center;">Data/Hora</th>
-                                                    <th style="text-align: center;">Resposta</th>
-                                                    <th style="text-align: center;"></th>
+                                                    <th scope="col">Campo</th>
+                                                    <th scope="col">mzona</th>
+                                                    <th scope="col">Clientes</th>
+                                                    <th scope="col">Objectivo</th>
+                                                    <th scope="col">Faturação</th>
+                                                    <th scope="col">DesvioFact</th>
+                                                    <th scope="col">KG</th>
+                                                    <th scope="col">PMV</th>
+                                                    <th scope="col">FactPend</th>
+                                                    <th scope="col">FactPrevista</th>
+                                                    <th scope="col">desvftprev</th>
+                                                    <th scope="col">Recebido</th>
+                                                    <th scope="col">Recsiva</th>
+                                                    <th scope="col">CC_Aberta</th>
+                                                    <th scope="col">n_vencida</th>
+                                                    <th scope="col">PMR</th>
+                                                    <th scope="col">ObjAcumulado</th>
+                                                    <th scope="col">FactAcumulada</th>
+                                                    <th scope="col">DesvFactAcum</th>
+                                                    <th scope="col">FactPrevAcum</th>
+                                                    <th scope="col">DesvFactPrevAcum</th>
+                                                    <th scope="col">cc_limite</th>
+                                                    <th scope="col">FT_Ant_AC</th>
+                                                    <th scope="col">Desvio_FT_Ant_AC</th>
+                                                    <th scope="col">fact365</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($enviadas as $row) {
-                                                    $ijs += 1;
-                                                ?>
+                                                <?php foreach ($Dados as $row) { ?>
                                                     <tr>
-                                                        <?php
-                                                        $query = "select nostamp, usrcode ,
-                                                                iif(data<>'19000101',convert(varchar,data,104),iif(ldata <> '19000101',convert(varchar,ldata,104),'')) Data ,
-                                                                iif(data<>'19000101',resp,iif(ldata <> '19000101','Lida','Não lida')) resposta  
-                                                                from destinatarios (nolock) a join utilizadores (nolock) c on c.USRNO=a.usrstamp -- receiver
-                                                                where nostamp='" . $row['notino'] . "'";
-
-                                                        $dest = $conn->query($query)->fetchAll();
-                                                        ?>
-                                                        <th scope="row" style="text-align: center;color: rgb(106, 120, 135);"><?php echo $row['notino'] ?></th>
-                                                        <td style="text-align: center; vertical-align:top;color: rgb(106, 120, 135);"><?php $dn = new datetime($row['data']);
-                                                                                                                                        echo $dn->format('d-m-Y H:i'); ?></td>
-                                                        <td style="text-align: center; vertical-align:top;color: rgb(106, 120, 135);"><?php echo $row['head'] ?></th>
-                                                            <form method="post">
-                                                                <?php if (isset($dest) && count($dest) > 1) { ?>
-                                                                    <?php if ($row['status'] == 0) { ?>
-                                                        <td class="show-more-button" data-img-id="img<?= $ijs ?>" style="text-align: center;"><img id="img<?= $ijs ?>" src="assets/img/mnr.jpg" width="40" height="40"></td>
-                                                    <?php } elseif ($row['status'] == 1) { ?>
-                                                        <td class="show-more-button" data-img-id="img<?= $ijs ?>" style="text-align: center;"><img id="img<?= $ijs ?>" src="assets/img/mr.jpg" width="40" height="40"></td>
-                                                    <?php } elseif ($row['status'] > 1) { ?>
-                                                        <td class="show-more-button" data-img-id="img<?= $ijs ?>" style="text-align: center;"><img id="img<?= $ijs ?>" src="assets/img/ml.jpg" width="40" height="40"></td>
-                                                    <?php } ?>
-                                                <?php } else { ?>
-                                                    <?php if ($row['status'] == 0) { ?>
-                                                        <td style="text-align: center;"><img src="assets/img/naorespondido.jpg" width="40" height="40"></td>
-                                                    <?php } elseif ($row['status'] == 1) { ?>
-                                                        <td style="text-align: center;"><img src="assets/img/respondido.jpg" width="40" height="40"></td>
-                                                    <?php } elseif ($row['status'] > 1) { ?>
-                                                        <td style="text-align: center;"><img src="assets/img/lido.jpg" width="40" height="40"></td>
-                                                    <?php } ?>
-                                                <?php } ?>
-                                                </form>
-                                                <?php if ($row['clip'] > 0) { ?>
-                                                    <td style="text-align: center;"><img
-                                                            src="assets/img/clip2.png"
-                                                            width="35" height="35">
-                                                    </td>
-                                                <?php } else { ?>
-                                                    <td style="text-align: center;"></td>
-                                                <?php } ?>
-                                                <?php
-                                                    if (count($dest) > 1) {
-                                                ?>
-
-                                                    <td class="show-less" style="text-align: center;color: rgb(106, 120, 135);">--------------------------------------------------</td>
-                                                    <td class="show-less" style="text-align: center;color: rgb(106, 120, 135);">---------------</td>
-                                                    <td class="show-less" style="text-align: center;color: rgb(106, 120, 135);">----</td>
-                                                    <td class="show-more" style="text-align: center;color: rgb(106, 120, 135);"><?php foreach ($dest as $e) {
-                                                                                                                                    echo $e['usrcode'];
-                                                                                                                                    echo '<br>';
-                                                                                                                                } ?> </td>
-                                                    <td class="show-more" style="text-align: center;color: rgb(106, 120, 135);"><?php foreach ($dest as $e) {
-                                                                                                                                    echo $e['Data'];
-                                                                                                                                    echo '<br>';
-                                                                                                                                } ?> </td>
-                                                    <td class="show-more" style="text-align: center;color: rgb(106, 120, 135);"><?php foreach ($dest as $e) {
-                                                                                                                                    echo $e['resposta'];
-                                                                                                                                    echo "<br>";
-                                                                                                                                } ?></td>
-
-                                                <?php } else { ?>
-                                                    <?php foreach ($dest as $g) { ?>
-                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $g['usrcode']; ?>
-
-
-                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $g['Data'] ?></td>
-                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $g['resposta']; ?> </td>
-                                                    <?php } ?>
-                                                <?php } ?>
-                                                <td><a href="ver.php?noti=<?= $row['notino'] ?>"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
+                                                        <th scope="row"><?php echo $row['campo'] ?></th>
+                                                        <td><?php echo $row['mzona'] ?></td>
+                                                        <td><?php echo $row['Clientes'] ?></td>
+                                                        <td><?php echo $row['Objectivo'] ?></td>
+                                                        <td><?php echo $row['Facturacao'] ?></td>
+                                                        <td><?php echo $row['DesvioFact'] ?></td>
+                                                        <td><?php echo $row['Kg'] ?></td>
+                                                        <td><?php echo $row['PMV'] ?></td>
+                                                        <td><?php echo $row['FactPend'] ?></td>
+                                                        <td><?php echo $row['FactPrevista'] ?></td>
+                                                        <td><?php echo $row['desvftprev'] ?></td>
+                                                        <td><?php echo $row['Recebido'] ?></td>
+                                                        <td><?php echo $row['RecSiva'] ?></td>
+                                                        <td><?php echo $row['Cc_Aberta'] ?></td>
+                                                        <td><?php echo $row['n_vencida'] ?></td>
+                                                        <td><?php echo $row['PMR'] ?></td>
+                                                        <td><?php echo $row['ObjAcumulado'] ?></td>
+                                                        <td><?php echo $row['FactAcumulada'] ?></td>
+                                                        <td><?php echo $row['DesvFactAcum'] ?></td>
+                                                        <td><?php echo $row['FactPrevAcum'] ?></td>
+                                                        <td><?php echo $row['DesvFactPrevAcum'] ?></td>
+                                                        <td><?php echo $row['CC_limite'] ?></td>
+                                                        <td><?php echo $row['FT_ANT_AC'] ?></td>
+                                                        <td><?php echo $row['Desvio_FT_ANT_AC'] ?></td>
+                                                        <td><?php echo $row['fact365'] ?></td>
                                                     </tr>
-                                                <?php  } ?>
+                                                <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -471,7 +451,7 @@ $ijs = 0;
             </div>
         </div>
     </div>
-    </div>
+
     <!--   Core JS Files   -->
     <script src="assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="assets/js/core/popper.min.js"></script>
@@ -499,94 +479,77 @@ $ijs = 0;
     <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
     <script src="assets/js/plugin/jsvectormap/world.js"></script>
 
-    <!-- Sweet Alert
-    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>-->
+    <!-- Google Maps Plugin -->
+    <script src="assets/js/plugin/gmaps/gmaps.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
     <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
 
-    <!-- Kaiadmin DEMO methods, don't include it in your project!
-    <script src="assets/js/setting-demo.js"></script>
-    <script src="assets/js/demo.js"></script>-->
-
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="assets/js/setting-demo2.js"></script>
     <script>
-        function toggleIconClass2() {
-            $(document).on("click", ".show-more-button", function() {
-                var iconId = $(this).data('icon');
-                var icon = document.getElementById(iconId);
-                if (icon.classList.contains('fa-plus-circle')) {
-                    icon.classList.replace('fa-plus-circle', 'fa-minus-circle');
-                } else if (icon.classList.contains('fa-minus-circle')) {
-                    icon.classList.replace('fa-minus-circle', 'fa-plus-circle');
-                }
-            });
-        }
+        window.onmousedown = function(e) {
+            var el = e.target;
+            if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+                e.preventDefault();
 
-        function toggleIconClass() {
-            var icon = document.getElementById('icon');
-            if (icon.classList.contains('fa-plus-circle')) {
-                icon.classList.replace('fa-plus-circle', 'fa-minus-circle');
-            } else if (icon.classList.contains('fa-minus-circle')) {
-                icon.classList.replace('fa-minus-circle', 'fa-plus-circle');
+                // toggle selection
+                if (el.hasAttribute('selected')) el.removeAttribute('selected');
+                else el.setAttribute('selected');
+
+                // hack to correct buggy behavior
+                var select = el.parentNode.cloneNode(true);
+                el.parentNode.parentNode.replaceChild(select, el.parentNode);
             }
         }
-
-        function myFunction() {
-            if (document.getElementById('icon').classList.contains('fa-plus-circle')) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        $(document).on("click", ".show-more-button", function() {
-            var imgid = $(this).data('img-id');
-            var img = document.getElementById(imgid)
-            var imgsrc = img.getAttribute('src');
-            if (imgsrc == 'assets/img/mnr.jpg') {
-                img.setAttribute('src', 'assets/img/lnr.jpg');
-                $(this).closest('tr').children(".show-more").css('display', 'table-cell');
-                $(this).closest('tr').children(".show-less").css('display', 'none');
-            }
-            if (imgsrc == 'assets/img/ml.jpg') {
-                img.setAttribute('src', 'assets/img/ll.jpg');
-                $(this).closest('tr').children(".show-more").css('display', 'table-cell');
-                $(this).closest('tr').children(".show-less").css('display', 'none');
-            }
-            if (imgsrc == 'assets/img/mr.jpg') {
-                img.setAttribute('src', 'assets/img/lr.jpg');
-                $(this).closest('tr').children(".show-more").css('display', 'table-cell');
-                $(this).closest('tr').children(".show-less").css('display', 'none');
-            }
-            if (imgsrc == 'assets/img/lnr.jpg') {
-                img.setAttribute('src', 'assets/img/mnr.jpg');
-                $(this).closest('tr').children(".show-more").css('display', 'none');
-                $(this).closest('tr').children(".show-less").css('display', 'table-cell');
-            }
-            if (imgsrc == 'assets/img/ll.jpg') {
-                img.setAttribute('src', 'assets/img/ml.jpg');
-                $(this).closest('tr').children(".show-more").css('display', 'none');
-                $(this).closest('tr').children(".show-less").css('display', 'table-cell');
-            }
-            if (imgsrc == 'assets/img/lr.jpg') {
-                img.setAttribute('src', 'assets/img/mr.jpg');
-                $(this).closest('tr').children(".show-more").css('display', 'none');
-                $(this).closest('tr').children(".show-less").css('display', 'table-cell');
-            }
-        });
     </script>
 
-<script>
-var $rows = $('#table tr');
-$('#search').keyup(function() {
-    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-    
-    $rows.show().filter(function() {
-        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-        return !~text.indexOf(val);
-    }).hide();
-});
-</script>
+    <script>
+        const box = document.querySelector('.box');
+        const fileInput = document.querySelector('[name="files[]"');
+        const selectButton = document.querySelector('label strong');
+        const fileList = document.querySelector('.file-list');
+
+        let droppedFiles = [];
+
+        ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(event => box.addEventListener(event, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }), false);
+
+        ['dragover', 'dragenter'].forEach(event => box.addEventListener(event, function(e) {
+            box.classList.add('is-dragover');
+        }), false);
+
+        ['dragleave', 'dragend', 'drop'].forEach(event => box.addEventListener(event, function(e) {
+            box.classList.remove('is-dragover');
+        }), false);
+
+        box.addEventListener('drop', function(e) {
+            droppedFiles = e.dataTransfer.files;
+            fileInput.files = droppedFiles;
+            updateFileList();
+        }, false);
+
+        fileInput.addEventListener('change', updateFileList);
+
+        function updateFileList() {
+            const filesArray = Array.from(fileInput.files);
+            if (filesArray.length > 1) {
+                fileList.innerHTML = '<p>Ficheiros Selecionados:</p><ul><li>' + filesArray.map(f => f.name).join('</li><li>') + '</li></ul>';
+            } else if (filesArray.length == 1) {
+                fileList.innerHTML = `<p>Ficheiro Selecionados: ${filesArray[0].name}</p>`;
+            } else {
+                fileList.innerHTML = '';
+            }
+        }
+    </script>
+
+
+
 
 
 </body>

@@ -145,7 +145,7 @@ $auz = 0;
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="#">
+                                        <a href="snapshor.php">
                                             <span class="sub-item">Snapshot</span>
                                         </a>
                                     </li>

@@ -223,7 +223,7 @@ if (isset($_POST["submit"])) {
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="#">
+                                        <a href="snapshot.php">
                                             <span class="sub-item">Snapshot</span>
                                         </a>
                                     </li>
