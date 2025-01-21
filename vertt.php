@@ -1,5 +1,5 @@
 <?php
-include 'config/display.php';
+include 'config/tt.php';
 if (!isset($_SESSION['login'])) {
     header('Location: login/index.php');
 }
@@ -335,145 +335,121 @@ $auz = 0;
                         </ul>
                     </div>-->
                     <div class="row">
-                        <div class="col-4 col-sm-4 col-lg-4">
+                        <div class="col-3 col-sm-2 col-lg-3">
+                            <div class="card">
+                                <div class="card-header" style="background-color: #D3e7fb; text-align: center">
+                                    <div class="headcs">ID</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="bodycs"> 9169 </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-2 col-lg-3">
                             <div class="card">
                                 <div class="card-header" style="background-color: #D3e7fb; text-align: center">
                                     <div class="headcs">Data/Hora</div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="bodycs"> <?= $data ?> </div>
+                                    <div class="bodycs"> 21/01/2025 15:26 </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4 col-sm-4 col-lg-4">
+                        <div class="col-3 col-sm-2 col-lg-3">
                             <div class="card">
                                 <div class="card-header" style="background-color: #D3e7fb; text-align: center">
-                                    <div class="headcs">Remetente</div>
+                                    <div class="headcs">Tecnico</div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="bodycs"> <?= $remetente ?> </div>
+                                    <div class="bodycs"> Ruben Ribeiro </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4 col-sm-4 col-lg-4">
+                        <div class="col-3 col-sm-2 col-lg-3">
                             <div class="card">
                                 <div class="card-header" style="background-color: #D3e7fb; text-align: center">
-                                    <div class="headcs">Assunto</div>
+                                    <div class="headcs">Urgencia</div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="bodycs"> <?= $assunto ?> </div>
+                                    <div class="bodycs"> Pode Esperar </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-lg-12">
+                        <div class="col-6 col-sm-6 col-lg-6">
                             <div class="card">
                                 <div class="card-header" style="background-color: #D3e7fb; text-align: center">
-                                    <div class="headcs">Notificação</div>
+                                    <div class="headcs">Problema</div>
                                 </div>
                                 <div class="card-body">
                                     <div class="bodycs" style=" text-align: justify">
-                                        <?= $notificacao ?>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-6 col-sm-6 col-lg-6">
+                        <div class="card">
+                  <div  class="card-header" style="background-color: #D3e7fb; text-align: center">
+                    <div class="card-head-row card-tools-still-right">
+                      <div class="card-title">Intervenções</div>
                     </div>
-                    <?php
-
-                    $query = "select * from destinatarios where NOSTAMP='" . $noti . "' and USRSTAMP='" . $uc . "' ";
-                    $e = $conn->query($query)->fetchAll();
-                    foreach ($e as $z) {
-                        $auz += 1;
-                    }
-                    if ($auz != 0) {
-                    ?>
-                        <form action="config/verbtn.php?noti=<?= $noti ?>" method="post">
-                            <?php if ($resbtn == 1) { ?>
-                                <?php if ($tpa == 2) { ?>
-                                    <div class="row">
-                                        <div class="col-3 col-sm-2 col-lg-3"></div>
-                                        <div class="col-3 col-sm-2 col-lg-3"></div>
-                                        <div class="col-3 col-sm-2 col-lg-3">
-                                            <div class="card">
-                                                <button style="padding: 0;border: none;background: none;" name="submits">
-                                                    <div class="card-header" style="background-color: #b4e8a0; text-align: center">
-                                                        <div class="headcs"><?= $sim ?></div>
-                                                    </div>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-3 col-sm-2 col-lg-3">
-                                            <div class="card">
-                                                <button style="padding: 0;border: none;background: none;" name="submitn">
-                                                    <div class="card-header" style="background-color: #f59b99; text-align: center">
-                                                        <div class="headcs"><?= $nao ?></div>
-                                                    </div>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } else { ?>
-                                    <div class="row">
-                                        <div class="col-4 col-sm-2 col-lg-4"></div>
-                                        <div class="col-4 col-sm-2 col-lg-4"></div>
-                                        <div class="col-4 col-sm-2 col-lg-4">
-                                            <div class="card">
-                                                <button style="padding: 0;border: none;background: none;" name="submitok">
-                                                    <div class="card-header" style="background-color: #b4e8a0; text-align: center">
-                                                        <div class="headcs"><?= $ok ?></div>
-                                                    </div>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                            <?php } ?>
-                        </form>
-                    <?php } ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header" style="background-color: #D3e7fb; text-align: center">
-
-                                    <h4 class="headcs">Destinatarios</h4>
-
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table
-                                            id="add-row"
-                                            class="table align-items-center mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Destinatarios</th>
-                                                    <th>Data/Hora</th>
-                                                    <th>Resposta</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                <?php foreach ($dest as $d) {
-                                                ?>
-                                                    <tr>
-                                                        <td><b><?= $d['usrcode'] ?></b></td>
-                                                        <td><?= $d['data'] ?></td>
-                                                        <td><?= $d['resposta'] ?></td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                  </div>
+                  <div class="card-body">
+                    <ol class="activity-feed">
+                      <li class="feed-item feed-item-secondary">
+                        <time class="date" datetime="9-25">Ruben</time>
+                        <span class="bodycs"
+                          ><b>Intervenção x:</b>
+                          Problema resolvido, fecho do tt</span
+                        >
+                      </li>
+                      <li class="feed-item feed-item-success">
+                        <time class="date" datetime="9-24">Eu</time>
+                        <span class="bodycs"
+                          ><b>Intervenção x:</b>
+                          Lorem ipsum odor amet, consectetuer adipiscing elit.</span
+                        >
+                      </li>
+                      <li class="feed-item feed-item-info">
+                        <time class="date" datetime="9-23">Ruben</time>
+                        <span class="bodycs"
+                          ><b>Intervenção x:</b>
+                          
+                            Lorem ipsum odor amet, consectetuer adipiscing elit.</span
+                        >
+                      </li>
+                      <li class="feed-item feed-item-warning">
+                        <time class="date" datetime="9-21">Eu</time>
+                        <span class="bodycs"
+                          ><b>Intervenção x:</b>
+                          Lorem ipsum odor amet, consectetuer adipiscing elit</span
+                        >
+                      </li>
+                      <li class="feed-item feed-item-danger">
+                        <time class="date" datetime="9-18">Ruben</time>
+                        <span class="bodycs"
+                          ><b>Intervenção x:</b>
+                          Lorem ipsum odor amet, consectetuer adipiscing elit.</span
+                        >
+                      </li>
+                      <li class="feed-item">
+                        <time class="date" datetime="9-17">Eu</time>
+                        <span class="bodycs"
+                          ><b>Intervenção x:</b>
+                         Lorem ipsum odor amet, consectetuer adipiscing elit.</span
+                        >
+                      </li>
+                    </ol>
+                  </div>
+                </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-lg-12">
                             <div class="card">
-                                <!-- rgba(227, 232, 236, 0.95) 
-                                     #D3e7fb -->
+                                <!-- rgba(227, 232, 236, 0.95) #D3e7fb -->
                                 <div class="card-header" style="background-color:#D3e7fb; text-align: center">
                                     <div class="headcs">Documentos</div>
                                 </div>

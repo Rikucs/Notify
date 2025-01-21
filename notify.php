@@ -119,6 +119,7 @@ $click = false;
                             </div>
                         </li>
                     </ul>
+                    <?php if ( $gp == 'Vendedores' || $gp == 'SI') { ?>
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
@@ -148,6 +149,7 @@ $click = false;
                             </div>
                         </li>
                     </ul>
+                    <?php } ?>
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
@@ -175,7 +177,7 @@ $click = false;
                                     </li>
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="#">
+                                        <a href="historico.php">
                                             <span class="sub-item">Historico</span>
                                         </a>
                                     </li>

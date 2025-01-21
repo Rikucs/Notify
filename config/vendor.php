@@ -6,6 +6,14 @@ include 'config copy.php';
 SESSION_START();
 $login = ucfirst($_SESSION['login']);
 
+$query = "select USRNO,USRCODE,USRGP,USRAR,USRDIR  from Utilizadores where USRCODE ='" . $login . "'";
+$useres= $conn->query($query)->fetchAll();
+foreach ($useres as $u) {
+    $uc = $u['USRNO'];
+    $gp = $u['USRGP'];
+    $udir = $u['USRDIR'];
+}
+
 $stmt = $conn->prepare("select count(*)
 from destinatarios (nolock) a join utilizadores (nolock) c on c.USRNO=a.usrstamp 
 where  USRCODE='".$login."' and data='19000101' and ldata='19000101' ");

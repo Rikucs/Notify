@@ -264,7 +264,7 @@ if (isset($_POST["submit"])) {
                                     </li>
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="#">
+                                        <a href="historico.php">
                                             <span class="sub-item">Historico</span>
                                         </a>
                                     </li>

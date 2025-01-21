@@ -8,6 +8,7 @@ $query = "select USRNO,USRCODE,USRGP,USRAR,USRDIR  from Utilizadores where USRCO
 $useres= $conn->query($query)->fetchAll();
 foreach ($useres as $u) {
     $uc = $u['USRNO'];
+    $gp = $u['USRGP'];
 }
 
 
