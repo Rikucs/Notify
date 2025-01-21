@@ -1,6 +1,6 @@
 <?php
 include 'config/tables.php';
-if (!isset ($_SESSION['login'])) {
+if (!isset($_SESSION['login'])) {
     header('Location: login/index.php');
 }
 $login = ucfirst($_SESSION['login']);
@@ -83,21 +83,22 @@ $click = false;
                     </button>
                 </div>
                 <!-- End Logo Header -->
-            </div>
+                </div>
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
                                 data-bs-toggle="collapse"
-                                href="#dashboard"
+                                href="#Notify"
                                 class="collapsed"
                                 aria-expanded="false">
-                                <i class="fas fa-home"></i>
-                                <p>Inicio</p>
+                                <i class="fa fa-bell" aria-hidden="true"></i>
+                                <p>Notify</p>
+                                <span class="badge badge-success"><?= $ns ?></span>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="dashboard">
+                            <div class="collapse" id="Notify">
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <a href="notify.php">
@@ -112,6 +113,70 @@ $click = false;
                                     <li>
                                         <a href="form.php">
                                             <span class="sub-item">Enviar Mensagem</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item">
+                            <a
+                                data-bs-toggle="collapse"
+                                href="#dashboard"
+                                class="collapsed"
+                                aria-expanded="false">
+                                <i class="fas fa-chart-area"></i>
+                                <p>Dashboard</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="dashboard">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Snapshot</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Remuneração Variavel</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item">
+                            <a
+                                data-bs-toggle="collapse"
+                                href="#TT"
+                                class="collapsed"
+                                aria-expanded="false">
+                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                                <p>Trouble Tickets</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="TT">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Abrir TT</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Abertos</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Historico</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -269,13 +334,13 @@ $click = false;
                             <i class="icon-arrow-right"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="form.php">Notify</a>
+                            <a href="#">Notify</a>
                         </li>
                         <li class="separator">
                             <i class="icon-arrow-right"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="form.php">Recebidas</a>
+                            <a href="#">Recebidas</a>
                         </li>
                     </ul>
 
@@ -292,11 +357,12 @@ $click = false;
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-title">Notificação Recebidas </div>
+                                    <div style="text-align: right;"><input type="text" id="search" placeholder="Pesquisar"></div>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
                                         <!-- Projects table -->
-                                        <table class="table align-items-center mb-0">
+                                        <table class="table align-items-center mb-0" id="table">
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th style="text-align: center;" scope="col">ID</th>
@@ -315,7 +381,7 @@ $click = false;
                                                     <tr>
                                                         <th style="text-align: center;color: rgb(106, 120, 135);" scope="row"><?= $row['notino'] ?></th>
                                                         <td style="text-align: center;color: rgb(106, 120, 135);"><?php $dn = new datetime($row['data']);
-                                                                                        echo $dn->format('d-m-Y H:i'); ?></td>
+                                                                                                                    echo $dn->format('d-m-Y H:i'); ?></td>
                                                         <td style="text-align: center;color: rgb(106, 120, 135);"><?= $row['usrcode'] ?></td>
                                                         <td style="text-align: center;color: rgb(106, 120, 135);"><?= $row['head'] ?></td>
                                                         <?php if ($row['status'] == 1) { ?>
@@ -331,7 +397,7 @@ $click = false;
                                                             <td style="text-align: center;"></td>
                                                         <?php } ?>
                                                         <td style="text-align: center;color: rgb(106, 120, 135);"><?php $dn = new datetime($row['Data']);
-                                                                                        echo $dn->format('d-m-Y H:i'); ?></td>
+                                                                                                                    echo $dn->format('d-m-Y H:i'); ?></td>
                                                         <?php if ($row['status'] > 1) { ?>
                                                             <td style="text-align: center;color: rgb(106, 120, 135);">Lida</td>
                                                         <?php } else { ?>
@@ -390,6 +456,19 @@ $click = false;
     <script src="assets/js/demo.js"></script>-->
 
     <!-- Show more table -->
+
+<script>
+var $rows = $('#table tr');
+$('#search').keyup(function() {
+    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+    
+    $rows.show().filter(function() {
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+    }).hide();
+});
+</script>
+
 
 </body>
 

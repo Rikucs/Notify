@@ -2,12 +2,12 @@
 include_once("config/config.php");
 include 'config/tables.php';
 
-if (!isset ($_SESSION['login'])) {
+if (!isset($_SESSION['login'])) {
     header('Location: login/index.php');
 }
 
 if (isset($_POST["submit"])) {
-    if ($_POST['mensagem'] != 0 && $_POST['mensagem'] != ''  && isset($_POST['users'] ) && $_POST['mensagem'] != '') {
+    if ($_POST['mensagem'] != 0 && $_POST['mensagem'] != ''  && isset($_POST['users']) && $_POST['mensagem'] != '') {
 
 
         $tpn = $_POST["tpno"];
@@ -172,21 +172,22 @@ if (isset($_POST["submit"])) {
                     </button>
                 </div>
                 <!-- End Logo Header -->
-            </div>
+                </div>
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
                                 data-bs-toggle="collapse"
-                                href="#dashboard"
+                                href="#Notify"
                                 class="collapsed"
                                 aria-expanded="false">
-                                <i class="fas fa-home"></i>
-                                <p>Inicio</p>
+                                <i class="fa fa-bell" aria-hidden="true"></i>
+                                <p>Notify</p>
+                                <span class="badge badge-success"><?= $ns ?></span>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="dashboard">
+                            <div class="collapse" id="Notify">
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <a href="notify.php">
@@ -203,9 +204,68 @@ if (isset($_POST["submit"])) {
                                             <span class="sub-item">Enviar Mensagem</span>
                                         </a>
                                     </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item">
+                            <a
+                                data-bs-toggle="collapse"
+                                href="#dashboard"
+                                class="collapsed"
+                                aria-expanded="false">
+                                <i class="fas fa-chart-area"></i>
+                                <p>Dashboard</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="dashboard">
+                                <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="fassunto.php">
-                                            <span class="sub-item">Adicionar Assunto</span>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Snapshot</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Remuneração Variavel</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item">
+                            <a
+                                data-bs-toggle="collapse"
+                                href="#TT"
+                                class="collapsed"
+                                aria-expanded="false">
+                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                                <p>Trouble Tickets</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="TT">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Abrir TT</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Abertos</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Historico</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -360,13 +420,13 @@ if (isset($_POST["submit"])) {
                                 <i class="icon-arrow-right"></i>
                             </li>
                             <li class="nav-item">
-                                <a href="form.php">Notify</a>
+                                <a href="notify.php">Notify</a>
                             </li>
                             <li class="separator">
                                 <i class="icon-arrow-right"></i>
                             </li>
                             <li class="nav-item">
-                                <a href="form.php">Enviar Mensagem</a>
+                                <a href="#">Enviar Mensagem</a>
                             </li>
                         </ul>
                     </div>
@@ -395,7 +455,7 @@ if (isset($_POST["submit"])) {
                                                     </select>
 
                                                 </div>
-                                                <div class="form-group" >
+                                                <div class="form-group">
                                                     <label for="assunto" Style="color: rgb(106, 120, 135);">Assunto</label>
                                                     <input
                                                         Style="color: rgb(106, 120, 135);"
@@ -404,7 +464,7 @@ if (isset($_POST["submit"])) {
                                                         id="assunto"
                                                         name="assunto" />
                                                 </div>
-                                                <div class="form-group" >
+                                                <div class="form-group">
                                                     <label for="mensagem" Style="color: rgb(106, 120, 135);">Texto</label>
                                                     <textarea name="mensagem" class="form-control" id="mensagem" rows="7" Style="color: rgb(106, 120, 135);"></textarea>
                                                 </div>

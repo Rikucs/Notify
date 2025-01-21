@@ -94,21 +94,22 @@ $auz = 0;
                     </button>
                 </div>
                 <!-- End Logo Header -->
-            </div>
+                </div>
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
                                 data-bs-toggle="collapse"
-                                href="#dashboard"
+                                href="#Notify"
                                 class="collapsed"
                                 aria-expanded="false">
-                                <i class="fas fa-home"></i>
-                                <p>Inicio</p>
+                                <i class="fa fa-bell" aria-hidden="true"></i>
+                                <p>Notify</p>
+                                <span class="badge badge-success"><?= $ns ?></span>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="dashboard">
+                            <div class="collapse" id="Notify">
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <a href="notify.php">
@@ -123,6 +124,70 @@ $auz = 0;
                                     <li>
                                         <a href="form.php">
                                             <span class="sub-item">Enviar Mensagem</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item">
+                            <a
+                                data-bs-toggle="collapse"
+                                href="#dashboard"
+                                class="collapsed"
+                                aria-expanded="false">
+                                <i class="fas fa-chart-area"></i>
+                                <p>Dashboard</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="dashboard">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Snapshot</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Remuneração Variavel</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item">
+                            <a
+                                data-bs-toggle="collapse"
+                                href="#TT"
+                                class="collapsed"
+                                aria-expanded="false">
+                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                                <p>Trouble Tickets</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="TT">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Abrir TT</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Abertos</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="#">
+                                            <span class="sub-item">Historico</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -154,17 +219,6 @@ $auz = 0;
                 <!-- Navbar Header -->
                 <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                     <div class="container-fluid">
-                        <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
-                            <div>
-                                <a href="notify.php" class="logo">
-                                    <img
-                                        src="assets/img/kaiadmin/notify.jpg"
-                                        alt="navbar brand"
-                                        class="navbar-brand"
-                                        height="40" />
-                                </a>
-                            </div>
-                        </nav>
 
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
 
@@ -568,6 +622,8 @@ $auz = 0;
             setInterval(fetchNotifications, 10000);
         });
     </script>
+    
+
 
 </body>
 
