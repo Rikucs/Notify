@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if (!isset ($_SESSION['login'])) {
-    header('Location: login/index.php');
+    header('Location: index.php');
 }
 
 ?>
@@ -13,7 +13,7 @@ if (!isset ($_SESSION['login'])) {
 <body>
 <center>
     <h1>Inserção de Tipos</h1>
-    <form action="teste.php" method="post">
+    <form action="addassunto.php" method="post">
         <p>
             <label for="Assunto">Assunto:</label>
             <input type="text" name="Assunto" id="Assunto">

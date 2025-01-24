@@ -1,13 +1,10 @@
 <?php
 
-include_once("config/config.php");
-include_once("config/tt.php");
-
-$date = date('d/m/Y');
-date_default_timezone_set("Europe/London");
+if (!isset($_SESSION['login'])) {
+    header('Location: ../index.php');
+}
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,11 +16,11 @@ date_default_timezone_set("Europe/London");
         name="viewport" />
     <link
         rel="icon"
-        href="assets/img/kaiadmin/favicon.png"
+        href="../assets/img/kaiadmin/favicon.png"
         type="image/x-icon" />
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
             google: {
@@ -36,23 +33,20 @@ date_default_timezone_set("Europe/London");
                     "Font Awesome 5 Brands",
                     "simple-line-icons",
                 ],
-                urls: ["assets/css/fonts.min.css"],
+                urls: ["../assets/css/fonts.min.css"],
             },
             active: function() {
                 sessionStorage.fonts = true;
             },
         });
     </script>
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
-
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="assets/css/demo.css" />
-    <script src="assets/js/multiselect-dropdown.js"></script>
     <style>
+        hr.rounded {
+            border-top: 8px solid;
+            border-radius: 5px;
+            background-color: #D3e7fb;
+        }
+
         .box {
             background-color: white;
             outline: 2px dashed black;
@@ -83,7 +77,25 @@ date_default_timezone_set("Europe/London");
         .box input {
             display: none;
         }
+
+        .show-more {
+            display: none;
+        }
+
+        .aling {
+            text-align: center;
+        }
     </style>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/custom.css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <script src="../assets/js/multiselect-dropdown.js"></script>
 </head>
 
 <body>
@@ -91,11 +103,11 @@ date_default_timezone_set("Europe/London");
         <!-- Sidebar -->
         <div class="sidebar sidebar-style-2" data-background-color="dark">
             <div class="sidebar-logo">
-                <!-- Logo Header -->
+                <!-- Logo header -->
                 <div class="logo-header" data-background-color="dark">
                     <a href="notify.php" class="logo">
                         <img
-                            src="assets/img/kaiadmin/NC.png"
+                            src="../assets/img/kaiadmin/NC.png"
                             alt="navbar brand"
                             class="navbar-brand"
                             height="40" />
@@ -112,7 +124,7 @@ date_default_timezone_set("Europe/London");
                         <i class="gg-more-vertical-alt"></i>
                     </button>
                 </div>
-                <!-- End Logo Header -->
+                <!-- End Logo header -->
             </div>
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
@@ -149,6 +161,7 @@ date_default_timezone_set("Europe/London");
                             </div>
                         </li>
                     </ul>
+
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
@@ -164,13 +177,13 @@ date_default_timezone_set("Europe/London");
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="snapshot.php">
+                                        <a href="../vendedores/snapshot.php">
                                             <span class="sub-item">Snapshot</span>
                                         </a>
                                     </li>
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="#">
+                                        <a href="../vendedores/KPI.php">
                                             <span class="sub-item">Remuneração Variavel</span>
                                         </a>
                                     </li>
@@ -178,6 +191,7 @@ date_default_timezone_set("Europe/London");
                             </div>
                         </li>
                     </ul>
+
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
@@ -205,7 +219,7 @@ date_default_timezone_set("Europe/London");
                                     </li>
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="historico.php">
+                                        <a href="../ttcs/historico.php">
                                             <span class="sub-item">Historico</span>
                                         </a>
                                     </li>
@@ -222,14 +236,15 @@ date_default_timezone_set("Europe/London");
         <div class="main-panel">
             <div class="main-header">
                 <div class="main-header-logo">
-                    <!-- Logo Header -->
+                    <!-- Logo header -->
                     <div class="logo-header" data-background-color="dark">
                         <a href="notify.php" class="logo">
-                            <img
-                                src="assets/img/kaiadmin/logo.png"
-                                alt="navbar brand"
-                                class="navbar-brand"
-                                height="40" />
+                            <!--<img
+                              src="../assets/img/kaiadmin/logo_light.svg"
+                              alt="navbar brand"
+                              class="navbar-brand"
+                              height="20"
+                          />-->
                         </a>
                         <div class="nav-toggle">
                             <button class="btn btn-toggle toggle-sidebar">
@@ -243,9 +258,9 @@ date_default_timezone_set("Europe/London");
                             <i class="gg-more-vertical-alt"></i>
                         </button>
                     </div>
-                    <!-- End Logo Header -->
+                    <!-- End Logo assuntoer -->
                 </div>
-                <!-- Navbar Header -->
+                <!-- Navbar assuntoer -->
                 <nav
                     class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                     <div class="container-fluid">
@@ -270,30 +285,32 @@ date_default_timezone_set("Europe/London");
                                     aria-labelledby="notifDropdown">
                                     <li>
                                         <div class="dropdown-title">
-                                            Tem <span><?= $ns ?></span> Notificaçoes Novas
+                                            Tem <span><?= $ns ?></span> notificações novas
                                         </div>
                                     </li>
                                     <li>
                                         <div class="notif-scroll scrollbar-outer">
                                             <div class="notif-center">
+
                                                 <?php foreach ($nosino as $sino) { ?>
                                                     <a href="ver.php?noti=<?= $sino['NOSTAMP'] ?>">
                                                         <div class="notif-img">
                                                             <img
-                                                                src="assets/img/kaiadmin/favicon.png"
+                                                                src="../assets/img/kaiadmin/favicon.png"
                                                                 alt="Img Profile" />
                                                         </div>
                                                         <div class="notif-content">
                                                             <span class="block"> NewCoffee - Notify </span>
-                                                            <span class="time">Nova Notificação de <?= $sino["usercode"] ?></span>
+                                                            <span class="time">Nova Notificação de <?= $sino["usrno"] ?></span>
                                                         </div>
                                                     </a>
                                                 <?php } ?>
+
                                             </div>
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="see-all" href="javascript:void(0);">Ver todas as notificações <i class="fa fa-angle-right"></i>
+                                        <a class="see-all" href="notify.php">Ver todas as notificações<i class="fa fa-angle-right"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -305,10 +322,7 @@ date_default_timezone_set("Europe/London");
                                     href="#"
                                     aria-expanded="false">
                                     <div class="avatar-sm">
-                                        <img
-                                            src="assets/img/profile.jpg"
-                                            alt="..."
-                                            class="avatar-img rounded-circle" />
+                                        <span class="avatar-title rounded-circle border border-white bg-danger"><?= substr($login, 0, 1); ?></span>
                                     </div>
                                     <span class="profile-username">
                                         <span class="op-7">Olá,</span>
@@ -320,10 +334,7 @@ date_default_timezone_set("Europe/London");
                                         <li>
                                             <div class="user-box">
                                                 <div class="avatar-lg">
-                                                    <img
-                                                        src="assets/img/profile.jpg"
-                                                        alt="image profile"
-                                                        class="avatar-img rounded" />
+                                                    <span class="avatar-title rounded-circle border border-white bg-danger"><?= substr($login, 0, 1); ?></span>
                                                 </div>
                                                 <div class="u-text">
                                                     <h4><?php echo $login ?></h4>
@@ -332,8 +343,8 @@ date_default_timezone_set("Europe/London");
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="notify.php">Enviadas</a>
-                                            <a class="dropdown-item" href="recebidas.php">Recebidas</a>
+                                            <a class="dropdown-item" href="enviadas.php">Enviadas</a>
+                                            <a class="dropdown-item" href="notify.php">Recebidas</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="form.php">Enviar mensagem</a>
                                             <div class="dropdown-divider"></div>
@@ -347,173 +358,3 @@ date_default_timezone_set("Europe/London");
                 </nav>
                 <!-- End Navbar -->
             </div>
-
-            <div class="container">
-                <div class="page-inner">
-                    <div class="page-header">
-                        <ul class="breadcrumbs mb-3">
-                            <li class="nav-home">
-                                <a href="notify.php">
-                                    <i class="icon-home"></i>
-                                </a>
-                            </li>
-                            <li class="separator">
-                                <i class="icon-arrow-right"></i>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#">Trouble Tickets</a>
-                            </li>
-                            <li class="separator">
-                                <i class="icon-arrow-right"></i>
-                            </li>
-                            <li class="nav-item">
-                                <a href="historico.php">Historico</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="card-title">Historico</div>
-                                </div>
-                                <div class="card-body p-0">
-                                    <div class="table-responsive">
-                                        <!-- Projects table -->
-                                        <table class="table align-items-center mb-0">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col">Dataa</th>
-                                                    <th scope="col">Urgencia</th>
-                                                    <th scope="col">Tecnico</th>
-                                                    <th scope="col">Problema</th>
-                                                    <th scope="col">Resolução</th>
-                                                    <th scope="col"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php foreach ($Dados as $row) { ?>
-                                                    <tr>
-                                                        <th scope="row"><?= date_format(date_create($row['dataa']),"d/m/Y")?></th>
-                                                        <td><?= $row['urg'] ?></td>
-                                                        <td><?= $row['tecnico'] ?></td>
-                                                        <td><?= substr($row['problema'],0,75) ?></td>
-                                                        <td><?= substr($row['resolucao'],0,50) ?></td>
-                                                        <td><a href="vertt.php"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--   Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
-
-    <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-
-    <!-- Chart JS -->
-    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
-
-    <!-- jQuery Sparkline -->
-    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
-
-    <!-- Chart Circle -->
-    <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
-
-    <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
-
-    <!-- Bootstrap Notify -->
-    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-
-    <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
-
-    <!-- Google Maps Plugin -->
-    <script src="assets/js/plugin/gmaps/gmaps.js"></script>
-
-    <!-- Sweet Alert -->
-    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-
-    <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
-
-    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="assets/js/setting-demo2.js"></script>
-    <script>
-        window.onmousedown = function(e) {
-            var el = e.target;
-            if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
-                e.preventDefault();
-
-                // toggle selection
-                if (el.hasAttribute('selected')) el.removeAttribute('selected');
-                else el.setAttribute('selected');
-
-                // hack to correct buggy behavior
-                var select = el.parentNode.cloneNode(true);
-                el.parentNode.parentNode.replaceChild(select, el.parentNode);
-            }
-        }
-    </script>
-
-    <script>
-        const box = document.querySelector('.box');
-        const fileInput = document.querySelector('[name="files[]"');
-        const selectButton = document.querySelector('label strong');
-        const fileList = document.querySelector('.file-list');
-
-        let droppedFiles = [];
-
-        ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(event => box.addEventListener(event, function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }), false);
-
-        ['dragover', 'dragenter'].forEach(event => box.addEventListener(event, function(e) {
-            box.classList.add('is-dragover');
-        }), false);
-
-        ['dragleave', 'dragend', 'drop'].forEach(event => box.addEventListener(event, function(e) {
-            box.classList.remove('is-dragover');
-        }), false);
-
-        box.addEventListener('drop', function(e) {
-            droppedFiles = e.dataTransfer.files;
-            fileInput.files = droppedFiles;
-            updateFileList();
-        }, false);
-
-        fileInput.addEventListener('change', updateFileList);
-
-        function updateFileList() {
-            const filesArray = Array.from(fileInput.files);
-            if (filesArray.length > 1) {
-                fileList.innerHTML = '<p>Ficheiros Selecionados:</p><ul><li>' + filesArray.map(f => f.name).join('</li><li>') + '</li></ul>';
-            } else if (filesArray.length == 1) {
-                fileList.innerHTML = `<p>Ficheiro Selecionados: ${filesArray[0].name}</p>`;
-            } else {
-                fileList.innerHTML = '';
-            }
-        }
-    </script>
-
-
-
-
-
-</body>
-
-</html>

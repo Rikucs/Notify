@@ -13,7 +13,7 @@ if ($ldapconn)
     if ($ldapbind)
     {
         $_SESSION["login"] = $ldaprdn;
-        header('Location: ../notify.php');
+        header('Location: ../notify/notify.php');
     }
     else
     {

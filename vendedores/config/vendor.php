@@ -1,34 +1,33 @@
 <?php
 
 include 'config.php';
-include 'config copy.php';
+include 'confignewco.php';
 
 SESSION_START();
 $login = ucfirst($_SESSION['login']);
 
-$query = "select USRNO,USRCODE,USRGP,USRAR,USRDIR  from Utilizadores where USRCODE ='" . $login . "'";
+$query = "select usrno,nome,dir  from us where nome ='" . $login . "'";
 $useres= $conn->query($query)->fetchAll();
 foreach ($useres as $u) {
-    $uc = $u['USRNO'];
-    $gp = $u['USRGP'];
-    $udir = $u['USRDIR'];
+    $uc = $u['usrno'];
+    $udir = $u['dir'];
 }
 
 $stmt = $conn->prepare("select count(*)
-from destinatarios (nolock) a join utilizadores (nolock) c on c.USRNO=a.usrstamp 
-where  USRCODE='".$login."' and data='19000101' and ldata='19000101' ");
+from dst (nolock) a join us (nolock) c on c.usrno=a.usrno 
+where  nome='".$login."' and data='19000101' and lida='19000101' ");
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 foreach ($result as $r) {
     $ns = $r;
 }
 
-$query ="select USRCODE,NOSTAMP
-from destinatarios (nolock) a join utilizadores (nolock) c on c.USRNO=a.usrstamp 
-where  USRCODE='".$login."' and data='19000101' and ldata='19000101'";
+$query ="select nome,msgno
+from dst (nolock) a join us (nolock) c on c.usrno=a.usrno 
+where  nome='".$login."' and data='19000101' and lida='19000101'";
 $nosino = $conn->query($query)->fetchAll();
 
-$query = "select * from Tipos where DSPUSR = 1";
+$query = "select * from Tipo where DSPUSR = 1";
 $dda = $conn->query($query)->fetchAll();
 
 $query = "select convert(varchar(100),a0.campo) campo ,A0.mzona,

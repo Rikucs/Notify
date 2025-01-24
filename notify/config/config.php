@@ -5,7 +5,7 @@ try
  
     $server = "10.88.1.30";
     $door = 1433;
-    $db = "Notify";
+    $db = "webPortal";
     $user = "sa";
     $password = "DEVbin3!";
 

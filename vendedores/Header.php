@@ -1,15 +1,9 @@
 <?php
-include 'config/tables.php';
+include "config/header.php";
 if (!isset($_SESSION['login'])) {
-    header('Location: login/index.php');
+    header('Location: ../index.php');
 }
-$login = ucfirst($_SESSION['login']);
-$date = date('d/m/Y');
-date_default_timezone_set("Europe/London");
-$click = false;
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,11 +15,11 @@ $click = false;
         name="viewport" />
     <link
         rel="icon"
-        href="assets/img/kaiadmin/favicon.png"
+        href="../assets/img/kaiadmin/favicon.png"
         type="image/x-icon" />
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
             google: {
@@ -38,7 +32,7 @@ $click = false;
                     "Font Awesome 5 Brands",
                     "simple-line-icons",
                 ],
-                urls: ["assets/css/fonts.min.css"],
+                urls: ["../assets/css/fonts.min.css"],
             },
             active: function() {
                 sessionStorage.fonts = true;
@@ -46,14 +40,54 @@ $click = false;
         });
     </script>
 
+    
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
-    <link rel="stylesheet" href="assets/css/custom.css" />
-
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/custom.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="assets/css/demo.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../assets/js/multiselect-dropdown.js"></script>
+
+    <style>
+        .box {
+            background-color: white;
+            outline: 2px dashed black;
+            height: 200px;
+        }
+
+        .box.is-dragover {
+            background-color: grey;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box label strong {
+            text-decoration: underline;
+            color: blue;
+            cursor: pointer;
+        }
+
+        .box label strong:hover {
+            color: blueviolet
+        }
+
+        .box input {
+            display: none;
+        }
+    </style>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 </head>
 
 <body>
@@ -65,7 +99,7 @@ $click = false;
                 <div class="logo-header" data-background-color="dark">
                     <a href="notify.php" class="logo">
                         <img
-                            src="assets/img/kaiadmin/NC.png"
+                            src="../assets/img/kaiadmin/NC.png"
                             alt="navbar brand"
                             class="navbar-brand"
                             height="40" />
@@ -83,7 +117,7 @@ $click = false;
                     </button>
                 </div>
                 <!-- End Logo Header -->
-                </div>
+            </div>
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
@@ -101,17 +135,17 @@ $click = false;
                             <div class="collapse" id="Notify">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="notify.php">
+                                        <a href="../notify/notify.php">
                                             <span class="sub-item">Recebidas</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="enviadas.php">
+                                        <a href="../notify/enviadas.php">
                                             <span class="sub-item">Enviadas</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="form.php">
+                                        <a href="../notify/form.php">
                                             <span class="sub-item">Enviar Mensagem</span>
                                         </a>
                                     </li>
@@ -119,7 +153,6 @@ $click = false;
                             </div>
                         </li>
                     </ul>
-                    <?php if ( $gp == 'Vendedores' || $gp == 'SI') { ?>
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
@@ -141,15 +174,14 @@ $click = false;
                                     </li>
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="#">
-                                            <span class="sub-item">Remuneração Variavel</span>
+                                        <a href="KPI.php">
+                                            <span class="sub-item">KPI</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                     </ul>
-                    <?php } ?>
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
@@ -177,7 +209,7 @@ $click = false;
                                     </li>
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="historico.php">
+                                        <a href="../ttcs/historico.php">
                                             <span class="sub-item">Historico</span>
                                         </a>
                                     </li>
@@ -197,12 +229,11 @@ $click = false;
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
                         <a href="notify.php" class="logo">
-                            <!--<img
-                              src="assets/img/kaiadmin/logo_light.svg"
-                              alt="navbar brand"
-                              class="navbar-brand"
-                              height="20"
-                          />-->
+                            <img
+                                src="../assets/img/kaiadmin/logo.png"
+                                alt="navbar brand"
+                                class="navbar-brand"
+                                height="40" />
                         </a>
                         <div class="nav-toggle">
                             <button class="btn btn-toggle toggle-sidebar">
@@ -243,32 +274,30 @@ $click = false;
                                     aria-labelledby="notifDropdown">
                                     <li>
                                         <div class="dropdown-title">
-                                            Tem <span><?= $ns ?></span> notificações novas
+                                            Tem <span><?= $ns ?></span> Notificaçoes Novas
                                         </div>
                                     </li>
                                     <li>
                                         <div class="notif-scroll scrollbar-outer">
                                             <div class="notif-center">
-
                                                 <?php foreach ($nosino as $sino) { ?>
-                                                    <a href="ver.php?noti=<?= $sino['NOSTAMP'] ?>">
+                                                    <a href="ver.php?noti=<?= $sino['msgno'] ?>">
                                                         <div class="notif-img">
                                                             <img
-                                                                src="assets/img/kaiadmin/favicon.png"
+                                                                src="../assets/img/kaiadmin/favicon.png"
                                                                 alt="Img Profile" />
                                                         </div>
                                                         <div class="notif-content">
                                                             <span class="block"> NewCoffee - Notify </span>
-                                                            <span class="time">Nova Notificação de <?= $sino["USRCODE"] ?></span>
+                                                            <span class="time">Nova Notificação de <?= $sino["nome"] ?></span>
                                                         </div>
                                                     </a>
                                                 <?php } ?>
-
                                             </div>
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="see-all" href="notify.php">Ver todas as notificações<i class="fa fa-angle-right"></i>
+                                        <a class="see-all" href="javascript:void(0);">Ver todas as notificações <i class="fa fa-angle-right"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -280,14 +309,11 @@ $click = false;
                                     href="#"
                                     aria-expanded="false">
                                     <div class="avatar-sm">
-                                        <img
-                                            src="assets/img/profile.jpg"
-                                            alt="..."
-                                            class="avatar-img rounded-circle" />
+                                        <span class="avatar-title rounded-circle border border-white bg-danger"><?= substr($login, 0, 1); ?></span>
                                     </div>
                                     <span class="profile-username">
                                         <span class="op-7">Olá,</span>
-                                        <span class="fw-bold"><?php echo $login ?></span>
+                                        <span class="fw-bold"><?= $login ?></span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -295,20 +321,17 @@ $click = false;
                                         <li>
                                             <div class="user-box">
                                                 <div class="avatar-lg">
-                                                    <img
-                                                        src="assets/img/profile.jpg"
-                                                        alt="image profile"
-                                                        class="avatar-img rounded" />
+                                                    <span class="avatar-title rounded-circle border border-white bg-danger"><?= substr($login, 0, 1); ?></span>
                                                 </div>
                                                 <div class="u-text">
-                                                    <h4><?php echo $login ?></h4>
+                                                    <h4><?= $login ?></h4>
                                                 </div>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="enviadas.php">Enviadas</a>
-                                            <a class="dropdown-item" href="notify.php">Recebidas</a>
+                                            <a class="dropdown-item" href="notify.php">Enviadas</a>
+                                            <a class="dropdown-item" href="recebidas.php">Recebidas</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="form.php">Enviar mensagem</a>
                                             <div class="dropdown-divider"></div>
@@ -322,156 +345,3 @@ $click = false;
                 </nav>
                 <!-- End Navbar -->
             </div>
-
-
-            <div class="container">
-                <div class="page-inner">
-                    <ul class="breadcrumbs mb-3">
-                        <li class="nav-home">
-                            <a href="notify.php">
-                                <i class="icon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="icon-arrow-right"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Notify</a>
-                        </li>
-                        <li class="separator">
-                            <i class="icon-arrow-right"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Recebidas</a>
-                        </li>
-                    </ul>
-
-                    <div
-                        class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                        <!-- btncs -->
-                        <div class="ms-md-auto py-2 py-md-0">
-                            <a href="enviadas.php" class="btn btn-round me-2 btncs">Ver mensagens enviadas</a>
-                            <a href="form.php" class="btn  btn-round btncs">Enviar uma mensagem</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="card-title">Notificação Recebidas </div>
-                                    <div style="text-align: right;"><input type="text" id="search" placeholder="Pesquisar"></div>
-                                </div>
-                                <div class="card-body p-0">
-                                    <div class="table-responsive">
-                                        <!-- Projects table -->
-                                        <table class="table align-items-center mb-0" id="table">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th style="text-align: center;" scope="col">ID</th>
-                                                    <th style="text-align: center;" scope="col">Data/Hora</th>
-                                                    <th style="text-align: center;" scope="col">Remetente</th>
-                                                    <th style="text-align: center;" scope="col">Assunto</th>
-                                                    <th style="text-align: center;" scope="col">Status</th>
-                                                    <th style="text-align: center;" scope="col"></th>
-                                                    <th style="text-align: center;" scope="col">Data/Hora</th>
-                                                    <th style="text-align: center;" scope="col">Resposta</th>
-                                                    <th style="text-align: center;" scope="col"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php foreach ($notify as $row) { ?>
-                                                    <tr>
-                                                        <th style="text-align: center;color: rgb(106, 120, 135);" scope="row"><?= $row['notino'] ?></th>
-                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?php $dn = new datetime($row['data']);
-                                                                                                                    echo $dn->format('d-m-Y H:i'); ?></td>
-                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $row['usrcode'] ?></td>
-                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $row['head'] ?></td>
-                                                        <?php if ($row['status'] == 1) { ?>
-                                                            <td style="text-align: center;"><img src="assets/img/respondido.jpg" width="40" height="40"></td>
-                                                        <?php } elseif ($row['status'] == 0) { ?>
-                                                            <td style="text-align: center;"><img src="assets/img/naorespondido.jpg" width="40" height="40"></td>
-                                                        <?php } else { ?>
-                                                            <td style="text-align: center;"><img src="assets/img/lido.jpg" width="40" height="40"></td>
-                                                        <?php } ?>
-                                                        <?php if ($row['clip'] > 0) { ?>
-                                                            <td style="text-align: center;"><img src="assets/img/clip2.png" width="35" height="35"></td>
-                                                        <?php } else { ?>
-                                                            <td style="text-align: center;"></td>
-                                                        <?php } ?>
-                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?php $dn = new datetime($row['Data']);
-                                                                                                                    echo $dn->format('d-m-Y H:i'); ?></td>
-                                                        <?php if ($row['status'] > 1) { ?>
-                                                            <td style="text-align: center;color: rgb(106, 120, 135);">Lida</td>
-                                                        <?php } else { ?>
-                                                            <td style="text-align: center;color: rgb(106, 120, 135);"><?= $row['RESP'] ?></td>
-                                                        <?php } ?>
-                                                        <td style="text-align: center;"><a href="ver.php?noti=<?= $row['notino'] ?>"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <!--   Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
-
-    <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-
-    <!-- Chart JS -->
-    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
-
-    <!-- jQuery Sparkline -->
-    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
-
-    <!-- Chart Circle -->
-    <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
-
-    <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
-
-    <!-- Bootstrap Notify -->
-    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.phpmin.js"></script>
-
-    <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
-
-    <!-- Sweet Alert
-    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>-->
-
-    <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
-
-    <!-- Kaiadmin DEMO methods, don't include it in your project!
-    <script src="assets/js/setting-demo.js"></script>
-    <script src="assets/js/demo.js"></script>-->
-
-    <!-- Show more table -->
-
-<script>
-var $rows = $('#table tr');
-$('#search').keyup(function() {
-    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-    
-    $rows.show().filter(function() {
-        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-        return !~text.indexOf(val);
-    }).hide();
-});
-</script>
-
-
-</body>
-
-</html>

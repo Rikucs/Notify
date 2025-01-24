@@ -1,9 +1,7 @@
 <?php
 include("config/config.php");
 
-if (!isset ($_SESSION['login'])) {
-    header('Location: login/index.php');
-}
+
 
 $Assunto = $_POST['Assunto'];
 $Texto = $_POST['Texto'];
@@ -20,7 +18,7 @@ $DSP = $_POST['DSP'];
 try {
 
 
-    $statement = $conn->prepare('INSERT INTO Tipos (HEAD, BODY, TPCODE, ORESP,SRESP, NRESP,TXTOK,TXTYES,TXTNO,DSPUSR)
+    $statement = $conn->prepare('INSERT INTO Tipo (assunto, texto, TPCODE, exok,exs, exn,TXTOK,txts,txtn,DSPUSR)
     VALUES (:Assunto,:Texto,:Tipo,:ok,:sim,:nao,:txtok,:txtsim,:txtnao,:dsp)');
 
     $statement->execute([
@@ -43,7 +41,7 @@ try {
     header('Location: fassunto.php');
 
 } catch(PDOException $e) {
-    echo $sql . "<br>" . $e->getMessage();
+    echo $conn . "<br>" . $e->getMessage();
 }
 
 
