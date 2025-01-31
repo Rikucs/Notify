@@ -4,9 +4,83 @@ include_once("config/config.php");
 include_once("config/vendor.php");
 include("Header.php");
 
-$date = date('d/m/Y');
 date_default_timezone_set("Europe/London");
+$y = date('Y');
+$m = date('m');
+$fy = date('Y');
 
+if (isset($_POST["submit"])) {
+    if (isset($_POST["ano"]) && $_POST['ano'] != 0 && $_POST['ano'] != '' && $_POST['ano'] != null) {
+        $y = $_POST['ano'];
+    }
+    if (isset($_POST["mes"]) && $_POST['mes'] != 0 && $_POST['mes'] != '') {
+        $m = $_POST['mes'];
+    }
+}
+
+$query = "select sum(valor)as total, mes, ano from ft where Nome= 'Avelino Soares' and ano = " . $y . " and mes <= " . $m . "  or Nome= 'Avelino Soares' and ano = " . $y - 1 . "  and mes >= " . $m . " group by mes,ano order by ano desc,mes desc";
+$graficoft = $conn->query($query)->fetchAll();
+
+$query = "select sum(valor)as total, mes, ano from obj where Nome= 'Avelino Soares' and ano = 2025 and mes <= 1 or  Nome= 'Avelino Soares' and  ano = 2024 and  mes >= 1 group by mes,ano order by ano desc,mes desc";
+$graficoobj = $conn->query($query)->fetchAll();
+
+$months = [
+    1 => 'Janeiro',
+    2 => 'Fevereiro',
+    3 => 'Março',
+    4 => 'Abril',
+    5 => 'Maio',
+    6 => 'Junho',
+    7 => 'Julho',
+    8 => 'Agosto',
+    9 => 'Setembro',
+    10 => 'Outubro',
+    11 => 'Novembro',
+    12 => 'Dezembro'
+];
+
+$auxmft = 0;
+$auxmobj = 0;
+$auxaft = 0;
+$auxaobj = 0;
+$auxn1ft = 0;
+$auxn1obj = 0;
+$auxkft = 0;
+$auxn1kft = 0;
+
+foreach ($Vft as $mft) {
+    if ($mft['Ano'] == $y and $mft['Mes'] == $m) {
+        $auxmft += $mft['Valor'];
+        $auxkft += $mft['Volume'];
+    }
+}
+foreach ($Vobj as $mobj) {
+    if ($mobj['Ano'] == $y and $mobj['Mes'] == $m) {
+        $auxmobj += $mobj['Valor'];
+    }
+}
+foreach ($Vft as $mft) {
+    if ($mft['Ano'] == $y and $mft['Mes'] <= $m) {
+        $auxaft += $mft['Valor'];
+    }
+}
+foreach ($Vobj as $mobj) {
+    if ($mobj['Ano'] == $y and $mobj['Mes'] <= $m) {
+        $auxaobj += $mobj['Valor'];
+    }
+}
+
+foreach ($Vft as $mft) {
+    if ($mft['Ano'] == $y - 1 and $mft['Mes'] == $m) {
+        $auxn1ft += $mft['Valor'];
+        $auxn1kft += $mft['Volume'];
+    }
+}
+foreach ($Vobj as $mobj) {
+    if ($mobj['Ano'] == $y - 1 and $mobj['Mes'] == $m) {
+        $auxn1obj += $mobj['Valor'];
+    }
+}
 
 ?>
 <div class="container">
@@ -39,52 +113,56 @@ date_default_timezone_set("Europe/London");
         <div class="card">
             <div class="card-header" style="text-align: center;">
                 <div class="d-flex justify-content-between">
-                    <div class="card-title">Bruno Clemente
+                    <div class="card-title">
+                        <div class="headcs" style="font-size : 25px"> <?= $login ?> </div>
                         <div class="text-info fw-bold">---------------</div>
-                        <div>Lisboa 01/2025</div>
+                        <div class="headcs" style="font-size : 25px">Paredes <?= $m ?>/<?= $y ?></div>
                         <div class="text-info fw-bold">---------------</div>
                     </div>
-                    <form>
+                    <form action="KPI.php" method="post">
                         <div class="form-group">
                             <select
+                                name="mes"
                                 class="form-select form-control-sm"
                                 id="smallSelect">
-                                <option>Janeiro</option>
-                                <option>Fevereiro</option>
-                                <option>Março</option>
-                                <option>Abril</option>
-                                <option>Maio</option>
-                                <option>Junho</option>
-                                <option>Julho</option>
-                                <option>Agosto</option>
-                                <option>Setembro</option>
-                                <option>Outubro</option>
-                                <option>Novembro</option>
-                                <option>Dezembro</option>
+                                <option value="1">Janeiro</option>
+                                <option value="2">Fevereiro</option>
+                                <option value="3">Março</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Maio</option>
+                                <option value="6">Junho</option>
+                                <option value="7">Julho</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <div class="selectgroup w-100">
                                 <label class="selectgroup-item">
                                     <input
+                                        id="oy"
                                         type="radio"
-                                        name="value"
-                                        value="2024"
+                                        name="ano"
+                                        value="<?= $fy - 1 ?>"
                                         class="selectgroup-input" />
-                                    <span class="selectgroup-button">2024</span>
+                                    <span class="selectgroup-button"><?= $fy - 1 ?></span>
                                 </label>
                                 <label class="selectgroup-item">
                                     <input
+                                        id="ty"
                                         type="radio"
-                                        name="value"
+                                        name="ano"
+                                        value="<?= $fy ?>"
                                         checked=""
-                                        value="2025"
                                         class="selectgroup-input" />
-                                    <span class="selectgroup-button">2025</span>
+                                    <span class="selectgroup-button"><?= $fy ?></span>
                                 </label>
                             </div>
                         </div>
-                        <a type="submit" classe="btn btn-round me-2 btncs">Atualizar</a>
+                        <button type="submit" name="submit" class="btn" style="background-color: #D3e7fb;">Atualizar</button>
                     </form>
                 </div>
             </div>
@@ -95,33 +173,41 @@ date_default_timezone_set("Europe/London");
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between" style="text-align: right">
-                                <div>
+                                <div class="headcs">
                                     <h4><b>Faturação</b></h4>
                                 </div>
-                                <h4 class="text-info fw-bold">75%</h4>
+                                <?php if ($auxmobj == 0) {
+                                    $ptn1 = 0;
+                                } else {
+                                    $ptn1 = round(($auxmft * 100) / $auxmobj, 2);
+                                } ?>
+                                <h4 class="text-info fw-bold"><?= $ptn1 ?>%</h4>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h5>Mês:</h5>
                                 </div>
-                                <h5>300 000€</h5>
+
+                                <h5><?= number_format($auxmft, 2, '.', ' ') ?> €</h5>
+
                             </div>
                             <div class="progress progress-sm" style="height:20px;">
                                 <div
-                                    class="progress-bar bg-info w-75"
+                                    class="progress-bar bg-info"
+                                    style=" width: <?= $ptn1 ?>%"
                                     role="progressbar"
-                                    aria-valuenow="75"
+                                    aria-valuenow="<?= $ptn1 ?>"
                                     aria-valuemin="0"
-                                    aria-valuemax="100">75%</div>
+                                    aria-valuemax="100"><?= $ptn1 ?></div>
                             </div>
                             <br>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h6>Objetivo:</h6>
                                 </div>
-                                <h6 class="text">400 000€</h6>
+                                <h6 class="text"><?= number_format($auxmobj, 2, '.', ' ') ?> €</h6>
                             </div>
                         </div>
                     </div>
@@ -130,33 +216,39 @@ date_default_timezone_set("Europe/London");
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between" style="text-align: right">
-                                <div>
+                                <div class="headcs">
                                     <h4><b>Faturação Acumulada</b></h4>
                                 </div>
-                                <h4 class="text-success fw-bold">75%</h4>
+                                <?php if ($auxaobj == 0) {
+                                    $ptn2 = 0;
+                                } else {
+                                    $ptn2 = round(($auxaft * 100) / $auxaobj, 2);
+                                } ?>
+                                <h4 class="text-success fw-bold"><?= $ptn2 ?>%</h4>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h5>Mês:</h5>
                                 </div>
-                                <h5>300 000€</h5>
+                                <h5><?= number_format($auxaft, 2, '.', ' ') ?> €</h5>
                             </div>
                             <div class="progress progress-sm" style="height:20px;">
                                 <div
-                                    class="progress-bar bg-success w-75"
+                                    class="progress-bar bg-success"
+                                    style=" width: <?= $ptn2 ?>%"
                                     role="progressbar"
-                                    aria-valuenow="75"
+                                    aria-valuenow="<?= $ptn2 ?>"
                                     aria-valuemin="0"
-                                    aria-valuemax="100">75%</div>
+                                    aria-valuemax="100"><?= $ptn2 ?></div>
                             </div>
                             <br>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h6>Objetivo:</h6>
                                 </div>
-                                <h6 class="text">400 000€</h6>
+                                <h6 class="text"><?= number_format($auxaobj, 2, '.', ' ') ?> €</h6>
                             </div>
                         </div>
                     </div>
@@ -165,33 +257,39 @@ date_default_timezone_set("Europe/London");
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between" style="text-align: right">
-                                <div>
+                                <div class="headcs">
                                     <h4><b>Faturação vs n-1 </b></h4>
                                 </div>
-                                <h4 class="text-danger fw-bold">75%</h4>
+                                <?php if ($auxn1ft == 0) {
+                                    $ptn3 = 0;
+                                } else {
+                                    $ptn3 = round(($auxmft * 100) / $auxn1ft, 2);
+                                } ?>
+                                <h4 class="text-danger fw-bold"><?= $ptn3 ?>%</h4>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h5>Mês:</h5>
                                 </div>
-                                <h5>300 000€</h5>
+                                <h5><?= number_format($auxmft, 2, '.', ' ') ?> €</h5>
                             </div>
                             <div class="progress progress-sm" style="height:20px;">
                                 <div
-                                    class="progress-bar bg-danger w-75"
+                                    class="progress-bar bg-danger"
+                                    style="width: <?= $ptn3 ?>%;"
                                     role="progressbar"
-                                    aria-valuenow="75"
+                                    aria-valuenow="<?= $ptn3 ?>"
                                     aria-valuemin="0"
-                                    aria-valuemax="100">75%</div>
+                                    aria-valuemax="100"><?= $ptn3 ?></div>
                             </div>
                             <br>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h6>Ano passado:</h6>
                                 </div>
-                                <h6 class="text">400 000€</h6>
+                                <h6 class="text"><?= number_format($auxn1ft, 2, '.', ' ') ?> €</h6>
                             </div>
                         </div>
                     </div>
@@ -200,33 +298,39 @@ date_default_timezone_set("Europe/London");
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between" style="text-align: right">
-                                <div>
+                                <div class="headcs">
                                     <h4><b>Faturação vs n-1 Kg</b></h4>
                                 </div>
-                                <h4 class="text-warning fw-bold">75%</h4>
+                                <?php if ($auxn1kft == 0) {
+                                    $ptn4 = 0;
+                                } else {
+                                    $ptn4 = round(($auxkft * 100) / $auxn1kft, 2);
+                                } ?>
+                                <h4 class="text-warning fw-bold"><?= $ptn4 ?>%</h4>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h5>Mês:</h5>
                                 </div>
-                                <h5>300 000€</h5>
+                                <h5><?= number_format($auxkft, 2, '.', ' ') ?> Kg</h5>
                             </div>
                             <div class="progress progress-sm" style="height:20px;">
                                 <div
-                                    class="progress-bar bg-warning w-75"
+                                    class="progress-bar bg-warning"
+                                    style="width: <?= $ptn4 ?>%;"
                                     role="progressbar"
-                                    aria-valuenow="75"
+                                    aria-valuenow="<?= $ptn4 ?>"
                                     aria-valuemin="0"
-                                    aria-valuemax="100">75%</div>
+                                    aria-valuemax="100"><?= $ptn4 ?></div>
                             </div>
                             <br>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h6>Ano passado:</h6>
                                 </div>
-                                <h6 class="text">400 000€</h6>
+                                <h6 class="text"><?= number_format($auxn1kft, 2, '.', ' ') ?> Kg</h6>
                             </div>
                         </div>
                     </div>
@@ -235,14 +339,14 @@ date_default_timezone_set("Europe/London");
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between" style="text-align: right">
-                                <div>
-                                    <h4><b>Conta Corrente</b></h4>
+                                <div class="headcs">
+                                    <h4><b>Conta Corrente fora do limite</b></h4>
                                 </div>
                                 <h4 class="text-secondary fw-bold">75%</h4>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h5>Valor cc:</h5>
                                 </div>
@@ -257,7 +361,7 @@ date_default_timezone_set("Europe/London");
                                     aria-valuemax="100">75%</div>
                             </div>
                             <br>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h6>Valor cc f:</h6>
                                 </div>
@@ -270,14 +374,14 @@ date_default_timezone_set("Europe/London");
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between" style="text-align: right">
-                                <div>
+                                <div class="headcs">
                                     <h4><b>PMR</b></h4>
                                 </div>
                                 <h4 class="text-primary fw-bold">75%</h4>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h5>Vendas médias:</h5>
                                 </div>
@@ -292,7 +396,7 @@ date_default_timezone_set("Europe/London");
                                     aria-valuemax="100">75%</div>
                             </div>
                             <br>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h6>CC em aberto:</h6>
                                 </div>
@@ -305,14 +409,14 @@ date_default_timezone_set("Europe/London");
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between" style="text-align: right">
-                                <div>
+                                <div class="headcs">
                                     <h4><b>Comissões</b></h4>
                                 </div>
-                                <h4 class="text-primary fw-bold">75%</h4>
+                                <h4 class="text-primary fw-bold ">75%</h4>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h5>Mês:</h5>
                                 </div>
@@ -327,7 +431,7 @@ date_default_timezone_set("Europe/London");
                                     aria-valuemax="100">75%</div>
                             </div>
                             <br>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between bodycs">
                                 <div>
                                     <h6>Objetivo:</h6>
                                 </div>
@@ -338,37 +442,39 @@ date_default_timezone_set("Europe/London");
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 col-sm-6 col-md-6 col-xl-6">
+                <div class="col-6 col-sm-6 col-lg-6">
                     <div class="card">
-                        <div class="card-body pb-0">
-                            <div class="h1 fw-bold float-end text-primary">375,15€</div>
-                            <h2 class="mb-2">Comissão media: 1,52 </h2>
-                            <p class="text-muted">Remuneração diaria</p>
-                            <div class="pull-in sparkline-fix">
-                                <div id="lineChart"></div>
+                        <div class="card-header" style="text-align: center;">
+                            <div class="card-title headcs" style="font-size: 20px;">Faturação vs Objetivo evolução do ultimo ano</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="multipleLineChart"
+                                    style="width: 50%; height: 50%"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-xl-6">
                     <div class="card">
-                        <div class="card-body pb-0">
-                            <div class="h1 fw-bold float-end text-warning">375,15€</div>
-                            <h2 class="mb-2">Comissão media: 1,52 </h2>
-                            <p class="text-muted">Remuneração diaria</p>
-                            <div class="pull-in sparkline-fix">
-                                <div id="lineChart2"></div>
+                        <div class="card-header" style="text-align: center;">
+                            <div class="card-title headcs" style="font-size: 20px;">Conta Corrente</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="barChart"
+                                    style="width: 50%; height: 50%"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-6 col-sm-6 col-md-6 col-xl-6">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-head-row card-tools-still-right">
-                                <div class="card-title">Trouble tickets</div>
+                                <div class="card-title headcs" style="font-size : 20px;">Trouble tickets</div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -407,100 +513,48 @@ date_default_timezone_set("Europe/London");
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-6 col-sm-6 col-md-6 col-xl-6">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-head-row">
-                                <div class="card-title">Notificaçãoes</div>
+                                <div class="card-title headcs" style="font-size : 20px;">Notificaçãoes</div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex">
-                                <div class="avatar">
-                                    <span
-                                        class="avatar-title rounded-circle border border-white bg-info">J</span>
-                                </div>
+
+                            <?php
+                            if ($n_count != 0) {
+                                foreach ($notify as $n) { ?>
+                                    <div class="d-flex">
+                                        <div class="avatar">
+                                            <span
+                                                class="avatar-title rounded-circle border border-white bg-danger"><?= substr($n['nome'], 0, 1) ?></span>
+                                        </div>
+                                        <div class="flex-1 ms-3 pt-1">
+                                            <h6 class="text-uppercase fw-bold mb-1">
+                                                <?= $n['nome'] ?>
+                                                <!-- Status -->
+                                                <?php if ($n['status'] == 0) { ?>
+                                                    <span class="text-warning ps-3">Por Responder</span>
+                                                <?php } elseif ($n['status'] == 2) { ?>
+                                                    <span class="text-danger ps-3">Por Abrir</span>
+                                                <?php } ?>
+                                            </h6>
+                                            <span class="text-muted"><?= $n['assunto'] ?></span>
+                                        </div>
+                                        <div class="float-end pt-1">
+                                            <small class="text-muted"><?= $n['data'] ?></small>
+                                        </div>
+                                    </div>
+                                    <div class="separator-dashed"></div>
+                                <?php }
+                            } else { ?>
                                 <div class="flex-1 ms-3 pt-1">
-                                    <h6 class="text-uppercase fw-bold mb-1">
-                                        Joko Subianto
-                                        <span class="text-warning ps-3">Lida</span>
+                                    <h6 class="text-uppercase fw-bold mb-1 bodycs">
+                                        Sem Notificações Pendentes
                                     </h6>
-                                    <span class="text-muted">I am facing some trouble with my viewport. When i
-                                        start my</span>
                                 </div>
-                                <div class="float-end pt-1">
-                                    <small class="text-muted">8:40 PM</small>
-                                </div>
-                            </div>
-                            <div class="separator-dashed"></div>
-                            <div class="d-flex">
-                                <div class="avatar">
-                                    <span
-                                        class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-                                </div>
-                                <div class="flex-1 ms-3 pt-1">
-                                    <h6 class="text-uppercase fw-bold mb-1">
-                                        Prabowo Widodo
-                                        <span class="text-success ps-3">respondida</span>
-                                    </h6>
-                                    <span class="text-muted">I have some query regarding the license issue.</span>
-                                </div>
-                                <div class="float-end pt-1">
-                                    <small class="text-muted">1 Day Ago</small>
-                                </div>
-                            </div>
-                            <div class="separator-dashed"></div>
-                            <div class="d-flex">
-                                <div class="avatar">
-                                    <span
-                                        class="avatar-title rounded-circle border border-white bg-danger">L</span>
-                                </div>
-                                <div class="flex-1 ms-3 pt-1">
-                                    <h6 class="text-uppercase fw-bold mb-1">
-                                        Lee Chong Wei
-                                        <span class="text-danger ps-3">Por Responder</span>
-                                    </h6>
-                                    <span class="text-muted">Is there any update plan for RTL version near
-                                        future?</span>
-                                </div>
-                                <div class="float-end pt-1">
-                                    <small class="text-muted">2 Days Ago</small>
-                                </div>
-                            </div>
-                            <div class="separator-dashed"></div>
-                            <div class="d-flex">
-                                <div class="avatar ">
-                                    <span
-                                        class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-                                </div>
-                                <div class="flex-1 ms-3 pt-1">
-                                    <h6 class="text-uppercase fw-bold mb-1">
-                                        Peter Parker
-                                        <span class="text-success ps-3">open</span>
-                                    </h6>
-                                    <span class="text-muted">I have some query regarding the license issue.</span>
-                                </div>
-                                <div class="float-end pt-1">
-                                    <small class="text-muted">2 Day Ago</small>
-                                </div>
-                            </div>
-                            <div class="separator-dashed"></div>
-                            <div class="d-flex">
-                                <div class="avatar">
-                                    <span
-                                        class="avatar-title rounded-circle border border-white bg-danger">L</span>
-                                </div>
-                                <div class="flex-1 ms-3 pt-1">
-                                    <h6 class="text-uppercase fw-bold mb-1">
-                                        Logan Paul <span class="text-muted ps-3">closed</span>
-                                    </h6>
-                                    <span class="text-muted">Is there any update plan for RTL version near
-                                        future?</span>
-                                </div>
-                                <div class="float-end pt-1">
-                                    <small class="text-muted">2 Days Ago</small>
-                                </div>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -551,15 +605,8 @@ date_default_timezone_set("Europe/London");
 <!-- Kaiadmin DEMO methods, don't include it in your project! -->
 <script src="../assets/js/setting-demo2.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $('.clickable').on('click', function() {
-            var content = $(this).data('content');
-            $('#myModal .modalxbody').text(content);
-            $('#myModal').modal('show');
-        });
-    });
-</script>
+
+
 
 <script>
     $("#lineChart").sparkline([39.97, 31.02, 27.11, 79.91, 9.55, 38.80, 14.19, 16.40, 23.48, 65.47, 27.09, 2.16, 31.02, 27.11, 79.91, 9.55, 38.80, 14.19, 16.40, 23.48, 65.47, 27.09, 2.16], {
@@ -577,6 +624,127 @@ date_default_timezone_set("Europe/London");
         lineWidth: "2",
         lineColor: "#ffa534",
         fillColor: "rgba(255, 165, 52, .14)",
+    });
+</script>
+<?php
+$reversedGraficoft = array_reverse($graficoft);
+$reversedGraficoobj = array_reverse($graficoobj);
+?>
+
+
+<script>
+    var multipleLineChart = document.getElementById("multipleLineChart").getContext("2d");
+    var myMultipleLineChart = new Chart(multipleLineChart, {
+        type: "line",
+        data: {
+            labels: [
+                <?php foreach ($reversedGraficoft as $row) {
+                    echo '"' . $months[$row['mes']] . '", ';
+                } ?>
+            ],
+            datasets: [{
+                    label: "Faturação",
+                    borderColor: "#1d7af3",
+                    pointBorderColor: "#FFF",
+                    pointBackgroundColor: "#1d7af3",
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 1,
+                    pointRadius: 4,
+                    backgroundColor: "transparent",
+                    fill: true,
+                    borderWidth: 2,
+                    data: [<?php foreach ($reversedGraficoft as $row) {
+                                echo $row['total'] . ', ';
+                            } ?>],
+                },
+                {
+                    label: "Objetivo",
+                    borderColor: "#59d05d",
+                    pointBorderColor: "#FFF",
+                    pointBackgroundColor: "#59d05d",
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 1,
+                    pointRadius: 4,
+                    backgroundColor: "transparent",
+                    fill: true,
+                    borderWidth: 2,
+                    data: [<?php foreach ($reversedGraficoobj as $row) {
+                                echo $row['total'] . ', ';
+                            } ?>],
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                position: "bottom",
+            },
+            tooltips: {
+                bodySpacing: 4,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest",
+                xPadding: 10,
+                yPadding: 10,
+                caretPadding: 10,
+            },
+            layout: {
+                padding: {
+                    left: 15,
+                    right: 15,
+                    top: 15,
+                    bottom: 15
+                },
+            },
+        },
+    });
+</script>
+<script>
+    var barChart = document.getElementById("barChart").getContext("2d");
+    var myBarChart = new Chart(barChart, {
+        type: "bar",
+        data: {
+            labels: [<?php foreach ($reversedGraficoft as $row) {
+                    echo '"' . $months[$row['mes']] . '", ';
+                } ?>],
+            datasets: [
+                {
+                    label: "Conta Corrente Aberta",
+                    backgroundColor: "rgb(75, 192, 192)",
+                    borderColor: "rgb(75, 192, 192)",
+                    data: [<?php foreach ($reversedGraficoft as $row) {
+                                echo $row['total'] . ', ';
+                            } ?>],
+                },
+                {
+                    label: "Conta Corrente Fechada",
+                    backgroundColor: "rgb(255, 99, 132)",
+                    borderColor: "rgb(255, 99, 132)",
+                    data: [<?php foreach ($reversedGraficoobj as $row) {
+                                echo $row['total'] . ', ';
+                            } ?>],
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                position: "bottom",
+            },
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                    },
+                ],
+            },
+        },
     });
 </script>
 

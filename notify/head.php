@@ -184,7 +184,7 @@ if (!isset($_SESSION['login'])) {
                                     <li>
                                         <!-- TO Change Link -->
                                         <a href="../vendedores/KPI.php">
-                                            <span class="sub-item">Remuneração Variavel</span>
+                                            <span class="sub-item">KPI</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -348,7 +348,7 @@ if (!isset($_SESSION['login'])) {
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="form.php">Enviar mensagem</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="login/logout.php">Sair</a>
+                                            <a class="dropdown-item" href="../login/logout.php">Sair</a>
                                         </li>
                                     </div>
                                 </ul>

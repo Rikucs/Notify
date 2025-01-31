@@ -34,7 +34,7 @@
 			<div class="wrap-login100">
 				<div class="login100-form-title" style="background-image: url(login/images/login.jpg);">
 					<span class="login100-form-title-1">
-						notify . Login
+						WebPortal . Login
 					</span>
 				</div>
 
