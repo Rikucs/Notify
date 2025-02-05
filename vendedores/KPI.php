@@ -6,7 +6,7 @@ include("Header.php");
 
 date_default_timezone_set("Europe/London");
 $y = date('Y');
-$m = date('m');
+$m = ltrim(date('m'), '0');
 $fy = date('Y');
 
 if (isset($_POST["submit"])) {
@@ -112,18 +112,18 @@ foreach ($Vobj as $mobj) {
         </div>
         <div class="card">
             <div class="card-header" style="text-align: center;">
-                <div class="d-flex justify-content-between">
-                    <div class="card-title">
-                        <div class="headcs" style="font-size : 25px"> <?= $login ?> </div>
-                        <div class="text-info fw-bold">---------------</div>
-                        <div class="headcs" style="font-size : 25px">Paredes <?= $m ?>/<?= $y ?></div>
-                        <div class="text-info fw-bold">---------------</div>
-                    </div>
-                    <form action="KPI.php" method="post">
-                        <div class="form-group">
+                <form action="KPI.php" method="post">
+                    <div class="d-flex justify-content-between">
+                        <div class="card-title d-flex align-items-center justify-content-center">
+                            <div class="headcs" style="font-size : 25px"> <?= $login ?> </div>
+                        </div>
+                        <div class="card-title d-flex align-items-center justify-content-center">
+                            <div class="headcs" style="font-size : 25px"> <?= $months[$m] ?>/<?= $y ?> </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center justify-content-center">
                             <select
                                 name="mes"
-                                class="form-select form-control-sm"
+                                class="form-select form-control"
                                 id="smallSelect">
                                 <option value="1">Janeiro</option>
                                 <option value="2">Fevereiro</option>
@@ -139,8 +139,8 @@ foreach ($Vobj as $mobj) {
                                 <option value="12">Dezembro</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <div class="selectgroup w-100">
+                        <div class="form-group d-flex align-items-center justify-content-center" style="height: 100%;">
+                            <div class="selectgroup w-100 d-flex flex-column align-items-center justify-content-cente w-100">
                                 <label class="selectgroup-item">
                                     <input
                                         id="oy"
@@ -148,7 +148,7 @@ foreach ($Vobj as $mobj) {
                                         name="ano"
                                         value="<?= $fy - 1 ?>"
                                         class="selectgroup-input" />
-                                    <span class="selectgroup-button"><?= $fy - 1 ?></span>
+                                    <span class="selectgroup-button" style="height: 100%"><?= $fy - 1 ?></span>
                                 </label>
                                 <label class="selectgroup-item">
                                     <input
@@ -158,13 +158,15 @@ foreach ($Vobj as $mobj) {
                                         value="<?= $fy ?>"
                                         checked=""
                                         class="selectgroup-input" />
-                                    <span class="selectgroup-button"><?= $fy ?></span>
+                                    <span class="selectgroup-button" style="height: 100%"><?= $fy ?></span>
                                 </label>
                             </div>
                         </div>
-                        <button type="submit" name="submit" class="btn" style="background-color: #D3e7fb;">Atualizar</button>
-                    </form>
-                </div>
+                        <div class="form-group d-flex align-items-center justify-content-center">
+                            <button type="submit" name="submit" class="btn" style="background-color: #D3e7fb;"> <i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="col-12 col-sm-12 col-lg-12 col-xl-12">
@@ -523,7 +525,7 @@ foreach ($Vobj as $mobj) {
                         <div class="card-body">
 
                             <?php
-                            if ($n_count != 0) {
+                            if ($n_count != 0 && $c != 0) {
                                 foreach ($notify as $n) { ?>
                                     <div class="d-flex">
                                         <div class="avatar">
@@ -708,10 +710,9 @@ $reversedGraficoobj = array_reverse($graficoobj);
         type: "bar",
         data: {
             labels: [<?php foreach ($reversedGraficoft as $row) {
-                    echo '"' . $months[$row['mes']] . '", ';
-                } ?>],
-            datasets: [
-                {
+                            echo '"' . $months[$row['mes']] . '", ';
+                        } ?>],
+            datasets: [{
                     label: "Conta Corrente Aberta",
                     backgroundColor: "rgb(75, 192, 192)",
                     borderColor: "rgb(75, 192, 192)",
@@ -736,13 +737,11 @@ $reversedGraficoobj = array_reverse($graficoobj);
                 position: "bottom",
             },
             scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
-                        },
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
                     },
-                ],
+                }, ],
             },
         },
     });

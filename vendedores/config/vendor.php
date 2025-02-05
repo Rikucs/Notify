@@ -29,7 +29,7 @@ $nosino = $conn->query($query)->fetchAll();
 
 $query = "select * from Tipo where DSPUSR = 1";
 $dda = $conn->query($query)->fetchAll();
-/*
+
 $query = "select convert(varchar(100),a0.campo) campo ,A0.mzona,
 isnull(a1.valor,0) Clientes,
 isnull(convert(numeric(10,0),isnull(a2.valor,0)),0) Objectivo,
@@ -81,7 +81,7 @@ left join
 where  isnull(a1.valor,0)+ isnull(a2.valor,0)+isnull(a9.factacum,0)+isnull(a5.valor,0) + isnull(a7.CC_limite,0) + isnull(a11.newcom,0) <>0
 order by cmdesc,campo";
 $Dados = $conn1->query($query)->fetchAll();
-*/
+
 $query= "select right(rtrim(valor),4) anodc,substring(valor,4,2) mesdc from para1 (nolock) where descricao ='mc_dataf'";
 $DC = $conn1->query($query)->fetchAll();
 foreach ($DC as $z){
@@ -103,5 +103,18 @@ join us (nolock) c on c.usrno=b.usrno -- receiver
 join us (nolock) e on a.usrno=e.usrno -- sender
 where  c.nome='" . $login . "'";
 $notify = $conn->query($query)->fetchAll();
+
+$query = "SELECT COUNT(b.rspt) as c
+from ntf (nolock) a join dst (nolock) b  on a.msgno=b.msgno
+join us (nolock) c on c.usrno=b.usrno -- receiver
+join us (nolock) e on a.usrno=e.usrno -- sender
+where  c.nome='" . $login . "' and b.rspt = ''";
+
+$crpt = $conn->query($query)->fetchAll();
+
+foreach( $crpt as $z ){
+    $c = $z['c'];
+}
+
 $n_count = count($notify);
 ?>
