@@ -20,7 +20,7 @@ $lida->execute();
 
 $query ="select msgno, nome ,
         iif(data<>'19000101',convert(varchar,data,104),iif(lida <> '19000101',convert(varchar,lida,104),'')) data ,
-        iif(data<>'19000101',rspt,iif(lida <> '19000101','Lida','Não lida')) resptosta  
+        iif(data<>'19000101',rspt,iif(lida <> '19000101','Lida','Não lida')) resposta  
         from dst (nolock) a join us (nolock) c on c.usrno=a.usrno -- receiver
         where msgno='".$noti."'";
 $dest = $conn->query($query)->fetchAll();

@@ -5,10 +5,10 @@ include 'config.php';
 SESSION_START();
 $login = ucfirst($_SESSION['login']);
 
-$query = "select USRNO,USRCODE,USRGP,USRAR,USRDIR  from Utilizadores where USRCODE ='" . $login . "'";
+$query = "select usrno from us where nome ='" . $login . "'";
 $useres= $conn->query($query)->fetchAll();
 foreach ($useres as $u) {
-    $uc = $u['USRNO'];
+    $uc = $u['usrno'];
 }
 
 $now = new DateTime("now", new DateTimeZone("Europe/London"));
@@ -18,21 +18,21 @@ $notis = $_GET['noti'];
 
 if (isset($_POST["submits"])) {
 
-    $query = "update destinatarios set DATA='".$dataf."',RESP = 'S' where NOSTAMP='" . $notis . "' and  USRSTAMP='" . $uc . "'";
+    $query = "update dst set DATA='".$dataf."',rspt = 'S' where msgno='" . $notis . "' and  usrno='" . $uc . "'";
     $conn->query($query);
     header('Location: ../notify.php');
 
 }
 if (isset($_POST["submitn"])) {
 
-    $query = "update destinatarios set DATA='".$dataf."',RESP = 'N' where NOSTAMP='" . $notis . "' and  USRSTAMP='" . $uc . "'";
+    $query = "update dst set DATA='".$dataf."',rspt = 'N' where msgno='" . $notis . "' and  usrno='" . $uc . "'";
     $conn->query($query);
     header('Location: ../notify.php');
 
 }
 if (isset($_POST["submitok"])) {
 
-    $query = "update destinatarios set DATA='".$dataf."',RESP = 'OK' where NOSTAMP='" . $notis . "' and  USRSTAMP='" . $uc . "'";
+    $query = "update dst set DATA='".$dataf."',rspt = 'OK' where msgno='" . $notis . "' and  usrno='" . $uc . "'";
     $conn->query($query);
     header('Location: ../notify.php');
 

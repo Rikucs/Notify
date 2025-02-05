@@ -71,7 +71,7 @@ $click = false;
                                                         <th style="text-align: center;color: rgb(106, 120, 135);" scope="row"><?= $row['msgno'] ?></th>
                                                         <td style="text-align: center;color: rgb(106, 120, 135);"><?php $dn = new datetime($row['data']);
                                                                                                                     echo $dn->format('d-m-Y H:i'); ?></td>
-                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $row['usrno'] ?></td>
+                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $row['nome'] ?></td>
                                                         <td style="text-align: center;color: rgb(106, 120, 135);"><?= $row['assunto'] ?></td>
                                                         <?php if ($row['status'] == 1) { ?>
                                                             <td style="text-align: center;"><img src="../assets/img/respondido.jpg" width="40" height="40"></td>

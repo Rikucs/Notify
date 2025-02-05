@@ -17,8 +17,8 @@ if (isset($_POST["submit"])) {
         $data = $dt->format('Y-m-d H:i:s');
 
 
-        $stmnoti = $conn->prepare("INSERT INTO Notificacoes (msgno, usrno, DATA, assunto, texto, TPCODE)
-            VALUES (:msgno,:nome,:datas,:assunto:texto,:tpcds)  ");
+        $stmnoti = $conn->prepare("INSERT INTO ntf (tpno, usrno, DATA, assunto, texto, TPCODE)
+            VALUES (:msgno,:nome,:datas,:assunto,:texto,:tpcds)  ");
 
         $stmnoti->execute([
             'msgno' => $tpn,
@@ -37,7 +37,7 @@ if (isset($_POST["submit"])) {
                 $fileData = bin2hex(file_get_contents($tmp_name)); //base64_encode(file_get_contents($tmp_name));
                 $fileName = basename($uploadedfiles['name'][$key]);
 
-                $stmfile = $conn->prepare('INSERT INTO doc (msgno, nome, DOC64)
+                $stmfile = $conn->prepare('INSERT INTO doc (msgno, nome, base64)
                     VALUES (:notiid,:filename,:file)');
 
                 $stmfile->bindParam(':notiid', $idnoti);
@@ -108,7 +108,7 @@ if (isset($_POST["submit"])) {
                                                         id="tpno"
                                                         class="form-select">
                                                         <?php foreach ($dda as $dd) { ?>
-                                                            <option value='<?= $dd['TPNO'] ?>' Style="color: rgb(106, 120, 135);"><?= $dd['HEAD'] ?></option>
+                                                            <option value='<?= $dd['tpno'] ?>' Style="color: rgb(106, 120, 135);"><?= $dd['assunto'] ?></option>
                                                         <?php } ?>
 
                                                     </select>

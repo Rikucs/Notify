@@ -72,7 +72,7 @@ $ijs = 0;
                                                 ?>
                                                     <tr>
                                                         <?php
-                                                        $query = "select msgno, usrno ,
+                                                        $query = "select msgno, nome ,
                                                                 iif(data<>'19000101',convert(varchar,data,104),iif(lida <> '19000101',convert(varchar,lida,104),'')) Data ,
                                                                 iif(data<>'19000101',rspt,iif(lida <> '19000101','Lida','Não lida')) resposta  
                                                                 from dst (nolock) a join us (nolock) c on c.USRNO=a.usrno -- receiver
@@ -111,7 +111,7 @@ $ijs = 0;
                                                     <td class="show-less" style="text-align: center;color: rgb(106, 120, 135);">---------------</td>
                                                     <td class="show-less" style="text-align: center;color: rgb(106, 120, 135);">----</td>
                                                     <td class="show-more" style="text-align: center;color: rgb(106, 120, 135);"><?php foreach ($dest as $e) {
-                                                                                                                                    echo $e['usrno'];
+                                                                                                                                    echo $e['nome'];
                                                                                                                                     echo '<br>';
                                                                                                                                 } ?> </td>
                                                     <td class="show-more" style="text-align: center;color: rgb(106, 120, 135);"><?php foreach ($dest as $e) {
@@ -125,7 +125,7 @@ $ijs = 0;
 
                                                 <?php } else { ?>
                                                     <?php foreach ($dest as $g) { ?>
-                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $g['usrno']; ?>
+                                                        <td style="text-align: center;color: rgb(106, 120, 135);"><?= $g['nome']; ?>
 
 
                                                         <td style="text-align: center;color: rgb(106, 120, 135);"><?= $g['Data'] ?></td>

@@ -8,6 +8,7 @@ $auz = 0;
 
 ?>
 
+
             <div class="container">
                 <div class="page-inner">
                     <!--<div class="page-header">
@@ -177,7 +178,7 @@ $auz = 0;
                                             if ($fileExtension == 'pdf') {
                                                 $fileName = $file['nome'];
                                                 $fileData = hex2bin($file['base64']);
-                                                $tmpFilePath = 'temp/' . $fileName;
+                                                $tmpFilePath = '../temp/' . $fileName;
                                                 file_put_contents($tmpFilePath, $fileData);
                                                 echo 'Use CTRL + Scroll para aumentar ou diminuir o zoom<br>';
                                                 echo '<iframe
@@ -213,31 +214,31 @@ $auz = 0;
     </div>
 
     <!--   Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
     <!-- Chart JS -->
-    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+    <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
 
     <!-- jQuery Sparkline -->
-    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
 
     <!-- Chart Circle -->
-    <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+    <script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
 
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- Bootstrap Notify -->
-    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.phpmin.js"></script>
+    <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.phpmin.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="../assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="../assets/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Sweet Alert
     <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>-->
