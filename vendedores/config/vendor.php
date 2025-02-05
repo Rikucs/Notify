@@ -4,6 +4,7 @@ include 'config.php';
 include 'confignewco.php';
 
 SESSION_START();
+
 $login = ucfirst($_SESSION['login']);
 
 $query = "select usrno,nome,dir  from us where nome ='" . $login . "'";
@@ -82,19 +83,6 @@ where  isnull(a1.valor,0)+ isnull(a2.valor,0)+isnull(a9.factacum,0)+isnull(a5.va
 order by cmdesc,campo";
 $Dados = $conn1->query($query)->fetchAll();
 
-$query= "select right(rtrim(valor),4) anodc,substring(valor,4,2) mesdc from para1 (nolock) where descricao ='mc_dataf'";
-$DC = $conn1->query($query)->fetchAll();
-foreach ($DC as $z){
-    $ano = $z['anodc'];
-    $mes = $z['mesdc'];
-}
-
-$query = "select * from ft where Nome= 'Avelino Soares'";
-$Vft = $conn->query($query)->fetchAll();
-
-$query = "select * from obj where Nome= 'Avelino Soares'";
-$Vobj = $conn->query($query)->fetchAll();
-
 $query = "select a.msgno,a.data,e.nome,a.assunto ,iif(b.rspt='',iif(lida<>'19000101','2','0'),'1') status,
 iif(b.data='19000101',iif(lida<>'19000101',lida,''),b.data) Data, b.rspt, 
 (select count(*) from doc (nolock) where msgno=a.msgno) clip
@@ -117,4 +105,6 @@ foreach( $crpt as $z ){
 }
 
 $n_count = count($notify);
+
+
 ?>

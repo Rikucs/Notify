@@ -99,7 +99,7 @@ if (!isset($_SESSION['login'])) {
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="notify.php" class="logo">
+                    <a href="../notify/notify.php" class="logo">
                         <img
                             src="../assets/img/kaiadmin/NC.png"
                             alt="navbar brand"
@@ -230,7 +230,7 @@ if (!isset($_SESSION['login'])) {
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="notify.php" class="logo">
+                        <a href="../notify/notify.php" class="logo">
                             <img
                                 src="../assets/img/kaiadmin/logo.png"
                                 alt="navbar brand"
@@ -332,10 +332,10 @@ if (!isset($_SESSION['login'])) {
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="notify.php">Enviadas</a>
-                                            <a class="dropdown-item" href="recebidas.php">Recebidas</a>
+                                            <a class="dropdown-item" href="../notify/notify.php">Enviadas</a>
+                                            <a class="dropdown-item" href="../notify/recebidas.php">Recebidas</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="form.php">Enviar mensagem</a>
+                                            <a class="dropdown-item" href="../notify/form.php">Enviar mensagem</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="../login/logout.php">Sair</a>
                                         </li>

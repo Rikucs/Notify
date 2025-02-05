@@ -2,27 +2,9 @@
 
 include_once("config/config.php");
 include_once("config/vendor.php");
+include("config/kpi.php");
 include("Header.php");
 
-date_default_timezone_set("Europe/London");
-$y = date('Y');
-$m = ltrim(date('m'), '0');
-$fy = date('Y');
-
-if (isset($_POST["submit"])) {
-    if (isset($_POST["ano"]) && $_POST['ano'] != 0 && $_POST['ano'] != '' && $_POST['ano'] != null) {
-        $y = $_POST['ano'];
-    }
-    if (isset($_POST["mes"]) && $_POST['mes'] != 0 && $_POST['mes'] != '') {
-        $m = $_POST['mes'];
-    }
-}
-
-$query = "select sum(valor)as total, mes, ano from ft where Nome= 'Avelino Soares' and ano = " . $y . " and mes <= " . $m . "  or Nome= 'Avelino Soares' and ano = " . $y - 1 . "  and mes >= " . $m . " group by mes,ano order by ano desc,mes desc";
-$graficoft = $conn->query($query)->fetchAll();
-
-$query = "select sum(valor)as total, mes, ano from obj where Nome= 'Avelino Soares' and ano = 2025 and mes <= 1 or  Nome= 'Avelino Soares' and  ano = 2024 and  mes >= 1 group by mes,ano order by ano desc,mes desc";
-$graficoobj = $conn->query($query)->fetchAll();
 
 $months = [
     1 => 'Janeiro',
@@ -114,11 +96,38 @@ foreach ($Vobj as $mobj) {
             <div class="card-header" style="text-align: center;">
                 <form action="KPI.php" method="post">
                     <div class="d-flex justify-content-between">
-                        <div class="card-title d-flex align-items-center justify-content-center">
-                            <div class="headcs" style="font-size : 25px"> <?= $login ?> </div>
-                        </div>
+
                         <div class="card-title d-flex align-items-center justify-content-center">
                             <div class="headcs" style="font-size : 25px"> <?= $months[$m] ?>/<?= $y ?> </div>
+                        </div>
+
+                        <div class="card-title d-flex align-items-center justify-content-center">
+                            <?php  if ($testcount != 0) { ?>
+                                <div class="headcs" style="font-size : 25px"> <?= $Vendedor ?> </div>
+                            <?php  } ?>
+                            <?php
+                            if ($udir == 'Sistemas de Informação') {
+                                $query = "SELECT DISTINCT nome from obj order by nome asc";
+                            }
+                            $select = $conn->query($query)->fetchAll();
+                            ?>
+
+                            <div class="form-group d-flex align-items-center justify-content-center">
+                                <select
+                                    name="vendedor"
+                                    class="form-select form-control"
+                                    data-live-search="true">
+                                    <option value=""><?= $login ?></option>
+
+                                    <?php
+                                    foreach ($select as $s) {
+                                    ?>
+
+                                        <option value="<?= $s['nome'] ?>"><?= $s['nome'] ?></option>
+
+                                    <?php } ?>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group d-flex align-items-center justify-content-center">
                             <select
@@ -627,7 +636,8 @@ foreach ($Vobj as $mobj) {
         lineColor: "#ffa534",
         fillColor: "rgba(255, 165, 52, .14)",
     });
-</script>
+</script>~
+
 <?php
 $reversedGraficoft = array_reverse($graficoft);
 $reversedGraficoobj = array_reverse($graficoobj);
