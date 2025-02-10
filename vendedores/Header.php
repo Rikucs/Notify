@@ -47,10 +47,9 @@ if (!isset($_SESSION['login'])) {
     <link rel="stylesheet" href="../assets/css/plugins.min.css" />
     <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="../assets/css/custom.css" />
-    
+  
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="../assets/css/demo.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="../assets/js/multiselect-dropdown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -85,6 +84,8 @@ if (!isset($_SESSION['login'])) {
         .box input {
             display: none;
         }
+
+        
     </style>
 
 

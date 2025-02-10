@@ -7,10 +7,6 @@ date_default_timezone_set("Europe/London");
 $click = false;
 ?>
 
-
-
-
-
             <div class="container">
                 <div class="page-inner">
                     <ul class="breadcrumbs mb-3">
@@ -36,9 +32,9 @@ $click = false;
                     <div
                         class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                         <!-- btncs -->
-                        <div class="ms-md-auto py-4 py-md-4">
+                        <div class="ms-md-auto py-4 py-md-4 ">
                             <a href="enviadas.php" class="btn btn-round me-2 btncs">Ver mensagens enviadas</a>
-                            <a href="form.php" class="btn  btn-round btncs">Enviar uma mensagem</a>
+                            <a href="form.php" class="btn  btn-round me-2 btncs">Enviar uma mensagem</a>
                         </div>
 
                     </div>
@@ -141,17 +137,17 @@ $click = false;
 
     <!-- Show more table -->
 
-<script>
-var $rows = $('#table tr');
-$('#search').keyup(function() {
-    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-    
-    $rows.show().filter(function() {
-        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-        return !~text.indexOf(val);
-    }).hide();
-});
-</script>
+    <script>
+        var $rows = $('#table tr');
+        $('#search').keyup(function() {
+            var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+            
+            $rows.show().filter(function() {
+                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                return !~text.indexOf(val);
+            }).hide();
+        });
+    </script>
 
 
 </body>

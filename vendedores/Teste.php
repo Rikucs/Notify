@@ -67,76 +67,23 @@ foreach ($Vobj as $mobj) {
 ?>
 <div class="container">
     <div class="page-inner">
-        <div class="card">
-            <div class="card-header">
-                <form  action="KPI.php" method="post">
-                    <?php
-                    if ($udir == 'Sistemas de Informação') {
-                        $query = "SELECT nome from us where vnd > 0 order by nome asc";
-                    }
-                    $select = $conn->query($query)->fetchAll();
-                    ?>
-                    <div class="form-group">
-                        <select name="vendedor[]"
-                            id="multiselect"
-                            class="form-control"
-                            size="0"
-                            multiple="multiple"
-                            multiselect-search="true"
-                            multiselect-select-all="true"
-                            required>
-                            <?php foreach ($select as $s) {
-                            ?>
-                                <option value=" <?= $s['nome'] ?> " Style="color: rgb(106, 120, 135);"> <?= $s['nome'] ?></option>';
-
-                            <?php } ?>
-                        </select>
-                        </select>
+        <main>
+            <div class="card">
+                <div class="card-title d-flex align-items-center justify-content-center">
+                    <div class="card-header" style="text-align: center;">
+                        <div class="headcs" style="font-size : 25px"><?= $login ?> <?= $months[$m] ?>/<?= $y ?> </div>
                     </div>
-                    <div class="form-group">
-                        <select
-                            name="mes"
-                            class="form-select form-control"
-                            id="smallSelect">
-                            <?php for ($i = 1; $i <= count($months); $i++) { ?>
-                                <option value="<?= $i ?>" <?php if ($i == $m) { ?> selected <?php } ?>><?= $months[$i] ?></option>
-                            <?php } ?>
-                        </select>
+                    <div>
+                        <!-- Modal Button -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">
+                            Open Form Modal
+                        </button>
                     </div>
-                    <div class="form-group " style="height: 100%;">
-                        <div class="selectgroup w-100">
-                            <label class="selectgroup-item">
-                                <input
-                                    id="oy"
-                                    type="radio"
-                                    name="ano"
-                                    value="<?= $fy - 1 ?>"
-                                    <?php if ($fy - 1 == $y) {  ?>
-                                    checked=""
-                                    <?php } ?>
-                                    class="selectgroup-input" />
-                                <span class="selectgroup-button" style="height: 100%"><?= $fy - 1 ?></span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input
-                                    id="ty"
-                                    type="radio"
-                                    name="ano"
-                                    value="<?= $fy ?>"
-                                    <?php if ($fy == $y) {  ?>
-                                    checked=""
-                                    <?php } ?>
-                                    class="selectgroup-input" />
-                                <span class="selectgroup-button" style="height: 100%"><?= $fy ?></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" id="submit" name="submit" class="btn" style="background-color: #D3e7fb;"> <i class="fas fa-sync-alt"></i></button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
+        </main>
+        
+
         <div class="col-12 col-sm-12 col-lg-12 col-xl-12">
             <div class="row">
                 <div class="col-3 col-sm-6 col-lg-6 col-xl-3">
@@ -535,8 +482,78 @@ foreach ($Vobj as $mobj) {
 </div>
 </div>
 
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="formModalLabel">Form Modal</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="Teste.php" method="post" enctype="multipart/form-data">
+                            <div class="card-title d-flex align-items-center justify-content-center">
+                                <?php
+                                if ($udir == 'Sistemas de Informação') {
+                                    $query = "SELECT nome from us where vnd > 0 order by nome asc";
+                                }
+                                $select = $conn->query($query)->fetchAll();
+                                ?>
+                                <div class="form-group d-flex align-items-center">
+                                    <select name="users[]"
+                                        id="multiselect"
+                                        class="form-control"
+                                        size="0"
+                                        multiple="multiple"
+                                        multiselect-search="true"
+                                        multiselect-select-all="true"
+                                        required>
+                                        <?php foreach ($select as $s) { ?>
+                                            <option value='<?= $s['nome'] ?>' style="color: rgb(106, 120, 135);"><?= $s['nome'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group d-flex align-items-center justify-content-center">
+                                <select name="mes" class="form-select form-control" id="smallSelect">
+                                    <option value="1">Janeiro</option>
+                                    <option value="2">Fevereiro</option>
+                                    <option value="3">Março</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Maio</option>
+                                    <option value="6">Junho</option>
+                                    <option value="7">Julho</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Setembro</option>
+                                    <option value="10">Outubro</option>
+                                    <option value="11">Novembro</option>
+                                    <option value="12">Dezembro</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="height: 100%;">
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item">
+                                        <input id="oy" type="radio" name="ano" value="<?= $fy - 1 ?>" class="selectgroup-input" />
+                                        <span class="selectgroup-button" style="height: 100%"><?= $fy - 1 ?></span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input id="ty" type="radio" name="ano" value="<?= $fy ?>" checked="" class="selectgroup-input" />
+                                        <span class="selectgroup-button" style="height: 100%"><?= $fy ?></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group d-flex align-items-center justify-content-center">
+                                <button type="submit" name="submit" class="btn" style="background-color: #D3e7fb;"> <i class="fas fa-sync-alt"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 <!--   Core JS Files   -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
 <script src="../assets/js/core/popper.min.js"></script>
 <script src="../assets/js/core/bootstrap.min.js"></script>
@@ -575,6 +592,9 @@ foreach ($Vobj as $mobj) {
 <!-- Kaiadmin DEMO methods, don't include it in your project! -->
 <script src="../assets/js/setting-demo2.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 
@@ -732,6 +752,7 @@ $reversedGraficoobj = array_reverse($graficoobj);
         }
     }
 </script>
+
 
 </body>
 
