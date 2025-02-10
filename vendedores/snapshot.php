@@ -277,6 +277,7 @@ $months = [
 
 <!-- Kaiadmin DEMO methods, don't include it in your project! -->
 <script src="../assets/js/setting-demo2.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <script>
     $(document).ready(function() {

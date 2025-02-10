@@ -6,6 +6,8 @@ include("config/kpi.php");
 include("Header.php");
 
 
+
+
 $months = [
     1 => 'Janeiro',
     2 => 'Fevereiro',
@@ -64,33 +66,34 @@ foreach ($Vobj as $mobj) {
     }
 }
 
+
+if ($udir == 'Sistemas de Informação') {
+    $query = "SELECT * from us where vnd > 0 order by nome asc";
+} else {
+    $query = "SELECT * FROM dbo.subordinados($vnd) order by nivel asc";
+}
+$select = $conn->query($query)->fetchAll();
+
+
 ?>
 <div class="container">
     <div class="page-inner">
         <div class="card">
             <div class="card-header">
-                <form  action="KPI.php" method="post">
-                    <?php
-                    if ($udir == 'Sistemas de Informação') {
-                        $query = "SELECT nome from us where vnd > 0 order by nome asc";
-                    }
-                    $select = $conn->query($query)->fetchAll();
-                    ?>
+                <form action="KPI.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <select name="vendedor[]"
                             id="multiselect"
                             class="form-control"
-                            size="0"
+                            size="10"
                             multiple="multiple"
                             multiselect-search="true"
                             multiselect-select-all="true"
                             required>
                             <?php foreach ($select as $s) {
                             ?>
-                                <option value=" <?= $s['nome'] ?> " Style="color: rgb(106, 120, 135);"> <?= $s['nome'] ?></option>';
-
+                                <option value=' <?= $s['nome'] ?> ' Style="color: rgb(106, 120, 135);"> <?= $s['nome'] ?></option>';
                             <?php } ?>
-                        </select>
                         </select>
                     </div>
                     <div class="form-group">
@@ -132,7 +135,7 @@ foreach ($Vobj as $mobj) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" id="submit" name="submit" class="btn" style="background-color: #D3e7fb;"> <i class="fas fa-sync-alt"></i></button>
+                        <button type="submit" name="submit" class="btn" style="background-color: #D3e7fb;"><i class="fas fa-sync-alt"></i></button>
                     </div>
                 </form>
             </div>
@@ -535,6 +538,8 @@ foreach ($Vobj as $mobj) {
 </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="../assets/js/multiselect-dropdown.js"></script>
 
 <!--   Core JS Files   -->
 <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
@@ -575,8 +580,22 @@ foreach ($Vobj as $mobj) {
 <!-- Kaiadmin DEMO methods, don't include it in your project! -->
 <script src="../assets/js/setting-demo2.js"></script>
 
+<script>
+    window.onmousedown = function(e) {
+        var el = e.target;
+        if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+            e.preventDefault();
 
+            // toggle selection
+            if (el.hasAttribute('selected')) el.removeAttribute('selected');
+            else el.setAttribute('selected');
 
+            // hack to correct buggy behavior
+            var select = el.parentNode.cloneNode(true);
+            el.parentNode.parentNode.replaceChild(select, el.parentNode);
+        }
+    }
+</script>
 
 <script>
     $("#lineChart").sparkline([39.97, 31.02, 27.11, 79.91, 9.55, 38.80, 14.19, 16.40, 23.48, 65.47, 27.09, 2.16, 31.02, 27.11, 79.91, 9.55, 38.80, 14.19, 16.40, 23.48, 65.47, 27.09, 2.16], {
@@ -595,7 +614,7 @@ foreach ($Vobj as $mobj) {
         lineColor: "#ffa534",
         fillColor: "rgba(255, 165, 52, .14)",
     });
-</script>~
+</script>
 
 <?php
 $reversedGraficoft = array_reverse($graficoft);
@@ -716,22 +735,7 @@ $reversedGraficoobj = array_reverse($graficoobj);
     });
 </script>
 
-<script>
-    window.onmousedown = function(e) {
-        var el = e.target;
-        if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
-            e.preventDefault();
 
-            // toggle selection
-            if (el.hasAttribute('selected')) el.removeAttribute('selected');
-            else el.setAttribute('selected');
-
-            // hack to correct buggy behavior
-            var select = el.parentNode.cloneNode(true);
-            el.parentNode.parentNode.replaceChild(select, el.parentNode);
-        }
-    }
-</script>
 
 </body>
 

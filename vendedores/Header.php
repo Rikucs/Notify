@@ -41,17 +41,6 @@ if (!isset($_SESSION['login'])) {
     </script>
     
 
-    
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
-    <link rel="stylesheet" href="../assets/css/custom.css" />
-  
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="../assets/css/demo.css" />
-    <script src="../assets/js/multiselect-dropdown.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         .box {
@@ -88,9 +77,17 @@ if (!isset($_SESSION['login'])) {
         
     </style>
 
-
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
+ <!-- CSS Files -->
+ <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/custom.css" />
+  
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+    
+  
+   
 </head>
 
 <body>
