@@ -105,7 +105,7 @@ if (!isset($_SESSION['login'])) {
             <div class="sidebar-logo">
                 <!-- Logo header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="notify.php" class="logo">
+                    <a href="../notify/notify.php" class="logo">
                         <img
                             src="../assets/img/kaiadmin/NC.png"
                             alt="navbar brand"
@@ -143,17 +143,17 @@ if (!isset($_SESSION['login'])) {
                             <div class="collapse" id="Notify">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="notify.php">
+                                        <a href="../notify/notify.php">
                                             <span class="sub-item">Recebidas</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="enviadas.php">
+                                        <a href="../notify/enviadas.php">
                                             <span class="sub-item">Enviadas</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="form.php">
+                                        <a href="../notify/form.php">
                                             <span class="sub-item">Enviar Mensagem</span>
                                         </a>
                                     </li>
@@ -207,13 +207,13 @@ if (!isset($_SESSION['login'])) {
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="../ttcs/abrirtt.php">
+                                        <a href="abrirtt.php">
                                             <span class="sub-item">Abrir TT</span>
                                         </a>
                                     </li>
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="../ttcs/abertos.php">
+                                        <a href="abertos.php">
                                             <span class="sub-item">Abertos</span>
                                         </a>
                                     </li>

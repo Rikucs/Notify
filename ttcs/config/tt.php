@@ -30,6 +30,9 @@ $query = "select * from tipo where DSPUSR = 1";
 $dda = $conn->query($query)->fetchAll();
 
 $query = "SELECT dataa,urg,tecnico,problema,resolucao from u_tt (nolock) where quem = '".$login."' order by dataa desc";
-$Dados = $conn1->query($query)->fetchAll();
+$historico = $conn1->query($query)->fetchAll();
+
+$query = "SELECT dataa,urg,tecnico,problema,resolucao from u_tt (nolock) where dataf= '1900-01-01' and quem = '".$login."' order by dataa desc";
+$abertos = $conn1->query($query)->fetchAll();
 
 ?>

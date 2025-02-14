@@ -43,6 +43,18 @@ if (!isset($_SESSION['login'])) {
 
 
     <style>
+        
+        #left, #right {
+            width: 40%;
+            margin:5px;
+            padding: 1em;
+            background: white;
+        }
+
+        #left  { float:left;  }
+        #right { float:right; }
+
+    
         .box {
             background-color: white;
             outline: 2px dashed black;
@@ -168,17 +180,18 @@ if (!isset($_SESSION['login'])) {
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="snapshot.php">
-                                            <span class="sub-item">Snapshot</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <!-- TO Change Link -->
                                         <a href="KPI.php">
                                             <span class="sub-item">KPI</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="snapshot.php">
+                                            <span class="sub-item">Snapshot</span>
+                                        </a>
+                                    </li>
                                 </ul>
+                                
                             </div>
                         </li>
                     </ul>
@@ -197,27 +210,31 @@ if (!isset($_SESSION['login'])) {
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="#">
+                                        <a href="../ttcs/abrirtt.php">
                                             <span class="sub-item">Abrir TT</span>
                                         </a>
                                     </li>
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="#">
+                                        <a href="../ttcs/abertos.php">
                                             <span class="sub-item">Abertos</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <!-- TO Change Link -->
-                                        <a href="../ttcs/historico.php">
-                                            <span class="sub-item">Historico</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                     </ul>
-
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item">
+                            <a
+                                href="../ExternalLinks/Hub.php"
+                                class="collapsed"
+                                aria-expanded="false">
+                                <i class="fab fa-cloudversify" aria-hidden="true"></i>
+                                <p>External Links Hub</p>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

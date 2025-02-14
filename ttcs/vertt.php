@@ -1,8 +1,8 @@
 <?php
 include 'config/tt.php';
-include 'Header.php';
+
 if (!isset($_SESSION['login'])) {
-    header('Location: index.php');
+    header('Location: ../index.php');
 }
 
 $auz = 0;
@@ -20,11 +20,11 @@ $auz = 0;
         name="viewport" />
     <link
         rel="icon"
-        href="assets/img/kaiadmin/favicon.png"
+        href="../assets/img/kaiadmin/favicon.png"
         type="image/x-icon" />
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
             google: {
@@ -37,7 +37,7 @@ $auz = 0;
                     "Font Awesome 5 Brands",
                     "simple-line-icons",
                 ],
-                urls: ["assets/css/fonts.min.css"],
+                urls: ["../assets/css/fonts.min.css"],
             },
             active: function() {
                 sessionStorage.fonts = true;
@@ -57,11 +57,11 @@ $auz = 0;
 
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/custom.css" />
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
-    <link rel="stylesheet" href="assets/css/custom.css" />
+    <link rel="stylesheet" href="../assets/css/custom.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/custom.css" />
 
 </head>
 
@@ -72,9 +72,9 @@ $auz = 0;
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="notify.php" class="logo">
+                    <a href="../notify/notify.php" class="logo">
                         <img
-                            src="assets/img/kaiadmin/NC.png"
+                            src="../assets/img/kaiadmin/NC.png"
                             alt="navbar brand"
                             class="navbar-brand"
                             height="40" />
@@ -110,17 +110,17 @@ $auz = 0;
                             <div class="collapse" id="Notify">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="notify.php">
+                                        <a href="../notify/notify.php">
                                             <span class="sub-item">Recebidas</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="enviadas.php">
+                                        <a href="../notify/enviadas.php">
                                             <span class="sub-item">Enviadas</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="form.php">
+                                        <a href="../notify/form.php">
                                             <span class="sub-item">Enviar Mensagem</span>
                                         </a>
                                     </li>
@@ -143,14 +143,14 @@ $auz = 0;
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="snapshot.php">
-                                            <span class="sub-item">Snapshot</span>
+                                        <a href="../vendedor/KPI.php">
+                                            <span class="sub-item">KPI</span>
                                         </a>
                                     </li>
                                     <li>
                                         <!-- TO Change Link -->
-                                        <a href="#">
-                                            <span class="sub-item">Remuneração Variavel</span>
+                                        <a href="../vendedor/snapshot.php">
+                                            <span class="sub-item">Snapshot</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -192,7 +192,41 @@ $auz = 0;
                             </div>
                         </li>
                     </ul>
-
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item">
+                            <a
+                                data-bs-toggle="collapse"
+                                href="#Outros"
+                                class="collapsed"
+                                aria-expanded="false">
+                                <i class="fab fa-cloudversify" aria-hidden="true"></i>
+                                <p>Aplicações Externas</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="Outros">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="https://books.newcoffee.pt/login">
+                                            <span class="sub-item">Books Online</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="https://nextcloud.newcoffee.pt">
+                                            <span class="sub-item">NextCloud</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <!-- TO Change Link -->
+                                        <a href="https://mudarpassword.newcoffee.pt">
+                                            <span class="sub-item">Mudar Password</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -203,9 +237,9 @@ $auz = 0;
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="notify.php" class="logo">
+                        <a href="../notify/notify.php" class="logo">
                             <!--<img
-                              src="assets/img/kaiadmin/logo_light.svg"
+                              src="../assets/img/kaiadmin/logo_light.svg"
                               alt="navbar brand"
                               class="navbar-brand"
                               height="20"
@@ -247,7 +281,7 @@ $auz = 0;
                                                     <a href="ver.php?noti=<?= $sino['NOSTAMP'] ?>">
                                                         <div width="170" height="40">
                                                             <img
-                                                                src="assets/img/kaiadmin/favicon.png"
+                                                                src="../assets/img/kaiadmin/favicon.png"
                                                                 width="170"
                                                                 height="40"
                                                                 alt="Img Profile" />
@@ -262,7 +296,7 @@ $auz = 0;
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="see-all" href="notify.php">Ver todas as notificações<i class="fa fa-angle-right"></i>
+                                        <a class="see-all" href="../notify/notify.php">Ver todas as notificações<i class="fa fa-angle-right"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -275,7 +309,7 @@ $auz = 0;
                                     aria-expanded="false">
                                     <div class="avatar-sm">
                                         <img
-                                            src="assets/img/profile.jpg"
+                                            src="../assets/img/profile.jpg"
                                             alt="..."
                                             class="avatar-img rounded-circle" />
                                     </div>
@@ -297,12 +331,12 @@ $auz = 0;
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="enviadas.php">Enviadas</a>
-                                            <a class="dropdown-item" href="notify.php">Recebidas</a>
+                                            <a class="dropdown-item" href="../notify/enviadas.php">Enviadas</a>
+                                            <a class="dropdown-item" href="../notify/notify.php">Recebidas</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="form.php">Enviar mensagem</a>
+                                            <a class="dropdown-item" href="../notify/form.php">Enviar mensagem</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="login/logout.php">Sair</a>
+                                            <a class="dropdown-item" href="../login/logout.php">Sair</a>
                                         </li>
                                     </div>
                                 </ul>
@@ -480,41 +514,41 @@ $auz = 0;
     </div>
 
     <!--   Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
     <!-- Chart JS -->
-    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+    <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
 
     <!-- jQuery Sparkline -->
-    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
 
     <!-- Chart Circle -->
-    <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+    <script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
 
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- Bootstrap Notify -->
-    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.phpmin.js"></script>
+    <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.phpmin.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="../assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="../assets/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Sweet Alert
-    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>-->
+    <script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>-->
 
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="../assets/js/kaiadmin.min.js"></script>
 
     <!-- Kaiadmin DEMO methods, don't include it in your project!
-    <script src="assets/js/setting-demo.js"></script>
-    <script src="assets/js/demo.js"></script>-->
+    <script src="../assets/js/setting-demo.js"></script>
+    <script src="../assets/js/demo.js"></script>-->
 
     <!-- Show more table -->
     <script>

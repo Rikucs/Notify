@@ -5,9 +5,6 @@ include_once("config/vendor.php");
 include("config/kpi.php");
 include("Header.php");
 
-
-
-
 $months = [
     1 => 'Janeiro',
     2 => 'Fevereiro',
@@ -23,6 +20,11 @@ $months = [
     12 => 'Dezembro'
 ];
 
+$auxccvencida =0;
+$auxccaberta =0;
+$auxcrvvl = 0;
+$auxcrvcom = 0;
+$auxcrv = 0;
 $auxmft = 0;
 $auxmobj = 0;
 $auxaft = 0;
@@ -66,11 +68,26 @@ foreach ($Vobj as $mobj) {
     }
 }
 
+foreach ($crv as $kcrv){
+    if ($kcrv['Ano'] == $y - 1 and $kcrv['Mes'] == $m) {
+        $auxcrvcom += $kcrv['comissionavel'];
+        $auxcrv += $kcrv['comissao'];
+        $auxcrvvl += $krcv['Valor'];
+    }
+}
+
+foreach ($CC as $c){
+
+        $auxccaberta += $c['ccaberta'];
+        $auxccvencida += $c['n_vencida'];
+        
+}
+
 
 if ($udir == 'Sistemas de Informação') {
-    $query = "SELECT * from us where vnd > 0 order by nome asc";
+    $query = "SELECT * FROM dbo.vndteams(9) order by 4 ";
 } else {
-    $query = "SELECT * FROM dbo.subordinados($vnd) order by nivel asc";
+    $query = "SELECT * FROM dbo.vndteams($vnd) order by 4 ";
 }
 $select = $conn->query($query)->fetchAll();
 
@@ -78,66 +95,91 @@ $select = $conn->query($query)->fetchAll();
 ?>
 <div class="container">
     <div class="page-inner">
-        <div class="card">
-            <div class="card-header">
-                <form action="KPI.php" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <select name="vendedor[]"
-                            id="multiselect"
-                            class="form-control"
-                            size="10"
-                            multiple="multiple"
-                            multiselect-search="true"
-                            multiselect-select-all="true"
-                            required>
-                            <?php foreach ($select as $s) {
-                            ?>
-                                <option value=' <?= $s['nome'] ?> ' Style="color: rgb(106, 120, 135);"> <?= $s['nome'] ?></option>';
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select
-                            name="mes"
-                            class="form-select form-control"
-                            id="smallSelect">
-                            <?php for ($i = 1; $i <= count($months); $i++) { ?>
-                                <option value="<?= $i ?>" <?php if ($i == $m) { ?> selected <?php } ?>><?= $months[$i] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group " style="height: 100%;">
-                        <div class="selectgroup w-100">
-                            <label class="selectgroup-item">
-                                <input
-                                    id="oy"
-                                    type="radio"
-                                    name="ano"
-                                    value="<?= $fy - 1 ?>"
-                                    <?php if ($fy - 1 == $y) {  ?>
-                                    checked=""
-                                    <?php } ?>
-                                    class="selectgroup-input" />
-                                <span class="selectgroup-button" style="height: 100%"><?= $fy - 1 ?></span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input
-                                    id="ty"
-                                    type="radio"
-                                    name="ano"
-                                    value="<?= $fy ?>"
-                                    <?php if ($fy == $y) {  ?>
-                                    checked=""
-                                    <?php } ?>
-                                    class="selectgroup-input" />
-                                <span class="selectgroup-button" style="height: 100%"><?= $fy ?></span>
-                            </label>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <form action="KPI.php" method="post" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group" style="top:50%;">
+                                        <select name="vendedor[]"
+                                            id="multiselect"
+                                            class="form-select form-control"
+                                            size="10"
+                                            multiple="multiple"
+                                            multiselect-search="true"
+                                            multiselect-select-all="true"
+                                            required>
+                                            <?php foreach ($select as $s) {
+
+                                            ?>
+                                                <option value=' <?= $s['nome'] ?> ' Style="color: rgb(106, 120, 135);"> <?= $s['caminho'] ?></option>';
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 col-lg-2">
+                                    <div class="form-group">
+                                        <select
+                                            name="mes"
+                                            class="form-select form-control"
+                                            id="smallSelect">
+                                            <?php for ($i = 1; $i <= count($months); $i++) { ?>
+                                                <option value="<?= $i ?>" <?php if ($i == $m) { ?> selected <?php } ?>><?= $months[$i] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-lg-3">
+                                    <div class="form-group " style=" top:50%;">
+                                        <div class="selectgroup w-100">
+                                            <label class="selectgroup-item">
+                                                <input
+                                                    id="oy"
+                                                    type="radio"
+                                                    name="ano"
+                                                    value="<?= $fy - 1 ?>"
+                                                    <?php if ($fy - 1 == $y) {  ?>
+                                                    checked=""
+                                                    <?php } ?>
+                                                    class="selectgroup-input" />
+                                                <span class="selectgroup-button" style="height: 100%"><?= $fy - 1 ?></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input
+                                                    id="ty"
+                                                    type="radio"
+                                                    name="ano"
+                                                    value="<?= $fy ?>"
+                                                    <?php if ($fy == $y) {  ?>
+                                                    checked=""
+                                                    <?php } ?>
+                                                    class="selectgroup-input" />
+                                                <span class="selectgroup-button" style="height: 100%"><?= $fy ?></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 col-lg-1">
+                                    <div class="form-group" style=" top:50%;">
+                                        <button type="submit" name="submit" class="btn" style="background-color: #D3e7fb;"><i class="fas fa-sync-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" name="submit" class="btn" style="background-color: #D3e7fb;"><i class="fas fa-sync-alt"></i></button>
-                    </div>
-                </form>
+                    </form>
+                    <?php if (isset($vendnr)) { ?>
+                        <div class="card-title" style="text-align:left; padding-left: 2.5%;">
+                            <div class="headcs">
+                                <h4><b><?php foreach ($vendnr as $vnr) {
+                                            echo ' > ' . $vnr['nome'];
+                                        } ?></b></h4>
+                            </div>
+                        </div>
+                    <?php  } ?>
+                </div>
             </div>
         </div>
         <div class="col-12 col-sm-12 col-lg-12 col-xl-12">
@@ -231,7 +273,7 @@ $select = $conn->query($query)->fetchAll();
                         <div class="card-header">
                             <div class="d-flex justify-content-between" style="text-align: right">
                                 <div class="headcs">
-                                    <h4><b>Faturação vs n-1 </b></h4>
+                                    <h4><b>Faturação em Valor </b></h4>
                                 </div>
                                 <?php if ($auxn1ft == 0) {
                                     $ptn3 = 0;
@@ -260,7 +302,7 @@ $select = $conn->query($query)->fetchAll();
                             <br>
                             <div class="d-flex justify-content-between bodycs">
                                 <div>
-                                    <h6>Ano passado:</h6>
+                                    <h6>Mês Ano n-1::</h6>
                                 </div>
                                 <h6 class="text"><?= number_format($auxn1ft, 2, '.', ' ') ?> €</h6>
                             </div>
@@ -272,7 +314,7 @@ $select = $conn->query($query)->fetchAll();
                         <div class="card-header">
                             <div class="d-flex justify-content-between" style="text-align: right">
                                 <div class="headcs">
-                                    <h4><b>Faturação vs n-1 Kg</b></h4>
+                                    <h4><b>Faturação em Volume</b></h4>
                                 </div>
                                 <?php if ($auxn1kft == 0) {
                                     $ptn4 = 0;
@@ -301,114 +343,101 @@ $select = $conn->query($query)->fetchAll();
                             <br>
                             <div class="d-flex justify-content-between bodycs">
                                 <div>
-                                    <h6>Ano passado:</h6>
+                                    <h6>Mês Ano n-1:</h6>
                                 </div>
                                 <h6 class="text"><?= number_format($auxn1kft, 2, '.', ' ') ?> Kg</h6>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-4 col-sm-6 col-md-6 col-xl-4">
+                </div>               
+                <div class="col-3 col-sm-6 col-md-6 col-xl-3">
                     <div class="card">
                         <div class="card-header">
-                            <div class="d-flex justify-content-between" style="text-align: right">
-                                <div class="headcs">
-                                    <h4><b>Conta Corrente fora do limite</b></h4>
+                            <div class="d-flex justify-content-between headcs" style="text-align: right">
+                                <div>
+                                    <h4><b>CC</b></h4>
                                 </div>
-                                <h4 class="text-secondary fw-bold">75%</h4>
+                                <h4>45.324€</h4>
                             </div>
+                            
                         </div>
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between bodycs">
+                        <div class="card-body headcs" style="text-align: center;">
+                            <h2><b>22</b> Dias</h2>
+                        </div>
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between headcs" style="text-align: right">
                                 <div>
-                                    <h5>Valor cc:</h5>
+                                    <h6><b>FT</b></h6>
                                 </div>
-                                <h5>300 000€</h5>
+                                <h6>45.324€</h6>
                             </div>
-                            <div class="progress progress-sm" style="height:20px;">
-                                <div
-                                    class="progress-bar bg-secondary w-75"
-                                    role="progressbar"
-                                    aria-valuenow="75"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100">75%</div>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h6>Valor cc f:</h6>
-                                </div>
-                                <h6 class="text">400 000€</h6>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
-                <div class="col-4 col-sm-6 col-md-6 col-xl-4">
-                    <div class="card">
+                <div class="col-3 col-sm-6 col-md-6 col-xl-3">
+                <div class="card">
                         <div class="card-header">
-                            <div class="d-flex justify-content-between" style="text-align: right">
-                                <div class="headcs">
-                                    <h4><b>PMR</b></h4>
+                            <div class="d-flex justify-content-between headcs" style="text-align: right">
+                                <div>
+                                    <h4><b>Comissão</b></h4>
                                 </div>
-                                <h4 class="text-primary fw-bold">75%</h4>
+                                <h4><?= number_format($auxcrv, 2, '.', ' ') ?> €</h4>
                             </div>
+                            
                         </div>
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between bodycs">
+                        <div class="card-body headcs" style="text-align: center;">
+                            <h2><b><?= number_format($auxcrvvl, 2, '.', ' ') ?> €</b> Valor</h2>
+                        </div>
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between headcs" style="text-align: right">
                                 <div>
-                                    <h5>Vendas médias:</h5>
+                                    <h6><b>Comissionavel</b></h6>
                                 </div>
-                                <h5>300 000€</h5>
+                                <h6><?= number_format($auxcrvcom, 2, '.', ' ') ?> €</h6>
                             </div>
-                            <div class="progress progress-sm" style="height:20px;">
-                                <div
-                                    class="progress-bar bg-primary w-75"
-                                    role="progressbar"
-                                    aria-valuenow="75"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100">75%</div>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h6>CC em aberto:</h6>
-                                </div>
-                                <h6 class="text">400 000€</h6>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
-                <div class="col-4 col-sm-6 col-md-6 col-xl-4">
+                
+                <div class="col-6 col-sm-6 col-md-6 col-xl-6">
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex justify-content-between" style="text-align: right">
                                 <div class="headcs">
-                                    <h4><b>Comissões</b></h4>
+                                    <h4><b>Conta Corrente</b></h4>
                                 </div>
-                                <h4 class="text-primary fw-bold ">75%</h4>
+                                <?php if ($auxccaberta == 0) {
+                                    $ptn5 = 0;
+                                } else {
+                                    $ptn5 = round(($auxccvencida * 100) / $auxccaberta, 2);
+                                } ?>
+                                <h4 class="text-secondary fw-bold"><?= $ptn5 ?> %</h4>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between bodycs">
                                 <div>
-                                    <h5>Mês:</h5>
+                                    <h5>Não regularizada:</h5>
                                 </div>
-                                <h5>300 000€</h5>
+                                <h5><?= number_format($auxccaberta, 2, '.', ' ') ?> €</h5>
                             </div>
                             <div class="progress progress-sm" style="height:20px;">
                                 <div
-                                    class="progress-bar bg-primary w-75"
+                                    class="progress-bar bg-secondary"
+                                    style="width: <?= $ptn5 ?>%;"
                                     role="progressbar"
-                                    aria-valuenow="75"
+                                    aria-valuenow="<?= $ptn5 ?>"
                                     aria-valuemin="0"
-                                    aria-valuemax="100">75%</div>
+                                    aria-valuemax="100"><?= $ptn5 ?> %</div>
                             </div>
                             <br>
                             <div class="d-flex justify-content-between bodycs">
                                 <div>
-                                    <h6>Objetivo:</h6>
+                                    <h6>Valor vencido:</h6>
                                 </div>
-                                <h6 class="text">400 000€</h6>
+                                <h6 class="text"><?= number_format($auxccvencida, 2, '.', ' ') ?> €</h6>
                             </div>
                         </div>
                     </div>

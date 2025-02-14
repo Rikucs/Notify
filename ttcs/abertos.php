@@ -27,7 +27,7 @@ date_default_timezone_set("Europe/London");
                             <i class="icon-arrow-right"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="#">Historico</a>
+                            <a href="#">Abertos</a>
                         </li>
                     </ul>
                     <div
@@ -35,7 +35,7 @@ date_default_timezone_set("Europe/London");
                         <div>
                         </div>
                         <div class="ms-md-auto py-2 py-md-0">
-                            <a href="abertos.php" class="btn btn-round me-2 btncs">Ver TTs Abertos</a>
+                            <a href="historico.php" class="btn btn-round me-2 btncs">Ver Historico de TTs</a>
                             <a href="abrirtt.php" class="btn  btn-round btncs">Abrir um TT</a>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ date_default_timezone_set("Europe/London");
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Historico</div>
+                                    <div class="card-title">Abertos</div>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
@@ -60,7 +60,7 @@ date_default_timezone_set("Europe/London");
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($historico as $row) { ?>
+                                                <?php foreach ($abertos as $row) { ?>
                                                     <tr>
                                                         <th scope="row"><?= date_format(date_create($row['dataa']), "d/m/Y") ?></th>
                                                         <td><?= $row['urg'] ?></td>

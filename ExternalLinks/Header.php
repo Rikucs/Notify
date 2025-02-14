@@ -1,9 +1,8 @@
 <?php
-
+include "config/header.php";
 if (!isset($_SESSION['login'])) {
-    header('Location: ../index.php');
+    header('Location: ../Erros/404.html');
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,62 +39,27 @@ if (!isset($_SESSION['login'])) {
             },
         });
     </script>
+    
+
+
     <style>
-        hr.rounded {
-            border-top: 8px solid;
-            border-radius: 5px;
-            background-color: #D3e7fb;
-        }
-
-        .box {
-            background-color: white;
-            outline: 2px dashed black;
-            height: 200px;
-        }
-
-        .box.is-dragover {
-            background-color: grey;
-        }
-
-        .box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .box label strong {
-            text-decoration: underline;
-            color: blue;
-            cursor: pointer;
-        }
-
-        .box label strong:hover {
-            color: blueviolet
-        }
-
-        .box input {
-            display: none;
-        }
-
-        .show-more {
-            display: none;
-        }
-
-        .aling {
-            text-align: center;
+        
+        .bk{
+            border-radius: 30px;
         }
     </style>
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+ <!-- CSS Files -->
+ <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../assets/css/plugins.min.css" />
     <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="../assets/css/custom.css" />
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="../assets/css/demo.css" />
-    <script src="../assets/js/multiselect-dropdown.js"></script>
+    
+  
+   
 </head>
 
 <body>
@@ -103,9 +67,9 @@ if (!isset($_SESSION['login'])) {
         <!-- Sidebar -->
         <div class="sidebar sidebar-style-2" data-background-color="dark">
             <div class="sidebar-logo">
-                <!-- Logo header -->
+                <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="notify.php" class="logo">
+                    <a href="../notify/notify.php" class="logo">
                         <img
                             src="../assets/img/kaiadmin/NC.png"
                             alt="navbar brand"
@@ -124,7 +88,7 @@ if (!isset($_SESSION['login'])) {
                         <i class="gg-more-vertical-alt"></i>
                     </button>
                 </div>
-                <!-- End Logo header -->
+                <!-- End Logo Header -->
             </div>
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
@@ -143,17 +107,17 @@ if (!isset($_SESSION['login'])) {
                             <div class="collapse" id="Notify">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="notify.php">
+                                        <a href="../notify/notify.php">
                                             <span class="sub-item">Recebidas</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="enviadas.php">
+                                        <a href="../notify/enviadas.php">
                                             <span class="sub-item">Enviadas</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="form.php">
+                                        <a href="../notify/form.php">
                                             <span class="sub-item">Enviar Mensagem</span>
                                         </a>
                                     </li>
@@ -161,7 +125,6 @@ if (!isset($_SESSION['login'])) {
                             </div>
                         </li>
                     </ul>
-
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
@@ -188,10 +151,10 @@ if (!isset($_SESSION['login'])) {
                                         </a>
                                     </li>
                                 </ul>
+                                
                             </div>
                         </li>
                     </ul>
-
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
@@ -221,11 +184,10 @@ if (!isset($_SESSION['login'])) {
                             </div>
                         </li>
                     </ul>
-
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
                             <a
-                                href="../ExternalLinks/Hub.php"
+                                href="Hub.php"
                                 class="collapsed"
                                 aria-expanded="false">
                                 <i class="fab fa-cloudversify" aria-hidden="true"></i>
@@ -233,7 +195,6 @@ if (!isset($_SESSION['login'])) {
                             </a>
                         </li>
                     </ul>
-
                 </div>
             </div>
         </div>
@@ -242,15 +203,14 @@ if (!isset($_SESSION['login'])) {
         <div class="main-panel">
             <div class="main-header">
                 <div class="main-header-logo">
-                    <!-- Logo header -->
+                    <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="notify.php" class="logo">
-                            <!--<img
-                              src="../assets/img/kaiadmin/logo_light.svg"
-                              alt="navbar brand"
-                              class="navbar-brand"
-                              height="20"
-                          />-->
+                        <a href="../notify/notify.php" class="logo">
+                            <img
+                                src="../assets/img/kaiadmin/logo.png"
+                                alt="navbar brand"
+                                class="navbar-brand"
+                                height="40" />
                         </a>
                         <div class="nav-toggle">
                             <button class="btn btn-toggle toggle-sidebar">
@@ -264,9 +224,9 @@ if (!isset($_SESSION['login'])) {
                             <i class="gg-more-vertical-alt"></i>
                         </button>
                     </div>
-                    <!-- End Logo assuntoer -->
+                    <!-- End Logo Header -->
                 </div>
-                <!-- Navbar assuntoer -->
+                <!-- Navbar Header -->
                 <nav
                     class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                     <div class="container-fluid">
@@ -291,15 +251,14 @@ if (!isset($_SESSION['login'])) {
                                     aria-labelledby="notifDropdown">
                                     <li>
                                         <div class="dropdown-title">
-                                            Tem <span><?= $ns ?></span> notificações novas
+                                            Tem <span><?= $ns ?></span> Notificaçoes Novas
                                         </div>
                                     </li>
                                     <li>
                                         <div class="notif-scroll scrollbar-outer">
                                             <div class="notif-center">
-
                                                 <?php foreach ($nosino as $sino) { ?>
-                                                    <a href="ver.php?noti=<?= $sino['NOSTAMP'] ?>">
+                                                    <a href="ver.php?noti=<?= $sino['msgno'] ?>">
                                                         <div class="notif-img">
                                                             <img
                                                                 src="../assets/img/kaiadmin/favicon.png"
@@ -307,16 +266,15 @@ if (!isset($_SESSION['login'])) {
                                                         </div>
                                                         <div class="notif-content">
                                                             <span class="block"> NewCoffee - Notify </span>
-                                                            <span class="time">Nova Notificação de <?= $sino["usrno"] ?></span>
+                                                            <span class="time">Nova Notificação de <?= $sino["nome"] ?></span>
                                                         </div>
                                                     </a>
                                                 <?php } ?>
-
                                             </div>
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="see-all" href="notify.php">Ver todas as notificações<i class="fa fa-angle-right"></i>
+                                        <a class="see-all" href="javascript:void(0);">Ver todas as notificações <i class="fa fa-angle-right"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -332,7 +290,7 @@ if (!isset($_SESSION['login'])) {
                                     </div>
                                     <span class="profile-username">
                                         <span class="op-7">Olá,</span>
-                                        <span class="fw-bold"><?php echo $login ?></span>
+                                        <span class="fw-bold"><?= $login ?></span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -343,16 +301,16 @@ if (!isset($_SESSION['login'])) {
                                                     <span class="avatar-title rounded-circle border border-white bg-danger"><?= substr($login, 0, 1); ?></span>
                                                 </div>
                                                 <div class="u-text">
-                                                    <h4><?php echo $login ?></h4>
+                                                    <h4><?= $login ?></h4>
                                                 </div>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="enviadas.php">Enviadas</a>
-                                            <a class="dropdown-item" href="notify.php">Recebidas</a>
+                                            <a class="dropdown-item" href="../notify/notify.php">Enviadas</a>
+                                            <a class="dropdown-item" href="../notify/recebidas.php">Recebidas</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="form.php">Enviar mensagem</a>
+                                            <a class="dropdown-item" href="../notify/form.php">Enviar mensagem</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="../login/logout.php">Sair</a>
                                         </li>
