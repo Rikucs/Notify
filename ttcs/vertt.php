@@ -528,7 +528,7 @@ $auz = 0;
                     </div>
                     <div>
                         Distribuido por
-                        <a target="_blank" href="https://themewagon.com/">@NewCoffee</a>.
+                        <a target="_blank" href="https://www.newcoffee.pt/pt/">@NewCoffee</a>.
                     </div>
                 </div>
             </footer>
