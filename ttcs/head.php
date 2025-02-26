@@ -349,11 +349,6 @@ if (!isset($_SESSION['login'])) {
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="enviadas.php">Enviadas</a>
-                                            <a class="dropdown-item" href="notify.php">Recebidas</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="form.php">Enviar mensagem</a>
-                                            <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="../login/logout.php">Sair</a>
                                         </li>
                                     </div>

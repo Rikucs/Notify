@@ -3,6 +3,7 @@
 include_once("config/config.php");
 include_once("config/vendor.php");
 include("config/kpi.php");
+include("config/kpinc.php");
 include("Header.php");
 
 $months = [
@@ -20,8 +21,8 @@ $months = [
     12 => 'Dezembro'
 ];
 
-$auxccvencida =0;
-$auxccaberta =0;
+$auxccvencida = 0;
+$auxccaberta = 0;
 $auxcrvvl = 0;
 $auxcrvcom = 0;
 $auxcrv = 0;
@@ -68,21 +69,6 @@ foreach ($Vobj as $mobj) {
     }
 }
 
-foreach ($crv as $kcrv){
-    if ($kcrv['Ano'] == $y - 1 and $kcrv['Mes'] == $m) {
-        $auxcrvcom += $kcrv['comissionavel'];
-        $auxcrv += $kcrv['comissao'];
-        $auxcrvvl += $krcv['Valor'];
-    }
-}
-
-foreach ($CC as $c){
-
-        $auxccaberta += $c['ccaberta'];
-        $auxccvencida += $c['n_vencida'];
-        
-}
-
 
 if ($udir == 'Sistemas de Informação') {
     $query = "SELECT * FROM dbo.vndteams(9) order by 4 ";
@@ -95,9 +81,18 @@ $select = $conn->query($query)->fetchAll();
 ?>
 <div class="container">
     <div class="page-inner">
-        <div class="row">
+        <div class="row row-card-no-pd">
             <div class="col-md-12">
                 <div class="card">
+                    <?php if (isset($vendnr)) { ?>
+                        <div class="card-title" style="text-align:left; padding-left: 2.5%;">
+                            <div class="headcs">
+                                <h5><b><?php foreach ($vendnr as $vnr) {
+                                            echo ' > ' . $vnr['nome'];
+                                        } ?></b></h5>
+                            </div>
+                        </div>
+                    <?php  } ?>
                     <form action="KPI.php" method="post" enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="row">
@@ -170,284 +165,260 @@ $select = $conn->query($query)->fetchAll();
                             </div>
                         </div>
                     </form>
-                    <?php if (isset($vendnr)) { ?>
-                        <div class="card-title" style="text-align:left; padding-left: 2.5%;">
+                </div>
+            </div>
+
+            <div class="col-3 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between" style="text-align: right">
                             <div class="headcs">
-                                <h4><b><?php foreach ($vendnr as $vnr) {
-                                            echo ' > ' . $vnr['nome'];
-                                        } ?></b></h4>
+                                <h4><b>Faturação</b></h4>
                             </div>
+                            <?php if ($auxmobj == 0) {
+                                $ptn1 = 0;
+                            } else {
+                                $ptn1 = round(($auxmft * 100) / $auxmobj, 2);
+                            } ?>
+                            <h4 class="text-info fw-bold"><?= $ptn1 ?>%</h4>
                         </div>
-                    <?php  } ?>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between bodycs">
+                            <div>
+                                <h5>Mês</h5>
+                            </div>
+
+                            <h5><?= number_format($auxmft, 2, '.', ' ') ?> €</h5>
+
+                        </div>
+                        <div class="progress progress-sm" style="height:20px;">
+                            <div
+                                class="progress-bar bg-info"
+                                style=" width: <?= $ptn1 ?>%"
+                                role="progressbar"
+                                aria-valuenow="<?= $ptn1 ?>"
+                                aria-valuemin="0"
+                                aria-valuemax="100"><?= $ptn1 ?></div>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-between bodycs">
+                            <div>
+                                <h6>Objetivo:</h6>
+                            </div>
+                            <h6 class="text"><?= number_format($auxmobj, 2, '.', ' ') ?> €</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 col-sm-6 col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between" style="text-align: right">
+                            <div class="headcs">
+                                <h4><b>Faturação Acumulada</b></h4>
+                            </div>
+                            <?php if ($auxaobj == 0) {
+                                $ptn2 = 0;
+                            } else {
+                                $ptn2 = round(($auxaft * 100) / $auxaobj, 2);
+                            } ?>
+                            <h4 class="text-success fw-bold"><?= $ptn2 ?>%</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between bodycs">
+                            <div>
+                                <h5>Mês</h5>
+                            </div>
+                            <h5><?= number_format($auxaft, 2, '.', ' ') ?> €</h5>
+                        </div>
+                        <div class="progress progress-sm" style="height:20px;">
+                            <div
+                                class="progress-bar bg-success"
+                                style=" width: <?= $ptn2 ?>%"
+                                role="progressbar"
+                                aria-valuenow="<?= $ptn2 ?>"
+                                aria-valuemin="0"
+                                aria-valuemax="100"><?= $ptn2 ?></div>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-between bodycs">
+                            <div>
+                                <h6>Objetivo</h6>
+                            </div>
+                            <h6 class="text"><?= number_format($auxaobj, 2, '.', ' ') ?> €</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 col-sm-6 col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between" style="text-align: right">
+                            <div class="headcs">
+                                <h4><b>Faturação em Valor </b></h4>
+                            </div>
+                            <?php if ($auxn1ft == 0) {
+                                $ptn3 = 0;
+                            } else {
+                                $ptn3 = round(($auxmft * 100) / $auxn1ft, 2);
+                            } ?>
+                            <h4 class="text-danger fw-bold"><?= $ptn3 ?>%</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between bodycs">
+                            <div>
+                                <h5>Mês</h5>
+                            </div>
+                            <h5><?= number_format($auxmft, 2, '.', ' ') ?> €</h5>
+                        </div>
+                        <div class="progress progress-sm" style="height:20px;">
+                            <div
+                                class="progress-bar bg-danger"
+                                style="width: <?= $ptn3 ?>%;"
+                                role="progressbar"
+                                aria-valuenow="<?= $ptn3 ?>"
+                                aria-valuemin="0"
+                                aria-valuemax="100"><?= $ptn3 ?></div>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-between bodycs">
+                            <div>
+                                <h6>Mês Ano n-1</h6>
+                            </div>
+                            <h6 class="text"><?= number_format($auxn1ft, 2, '.', ' ') ?> €</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 col-sm-6 col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between" style="text-align: right">
+                            <div class="headcs">
+                                <h4><b>Faturação em Volume</b></h4>
+                            </div>
+                            <?php if ($auxn1kft == 0) {
+                                $ptn4 = 0;
+                            } else {
+                                $ptn4 = round(($auxkft * 100) / $auxn1kft, 2);
+                            } ?>
+                            <h4 class="text-warning fw-bold"><?= $ptn4 ?>%</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between bodycs">
+                            <div>
+                                <h5>Mês</h5>
+                            </div>
+                            <h5><?= number_format($auxkft, 2, '.', ' ') ?> Kg</h5>
+                        </div>
+                        <div class="progress progress-sm" style="height:20px;">
+                            <div
+                                class="progress-bar bg-warning"
+                                style="width: <?= $ptn4 ?>%;"
+                                role="progressbar"
+                                aria-valuenow="<?= $ptn4 ?>"
+                                aria-valuemin="0"
+                                aria-valuemax="100"><?= $ptn4 ?></div>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-between bodycs">
+                            <div>
+                                <h6>Mês Ano n-1</h6>
+                            </div>
+                            <h6 class="text"><?= number_format($auxn1kft, 2, '.', ' ') ?> Kg</h6>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-12 col-sm-12 col-lg-12 col-xl-12">
             <div class="row">
-                <div class="col-3 col-sm-6 col-lg-6 col-xl-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between" style="text-align: right">
-                                <div class="headcs">
-                                    <h4><b>Faturação</b></h4>
-                                </div>
-                                <?php if ($auxmobj == 0) {
-                                    $ptn1 = 0;
-                                } else {
-                                    $ptn1 = round(($auxmft * 100) / $auxmobj, 2);
-                                } ?>
-                                <h4 class="text-info fw-bold"><?= $ptn1 ?>%</h4>
-                            </div>
-                        </div>
+                <div class="col-3 col-sm-3 col-md-3 col-xl-3">
+                    <div class="card card-stats card-round">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h5>Mês:</h5>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="icon-big text-center">
+                                        <i class="far fa-clock text-warning"></i>
+                                    </div>
                                 </div>
-
-                                <h5><?= number_format($auxmft, 2, '.', ' ') ?> €</h5>
-
-                            </div>
-                            <div class="progress progress-sm" style="height:20px;">
-                                <div
-                                    class="progress-bar bg-info"
-                                    style=" width: <?= $ptn1 ?>%"
-                                    role="progressbar"
-                                    aria-valuenow="<?= $ptn1 ?>"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"><?= $ptn1 ?></div>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h6>Objetivo:</h6>
+                                <div class="col-9 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category headcs text-warning">Prazo Medio Recebimento</p>
+                                        <h4 class="card-title bodycs" style="font-size: 19px;"><?= (round($pmr) == 365) ? 0 : round($pmr);  ?> Dias</h4>
+                                    </div>
                                 </div>
-                                <h6 class="text"><?= number_format($auxmobj, 2, '.', ' ') ?> €</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-3 col-sm-6 col-md-6 col-xl-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between" style="text-align: right">
-                                <div class="headcs">
-                                    <h4><b>Faturação Acumulada</b></h4>
-                                </div>
-                                <?php if ($auxaobj == 0) {
-                                    $ptn2 = 0;
-                                } else {
-                                    $ptn2 = round(($auxaft * 100) / $auxaobj, 2);
-                                } ?>
-                                <h4 class="text-success fw-bold"><?= $ptn2 ?>%</h4>
-                            </div>
-                        </div>
+                <div class="col-3 col-sm-3 col-md-3 col-xl-3">
+                    <div class="card card-stats card-round">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h5>Mês:</h5>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="icon-big text-center">
+                                        <i class="icon-wallet text-success"></i>
+                                    </div>
                                 </div>
-                                <h5><?= number_format($auxaft, 2, '.', ' ') ?> €</h5>
-                            </div>
-                            <div class="progress progress-sm" style="height:20px;">
-                                <div
-                                    class="progress-bar bg-success"
-                                    style=" width: <?= $ptn2 ?>%"
-                                    role="progressbar"
-                                    aria-valuenow="<?= $ptn2 ?>"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"><?= $ptn2 ?></div>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h6>Objetivo:</h6>
+                                <div class="col-9 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category headcs text-success">Valor de comissão provisorio</p>
+                                        <h4 class="card-title bodycs" style="font-size: 19px;"><?= number_format($comissao, 2, '.', ' ') ?> €</h4>
+                                    </div>
                                 </div>
-                                <h6 class="text"><?= number_format($auxaobj, 2, '.', ' ') ?> €</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-3 col-sm-6 col-md-6 col-xl-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between" style="text-align: right">
-                                <div class="headcs">
-                                    <h4><b>Faturação em Valor </b></h4>
-                                </div>
-                                <?php if ($auxn1ft == 0) {
-                                    $ptn3 = 0;
-                                } else {
-                                    $ptn3 = round(($auxmft * 100) / $auxn1ft, 2);
-                                } ?>
-                                <h4 class="text-danger fw-bold"><?= $ptn3 ?>%</h4>
-                            </div>
-                        </div>
+                <div class="col-3 col-sm-3 col-md-3 col-xl-3">
+                    <div class="card card-stats card-round">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h5>Mês:</h5>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="icon-big text-center">
+                                        <i class="fas fa-calendar-alt text-info"></i>
+                                    </div>
                                 </div>
-                                <h5><?= number_format($auxmft, 2, '.', ' ') ?> €</h5>
-                            </div>
-                            <div class="progress progress-sm" style="height:20px;">
-                                <div
-                                    class="progress-bar bg-danger"
-                                    style="width: <?= $ptn3 ?>%;"
-                                    role="progressbar"
-                                    aria-valuenow="<?= $ptn3 ?>"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"><?= $ptn3 ?></div>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h6>Mês Ano n-1::</h6>
+                                <div class="col-9 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category headcs text-info">Valor C.C. não regularizado</p>
+                                        <h4 class="card-title bodycs" style="font-size: 19px;"><?= number_format($ccaberta, 2, '.', ' ') ?> €</h4>
+                                    </div>
                                 </div>
-                                <h6 class="text"><?= number_format($auxn1ft, 2, '.', ' ') ?> €</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-3 col-sm-6 col-md-6 col-xl-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between" style="text-align: right">
-                                <div class="headcs">
-                                    <h4><b>Faturação em Volume</b></h4>
-                                </div>
-                                <?php if ($auxn1kft == 0) {
-                                    $ptn4 = 0;
-                                } else {
-                                    $ptn4 = round(($auxkft * 100) / $auxn1kft, 2);
-                                } ?>
-                                <h4 class="text-warning fw-bold"><?= $ptn4 ?>%</h4>
-                            </div>
-                        </div>
+                <div class="col-3 col-sm-3 col-md-3 col-xl-3">
+                    <div class="card card-stats card-round">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h5>Mês:</h5>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="icon-big text-center">
+                                        <i class="fas fa-euro-sign text-danger"></i>
+                                    </div>
                                 </div>
-                                <h5><?= number_format($auxkft, 2, '.', ' ') ?> Kg</h5>
-                            </div>
-                            <div class="progress progress-sm" style="height:20px;">
-                                <div
-                                    class="progress-bar bg-warning"
-                                    style="width: <?= $ptn4 ?>%;"
-                                    role="progressbar"
-                                    aria-valuenow="<?= $ptn4 ?>"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"><?= $ptn4 ?></div>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h6>Mês Ano n-1:</h6>
+                                <div class="col-9 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category headcs text-danger">Valor C.C. Vencido </p>
+                                        <h4 class="card-title bodycs" style="font-size: 19px;"><?= number_format($ccvencida, 2, '.', ' ') ?> €</h4>
+                                    </div>
                                 </div>
-                                <h6 class="text"><?= number_format($auxn1kft, 2, '.', ' ') ?> Kg</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>               
-                <div class="col-3 col-sm-6 col-md-6 col-xl-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between headcs" style="text-align: right">
-                                <div>
-                                    <h4><b>CC</b></h4>
-                                </div>
-                                <h4>45.324€</h4>
-                            </div>
-                            
-                        </div>
-                        <div class="card-body headcs" style="text-align: center;">
-                            <h2><b>22</b> Dias</h2>
-                        </div>
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between headcs" style="text-align: right">
-                                <div>
-                                    <h6><b>FT</b></h6>
-                                </div>
-                                <h6>45.324€</h6>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3 col-sm-6 col-md-6 col-xl-3">
-                <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between headcs" style="text-align: right">
-                                <div>
-                                    <h4><b>Comissão</b></h4>
-                                </div>
-                                <h4><?= number_format($auxcrv, 2, '.', ' ') ?> €</h4>
-                            </div>
-                            
-                        </div>
-                        <div class="card-body headcs" style="text-align: center;">
-                            <h2><b><?= number_format($auxcrvvl, 2, '.', ' ') ?> €</b> Valor</h2>
-                        </div>
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between headcs" style="text-align: right">
-                                <div>
-                                    <h6><b>Comissionavel</b></h6>
-                                </div>
-                                <h6><?= number_format($auxcrvcom, 2, '.', ' ') ?> €</h6>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-6 col-sm-6 col-md-6 col-xl-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between" style="text-align: right">
-                                <div class="headcs">
-                                    <h4><b>Conta Corrente</b></h4>
-                                </div>
-                                <?php if ($auxccaberta == 0) {
-                                    $ptn5 = 0;
-                                } else {
-                                    $ptn5 = round(($auxccvencida * 100) / $auxccaberta, 2);
-                                } ?>
-                                <h4 class="text-secondary fw-bold"><?= $ptn5 ?> %</h4>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h5>Não regularizada:</h5>
-                                </div>
-                                <h5><?= number_format($auxccaberta, 2, '.', ' ') ?> €</h5>
-                            </div>
-                            <div class="progress progress-sm" style="height:20px;">
-                                <div
-                                    class="progress-bar bg-secondary"
-                                    style="width: <?= $ptn5 ?>%;"
-                                    role="progressbar"
-                                    aria-valuenow="<?= $ptn5 ?>"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"><?= $ptn5 ?> %</div>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between bodycs">
-                                <div>
-                                    <h6>Valor vencido:</h6>
-                                </div>
-                                <h6 class="text"><?= number_format($auxccvencida, 2, '.', ' ') ?> €</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 col-sm-6 col-lg-6">
+                <div class="col-12 col-sm-12 col-lg-12">
                     <div class="card">
                         <div class="card-header" style="text-align: center;">
-                            <div class="card-title headcs" style="font-size: 20px;">Faturação vs Objetivo evolução do ultimo ano</div>
+                            <div class="card-title headcs" style="font-size: 20px;">Evolução ultimos 12m Objetivo vs Faturação e Recebimentos</div>
                         </div>
                         <div class="card-body">
                             <div class="chart-container">
@@ -457,69 +428,13 @@ $select = $conn->query($query)->fetchAll();
                         </div>
                     </div>
                 </div>
-                <div class="col-6 col-sm-6 col-md-6 col-xl-6">
-                    <div class="card">
-                        <div class="card-header" style="text-align: center;">
-                            <div class="card-title headcs" style="font-size: 20px;">Conta Corrente</div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="barChart"
-                                    style="width: 50%; height: 50%"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="row">
                 <div class="col-6 col-sm-6 col-md-6 col-xl-6">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-head-row card-tools-still-right">
-                                <div class="card-title headcs" style="font-size : 20px;">Trouble tickets</div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <ol class="activity-feed">
-                                <li class="feed-item feed-item-success">
-                                    <time class="date" datetime="9-25">Sep 25</time>
-                                    {Tecnico}
-                                    <span class="text-success"><a href="single-group.php">"Sem Tecnico Atribuido"</a></span>
-                                </li>
-                                <li class="feed-item feed-item-success">
-                                    <time class="date" datetime="9-24">Sep 24</time>
-                                    {Tecnico}
-                                    <span class="text-success"><a href="single-group.php">"Sem Tecnico Atribuido"</a></span>
-                                </li>
-                                <li class="feed-item feed-item-warning">
-                                    <time class="date" datetime="9-23">Sep 23</time>
-                                    {Tecnico}
-                                    <span class="text-warning"><a href="single-group.php">"Nova Intervenção"</a></span>
-                                </li>
-                                <li class="feed-item feed-item-warning">
-                                    <time class="date" datetime="9-21">Sep 21</time>
-                                    {Tecnico}
-                                    <span class="text-warning"><a href="single-group.php">"Nova Intervenção"</a></span>
-                                </li>
-                                <li class="feed-item feed-item-danger">
-                                    <time class="date" datetime="9-18">Sep 18</time>
-                                    Ticket Aberto
-                                    <span class="text-danger"><a href="single-group.php">"Sem Tecnico Atribuido"</a></span>
-                                </li>
-                                <li class="feed-item feed-item-danger">
-                                    <time class="date" datetime="9-17">Sep 17</time>
-                                    Ticket Aberto
-                                    <span class="text-danger"><a href="single-group.php">"Sem Tecnico Atribuido"</a></span>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-md-6 col-xl-6">
-                    <div class="card">
-                        <div class="card-header">
                             <div class="card-head-row">
-                                <div class="card-title headcs" style="font-size : 20px;">Notificaçãoes</div>
+                                <div class="card-title headcs" style="font-size : 20px;">Notificações</div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -560,10 +475,75 @@ $select = $conn->query($query)->fetchAll();
                         </div>
                     </div>
                 </div>
+                <div class="col-6 col-sm-6 col-md-6 col-xl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-head-row card-tools-still-right">
+                                <div class="card-title headcs" style="font-size : 20px;">Trouble Tickets</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ol class="activity-feed">
+                                <li class="feed-item feed-item-success">
+                                    <time class="date" datetime="9-25">Sep 25</time>
+                                    {Tecnico}
+                                    <span class="text-success"><a href="single-group.php">"Sem Tecnico Atribuido"</a></span>
+                                </li>
+                                <li class="feed-item feed-item-success">
+                                    <time class="date" datetime="9-24">Sep 24</time>
+                                    {Tecnico}
+                                    <span class="text-success"><a href="single-group.php">"Sem Tecnico Atribuido"</a></span>
+                                </li>
+                                <li class="feed-item feed-item-warning">
+                                    <time class="date" datetime="9-23">Sep 23</time>
+                                    {Tecnico}
+                                    <span class="text-warning"><a href="single-group.php">"Nova Intervenção"</a></span>
+                                </li>
+                                <li class="feed-item feed-item-warning">
+                                    <time class="date" datetime="9-21">Sep 21</time>
+                                    {Tecnico}
+                                    <span class="text-warning"><a href="single-group.php">"Nova Intervenção"</a></span>
+                                </li>
+                                <li class="feed-item feed-item-danger">
+                                    <time class="date" datetime="9-18">Sep 18</time>
+                                    Ticket Aberto
+                                    <span class="text-danger"><a href="single-group.php">"Sem Tecnico Atribuido"</a></span>
+                                </li>
+                                <li class="feed-item feed-item-danger">
+                                    <time class="date" datetime="9-17">Sep 17</time>
+                                    Ticket Aberto
+                                    <span class="text-danger"><a href="single-group.php">"Sem Tecnico Atribuido"</a></span>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<footer class="footer">
+    <div class="container-fluid d-flex justify-content-between">
+        <nav class="pull-left">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Help </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Licenses </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            © D.S.I - 2025 <!--, Feito com <i class="fa fa-heart heart text-danger"></i> por
+              <a href="https://www.facebook.com/rafael.silva.737448" target="_blank">Rafael Silva</a> para um melhor gerenciamento de notificações. -->
+        </div>
+        <div>
+            Distribuido por
+            <a target="_blank" href="https://themewagon.com/">@NewCoffee</a>.
+        </div>
+    </div>
+</footer>
 </div>
 </div>
 
@@ -657,40 +637,55 @@ $reversedGraficoobj = array_reverse($graficoobj);
         type: "line",
         data: {
             labels: [
-                <?php foreach ($reversedGraficoft as $row) {
+                <?php foreach ($grafico as $row) {
                     echo '"' . $months[$row['mes']] . '", ';
                 } ?>
             ],
             datasets: [{
-                    label: "Faturação",
-                    borderColor: "#1d7af3",
+                    label: "Objetivo",
+                    borderColor: "#ff0000",
                     pointBorderColor: "#FFF",
-                    pointBackgroundColor: "#1d7af3",
+                    pointBackgroundColor: "#ff0000",
                     pointBorderWidth: 2,
                     pointHoverRadius: 4,
                     pointHoverBorderWidth: 1,
                     pointRadius: 4,
-                    backgroundColor: "transparent",
-                    fill: true,
+                    backgroundColor: "#ff0000", //"transparent",
+                    fill: false,
                     borderWidth: 2,
-                    data: [<?php foreach ($reversedGraficoft as $row) {
-                                echo $row['total'] . ', ';
+                    data: [<?php foreach ($grafico as $row) {
+                                echo $row['valorobj'] . ', ';
+                            } ?>],
+                }, {
+                    label: "Faturação",
+                    borderColor: "#2a00ff",
+                    pointBorderColor: "#FFF",
+                    pointBackgroundColor: "#2a00ff",
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 1,
+                    pointRadius: 4,
+                    backgroundColor: "#2a00ff",
+                    fill: false,
+                    borderWidth: 2,
+                    data: [<?php foreach ($grafico as $row) {
+                                echo $row['valorft'] . ', ';
                             } ?>],
                 },
                 {
-                    label: "Objetivo",
-                    borderColor: "#59d05d",
+                    label: "Recebimentos",
+                    borderColor: "#00beff",
                     pointBorderColor: "#FFF",
-                    pointBackgroundColor: "#59d05d",
+                    pointBackgroundColor: "#00beff",
                     pointBorderWidth: 2,
                     pointHoverRadius: 4,
                     pointHoverBorderWidth: 1,
                     pointRadius: 4,
-                    backgroundColor: "transparent",
-                    fill: true,
+                    backgroundColor: "#00beff",
+                    fill: false,
                     borderWidth: 2,
-                    data: [<?php foreach ($reversedGraficoobj as $row) {
-                                echo $row['total'] . ', ';
+                    data: [<?php foreach ($grafico as $row) {
+                                echo $row['recebido'] . ', ';
                             } ?>],
                 },
             ],
@@ -699,7 +694,7 @@ $reversedGraficoobj = array_reverse($graficoobj);
             responsive: true,
             maintainAspectRatio: false,
             legend: {
-                position: "bottom",
+                position: "right",
             },
             tooltips: {
                 bodySpacing: 4,
@@ -721,49 +716,6 @@ $reversedGraficoobj = array_reverse($graficoobj);
         },
     });
 </script>
-<script>
-    var barChart = document.getElementById("barChart").getContext("2d");
-    var myBarChart = new Chart(barChart, {
-        type: "bar",
-        data: {
-            labels: [<?php foreach ($reversedGraficoft as $row) {
-                            echo '"' . $months[$row['mes']] . '", ';
-                        } ?>],
-            datasets: [{
-                    label: "Conta Corrente Aberta",
-                    backgroundColor: "rgb(75, 192, 192)",
-                    borderColor: "rgb(75, 192, 192)",
-                    data: [<?php foreach ($reversedGraficoft as $row) {
-                                echo $row['total'] . ', ';
-                            } ?>],
-                },
-                {
-                    label: "Conta Corrente Fechada",
-                    backgroundColor: "rgb(255, 99, 132)",
-                    borderColor: "rgb(255, 99, 132)",
-                    data: [<?php foreach ($reversedGraficoobj as $row) {
-                                echo $row['total'] . ', ';
-                            } ?>],
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                position: "bottom",
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                    },
-                }, ],
-            },
-        },
-    });
-</script>
-
 
 
 </body>

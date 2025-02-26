@@ -162,6 +162,28 @@ if (isset($_POST["submit"])) {
         </div>
     </div>
 </div>
+<footer class="footer">
+    <div class="container-fluid d-flex justify-content-between">
+        <nav class="pull-left">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Help </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Licenses </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            © D.S.I - 2025 <!--, Feito com <i class="fa fa-heart heart text-danger"></i> por
+              <a href="https://www.facebook.com/rafael.silva.737448" target="_blank">Rafael Silva</a> para um melhor gerenciamento de notificações. -->
+        </div>
+        <div>
+            Distribuido por
+            <a target="_blank" href="https://themewagon.com/">@NewCoffee</a>.
+        </div>
+    </div>
+</footer>
 </div>
 </div>
 

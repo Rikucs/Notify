@@ -39,31 +39,53 @@ $colors = [
         </div>
         <div class="col-12 col-sm-12 col-lg-12 col-xl-12">
             <div class="row">
-            <?php foreach($links as $l){ 
-                    $bk = $colors[rand(1,2)]
-            ?>
-                <div class="col-3 col-sm-3 col-lg-3 col-xl-3">
-                    <div class="card ani" style="background-color: <?= $bk ?> ; border-radius: 30px;">
-                        <div class="card-body" >
-                            <div class="bodycs">
-                                <button class="btn ani " style="background-color: <?= $bk ?> ;border-radius: 30px;height: 100px; width: 100%;color:#ffffff;"
+                <?php foreach ($links as $l) {
+                    $bk = $colors[rand(1, 2)]
+                ?>
+                    <div class="col-3 col-sm-3 col-lg-3 col-xl-3">
+                        <div class="card ani" style="background-color: <?= $bk ?> ; border-radius: 30px;">
+                            <div class="card-body">
+                                <div class="bodycs">
+                                    <button class="btn ani " style="background-color: <?= $bk ?> ;border-radius: 30px;height: 100px; width: 100%;color:#ffffff;"
                                         onclick="window.open('<?= $l['link'] ?>', '_blank')">
                                         <h3>
-                                    <span class="btn-label">
-                                        <i class="fa fa-link"></i>
-                                    </span>
-                                    <?= $l['nome'] ?>
-                                    </h3>
-                                </button>
+                                            <span class="btn-label">
+                                                <i class="fa fa-link"></i>
+                                            </span>
+                                            <?= $l['nome'] ?>
+                                        </h3>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <?php } ?>
             </div>
         </div>
     </div>
 </div>
+<footer class="footer">
+    <div class="container-fluid d-flex justify-content-between">
+        <nav class="pull-left">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Help </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Licenses </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            © D.S.I - 2025 <!--, Feito com <i class="fa fa-heart heart text-danger"></i> por
+              <a href="https://www.facebook.com/rafael.silva.737448" target="_blank">Rafael Silva</a> para um melhor gerenciamento de notificações. -->
+        </div>
+        <div>
+            Distribuido por
+            <a target="_blank" href="https://themewagon.com/">@NewCoffee</a>.
+        </div>
+    </div>
+</footer>
 </div>
 </div>
 </div>
