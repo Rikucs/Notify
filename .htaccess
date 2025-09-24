@@ -1,0 +1,103 @@
+# Apache Configuration for Notify Application
+# Place this in the document root or include in virtual host
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Hide sensitive files
+<Files "*.env">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|sql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protect config directories
+<DirectoryMatch "config/">
+    <Files "*.php">
+        # Allow access to config files from PHP includes only
+        # This doesn't provide complete protection but adds a layer
+    </Files>
+</DirectoryMatch>
+
+# Enable compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# Browser caching for static files
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresDefault "access plus 2 days"
+</IfModule>
+
+# URL Rewriting (if needed)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Force HTTPS in production (uncomment if needed)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Remove trailing slashes
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{THE_REQUEST} /+[^\s]*\?[^\s]* [NC]
+    RewriteRule ^(.*)$ /$1 [R=301,L]
+    
+    # Block access to version control directories
+    RewriteRule ^(.*/)?\.git/ - [F,L]
+    RewriteRule ^(.*/)?\.svn/ - [F,L]
+</IfModule>
+
+# PHP Settings
+<IfModule mod_php7.c>
+    # Increase memory limit if needed
+    php_value memory_limit 256M
+    
+    # Set maximum execution time
+    php_value max_execution_time 300
+    
+    # File upload settings
+    php_value upload_max_filesize 50M
+    php_value post_max_size 50M
+    
+    # Hide PHP version
+    php_flag expose_php Off
+    
+    # Session settings
+    php_value session.cookie_httponly 1
+    php_value session.cookie_secure 1
+    php_value session.use_only_cookies 1
+</IfModule>
+
+# Error pages (customize as needed)
+ErrorDocument 404 /Erros/404.html
+ErrorDocument 403 /Erros/403.html
+ErrorDocument 500 /Erros/500.html

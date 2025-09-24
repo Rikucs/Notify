@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  notify-app:
+    build: .
+    container_name: notify-web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html/
+      - ./docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
+    environment:
+      - DB_SERVER=${DB_SERVER}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - LDAP_SERVER=${LDAP_SERVER}
+    depends_on:
+      - sqlserver
+    networks:
+      - notify-network
+
+  # Optional: Local SQL Server for development
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: notify-db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - notify-network
+
+  # Optional: LDAP server for development/testing
+  ldap:
+    image: osixia/openldap:latest
+    container_name: notify-ldap
+    environment:
+      - LDAP_ORGANISATION="Your Organization"
+      - LDAP_DOMAIN="your-domain.com"
+      - LDAP_ADMIN_PASSWORD=admin_password
+    ports:
+      - "389:389"
+      - "636:636"
+    volumes:
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap/slapd.d
+    networks:
+      - notify-network
+
+volumes:
+  sqlserver_data:
+  ldap_data:
+  ldap_config:
+
+networks:
+  notify-network:
+    driver: bridge
